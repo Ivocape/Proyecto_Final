@@ -4,7 +4,8 @@ from procesos import *
 from discoDuro import *
 from menus import *
 from tkinter import *
-
+  
+  
 class HistogramGUI:
     def __init__(self, data):
         self.data = data
