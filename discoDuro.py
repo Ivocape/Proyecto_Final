@@ -19,6 +19,7 @@ class DiscoDuro():
                             
                     for row in reader:
                         # Extraigo la informacion de cada fila de los proyectos del 2015
+                        año=2015
                         proyecto_id = row[0]
                         fuente = row[1]
                         titulo = row[2]
@@ -38,4 +39,6 @@ class DiscoDuro():
                         cantidad_miembros_F = row[16]
                         cantidad_miembros_M = row[17]
                         sexo_director = row[18]
+                        
+                        instance.cache.cargar(año,proyecto_id,fuente, titulo,fecha_inicio,fecha_fin,resumen,moneda_id,monto_total_solicitado,monto_total_adjudicado,monto_financiado_solicitado,monto_financiado_adjudicado,tipo_proyecto_id,codigo_identificacion,palabras_clave,estado_id,fondo_anpcyt,cantidad_miembros_F,cantidad_miembros_M,sexo_director)
                         
