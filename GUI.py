@@ -1,73 +1,75 @@
-import matplotlib.pyplot as plt
-from procesos import *
-from discoDuro import *
-from menus import *
-from analisis import *
-from histogramas import *
 import tkinter as tk
-
-class HistogramGUI():
+from backend import Backend
+class GUI:
     def __init__(self):
-        self.discoDuro=DiscoDuro()
-        self.cache=Cache()
-        self.histogramas=histogramas()
-        self.analisis=Analisis()
-    
-        self.root = Tk()
-        self.root.title("Menu Principal")
-        ventana = tk.Tk()
+        self.ventana = tk.Tk()
+        self.backend = Backend()
+        self.ventana.title("Ventana con imagen de fondo")
+        
+        # Configurar las dimensiones de la ventana
+        self.ancho_ventana = 600
+        self.alto_ventana = 400
+        self.ventana.geometry(f"{self.ancho_ventana}x{self.alto_ventana}")
+
         # Cargar la imagen de fondo
-        ruta_imagen = "descarga.png"  ## Reemplaza con la ruta de tu imagen
-        imagen_fondo = tk.PhotoImage(file=ruta_imagen)
+        self.ruta_imagen = "descarga.png"  # Reemplaza con la ruta de tu imagen
+        self.imagen_fondo = tk.PhotoImage(file=self.ruta_imagen)
 
         # Crear un widget Canvas para la imagen de fondo
-        canvas = tk.Canvas(width=600, height=400)
-        canvas.pack(fill="both", expand=True)
-        canvas.create_image(0, 0, anchor="nw", image=imagen_fondo)
+        self.canvas = tk.Canvas(self.ventana, width=self.ancho_ventana, height=self.alto_ventana)
+        self.canvas.pack(fill="both", expand=True)
+        self.canvas.create_image(0, 0, anchor="nw", image=self.imagen_fondo)
 
-        # Aquí agregar el resto de tus botones
+        # Crear los botones y aplicar el efecto de brillo a cada uno
+        self.boton1 = tk.Button(self.ventana, text="distribución de los proyectos por área de investigación", bg="black", fg="white", command=self.on_button_click)
+        self.boton1.place(relx=0.5, rely=0.3, anchor="center")  # Posiciona el botón en el centro
+        self.aplicar_efecto_brillo(self.boton1)  # Aplicar el efecto de brillo al botón
 
-        # Integrar el botón que se ilumina al pasar el mouse
-        boton = tk.Button(ventana, text="Ejemplo Botón", bg="black", fg="white")
-        boton.place(relx=0.5, rely=0.5, anchor="center")  # Posiciona el botón en el centro
+        self.boton2 = tk.Button(self.ventana, text="porcentaje de participación de las mujeres en los diferentes proyectos según el rol quedesempeña", bg="black", fg="white", command=self.on_button_click)
+        self.boton2.place(relx=0.5, rely=0.4, anchor="center")  # Posiciona el botón en el centro
+        self.aplicar_efecto_brillo(self.boton2)  # Aplicar el efecto de brillo al botón
 
-        def on_enter(event):
-            boton.config(bg='gray')  # Cambiar color al pasar el mouse
+        self.boton3 = tk.Button(self.ventana, text="tiempo promedio de terminación", bg="black", fg="white", command=self.on_button_click)
+        self.boton3.place(relx=0.5, rely=0.5, anchor="center")  # Posiciona el botón en el centro
+        self.aplicar_efecto_brillo(self.boton3)
 
-        def on_leave(event):
-            boton.config(bg='black')  # Restaurar color al quitar el mouse
+        self.boton4 = tk.Button(self.ventana, text="porcentaje de proyectos que han utilizado tecnologías emergentes", bg="black", fg="white", command=self.on_button_click)
+        self.boton4.place(relx=0.5, rely=0.6, anchor="center")  # Posiciona el botón en el centro
+        self.aplicar_efecto_brillo(self.boton4)
 
-        boton.bind("<Enter>", on_enter)
-        boton.bind("<Leave>", on_leave)
+        self.boton5 = tk.Button(self.ventana, text="lista de proyectos", bg="black", fg="white", command=self.on_button_click)
+        self.boton5.place(relx=0.5, rely=0.7, anchor="center")  # Posiciona el botón en el centro
+        self.aplicar_efecto_brillo(self.boton5)
 
-        self.button = Button(ventana, text="distribución de los proyectos por área de investigación", command=self.histogramas.show_histogram)
-        self.button.pack()
+        self.boton6 = tk.Button(self.ventana, text="Financiamiento Solicitado/Otorgado", bg="black", fg="white", command=self.on_button_click)
+        self.boton6.place(relx=0.5, rely=0.8, anchor="center")  # Posiciona el botón en el centro
+        self.aplicar_efecto_brillo(self.boton6)
 
-        self.button = Button(ventana, text="porcentaje de participación de las mujeres en los diferentes proyectos según el rol quedesempeña", command=self.histogramas.show_histogram)
-        self.button.pack()
-
-        self.button = Button(ventana, text="tiempo promedio de terminación", command=self.histogramas.show_histogram)
-        self.button.pack()
-
-        self.button = Button(ventana, text=" porcentaje de proyectos que han utilizado tecnologías emergentes", command=self.histogramas.show_histogram)
-        self.button.pack()
-
-        self.button = Button(ventana, text="lista de proyectos", command=self.histogramas.show_histogram)
-        self.button.pack()
-
-        self.button = Button(ventana, text="Financiamiento Solicitado/Otorgado", command=self.histogramas.show_histogram)
-        self.button.pack()
-
-        self.button = Button(ventana, text="Cerrar", command=self.root.destroy)
-        self.button.pack()
-
-    def setup(self):
-
-        listacsv=['proyectos_2015.csv','proyectos_2016.csv','proyectos_2017.csv','proyectos_2018.csv','proyecto_disciplina.csv','proyecto_participante.csv','ref_disciplina.csv','ref_estado_proyecto.csv','ref_funcion.csv','ref_moneda.csv','ref_tipo_proyecto.csv']
-        for carpeta in listacsv:
-            self.discoDuro.leerSETUP(carpeta)
+        self.boton7 = tk.Button(self.ventana, text="Cerrar", bg="black", fg="white", command=self.ventana.destroy) 
+        self.boton7.place(relx=0.5, rely=0.9, anchor="center")  # Posiciona el botón en el centro
+        self.aplicar_efecto_brillo(self.boton7)
         
+
+    def on_button_click(self):
+        print("Botón clickeado")
+
+    def on_enter(self, event):
+        event.widget.config(bg='gray')  # Cambiar color al pasar el mouse
+
+    def on_leave(self, event):
+        event.widget.config(bg='black')  # Restaurar color al quitar el mouse
+
+    def aplicar_efecto_brillo(self, boton):
+        boton.bind("<Enter>", self.on_enter)
+        boton.bind("<Leave>", self.on_leave)
+
     def run(self):
-        self.root.mainloop()
-            
-instance=HistogramGUI()
+        self.ventana.mainloop()
+
+# Crear una instancia de la clase GUI y ejecutar la aplicación
+instance= GUI()
+
+#####################################################################################
+# + Para llamar al backend y ejecutar sus distintas funciones no estando en este archivo (self.backend en este caso)
+# debo llamar de la siguiente manera: instance.backend.funcion() (donde funcion es la funcion que quiero ejecutar)
+#####################################################################################
