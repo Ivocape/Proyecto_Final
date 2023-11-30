@@ -210,7 +210,7 @@ class Analisis:
         cantidad=0
         from GUI import cache
         for proyecto in self.proyectotal:
-            if proyecto.tipo_proyecto_id==1:
+            if proyecto.tipo_proyecto_id==1:  #CHEQUEAR EL ID DE TECNOLOGIA
                 cantidad+=1
         total=len(self.proyectotal)
         porcentaje=(cantidad*100)/total
