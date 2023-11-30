@@ -4,21 +4,21 @@ class GUI:
     def __init__(self):
         self.ventana = tk.Tk()
         self.backend = Backend()
-        self.ventana.title("Ventana con imagen de fondo")
+        self.ventana.title("CENTRO DE COMPUTO DE LA NACION ARGENTINA")
         
         # Configurar las dimensiones de la ventana
-        self.ancho_ventana = 600
-        self.alto_ventana = 400
+        self.ancho_ventana = 700
+        self.alto_ventana = 600
         self.ventana.geometry(f"{self.ancho_ventana}x{self.alto_ventana}")
-
+       
         # Cargar la imagen de fondo
-        self.ruta_imagen = "descarga.png"  # Reemplaza con la ruta de tu imagen
+        self.ruta_imagen = "fotoArg.png"  # Reemplaza con la ruta de tu imagen
         self.imagen_fondo = tk.PhotoImage(file=self.ruta_imagen)
 
         # Crear un widget Canvas para la imagen de fondo
         self.canvas = tk.Canvas(self.ventana, width=self.ancho_ventana, height=self.alto_ventana)
         self.canvas.pack(fill="both", expand=True)
-        self.canvas.create_image(0, 0, anchor="nw", image=self.imagen_fondo)
+        self.canvas.create_image(0, 0,anchor="nw" ,image=self.imagen_fondo)
 
         # Crear los botones y aplicar el efecto de brillo a cada uno
         self.boton1 = tk.Button(self.ventana, text="distribución de los proyectos por área de investigación", bg="black", fg="white", command=self.on_button_click)
@@ -49,6 +49,8 @@ class GUI:
         self.boton7.place(relx=0.5, rely=0.9, anchor="center")  # Posiciona el botón en el centro
         self.aplicar_efecto_brillo(self.boton7)
         
+    def toggle_fullscreen(window):
+        window.attributes("-fullscreen", True)
 
     def on_button_click(self):
         print("Botón clickeado")
@@ -64,6 +66,7 @@ class GUI:
         boton.bind("<Leave>", self.on_leave)
 
     def run(self):
+        self.backend.setup()
         self.ventana.mainloop()
 
 # Crear una instancia de la clase GUI y ejecutar la aplicación
