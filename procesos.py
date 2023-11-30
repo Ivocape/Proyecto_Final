@@ -1,4 +1,3 @@
-#Mostrar la distribución de los proyectos por área de investigación (por ejemplo, ciencias sociales,ciencias naturales, tecnología, etc.) y sus correspondientes sub áreas ( por ejemplo de cienciasnaturales las sub áreas de matemáticas, ciencias de la computación, ciencias físicas....)
 import pandas as pd
 class Proyecto:
     def __init__ (self, proyecto_id,fuente, titulo,fecha_inicio,fecha_fin,resumen,moneda_id,monto_total_solicitado,monto_total_adjudicado,monto_financiado_solicitado,monto_financiado_adjudicado,tipo_proyecto_id,codigo_identificacion,palabras_clave,estado_id,fondo_anpcyt,cantidad_miembros_F,cantidad_miembros_M,sexo_director):
@@ -32,8 +31,6 @@ class Disciplina:
         self.disciplina_codigo=disciplina_codigo
         self.disciplina_descripcion=disciplina_descripcion
                        
-
-
 class Cache:
     def __init__(self):
         self.proyec2015={}
@@ -160,5 +157,44 @@ class Analisis:
         lista.sort()
         print(lista)
 
+#Mostrar la distribución de los proyectos por área de investigación (por ejemplo, ciencias sociales,ciencias naturales, tecnología, etc.) y sus correspondientes sub áreas ( por ejemplo de cienciasnaturales las sub áreas de matemáticas, ciencias de la computación, ciencias físicas....)
 
-  
+# cantidad de proyectos por gran area
+    def cantidad_proyectos_gran_area(self,gran_area):
+        cantidad=0
+        from GUI import cache
+        for disciplina in self.ref_disciplina:
+            if disciplina.gran_area_descripcion==gran_area:
+                id_disciplina=disciplina.disciplina_id
+        for proyecto in self.proyectotal:
+            if proyecto.tipo_proyecto_id==id_disciplina:
+                cantidad+=1
+        print("La cantidad de proyectos en el gran area ",gran_area," es: ",cantidad)
+
+# cantidad de proyectos por area
+    def cantidad_proyectos_area(self,area):
+        cantidad=0
+        from GUI import cache
+        for disciplina in self.ref_disciplina:
+            if disciplina.area_descripcion==area:
+                id_disciplina=disciplina.disciplina_id
+        for proyecto in self.proyectotal:
+            if proyecto.tipo_proyecto_id==id_disciplina:
+                cantidad+=1
+        print("La cantidad de proyectos en el area ",area," es: ",cantidad)
+     
+#Visualizar el tiempo promedio de terminación de los proyectos según el área al que pertenecen.
+    def tiempo_promedio_proyectos_area(self,area):
+        from GUI import cache
+        for disciplina in self.ref_disciplina:
+            if disciplina.area_descripcion==area:
+                id_disciplina=disciplina.disciplina_id
+        lista=[]
+        for proyecto in self.proyectotal:
+            if proyecto.tipo_proyecto_id==id_disciplina:
+                lista.append(proyecto.fecha_fin-proyecto.fecha_inicio)
+        promedio=sum(lista)/len(lista)
+        print("El tiempo promedio de terminacion de los proyectos del area ",area," es: ",promedio) 
+
+
+
