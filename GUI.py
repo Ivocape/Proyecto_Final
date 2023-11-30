@@ -52,5 +52,3 @@ class HistogramGUI:
         self.root.mainloop()
             
 instance=HistogramGUI()
-instance.setup()
-instance.run()
