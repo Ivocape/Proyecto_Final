@@ -65,11 +65,26 @@ class Cache:
             self.proyectotal.add(proyecto)
         else:
             print("Año incorrecto")
-            
+    def cargar_disciplina(self,disciplina_id,gran_area_codigo,gran_area_descripcion,area_codigo,area_descripcion,disciplina_codigo,disciplina_descripcion):
+        disciplina=Disciplina(disciplina_id,gran_area_codigo,gran_area_descripcion,area_codigo,area_descripcion,disciplina_codigo,disciplina_descripcion)
+        self.ref_disciplina.add(disciplina)   
+    def cargar_estado_proyecto(self,estado_id,estado_descripcion):
+        self.ref_estado_proyecto.add(estado_id,estado_descripcion)
+    def cargar_funcion(self,funcion_id,funcion_descripcion):
+        self.ref_funcion.add(funcion_id,funcion_descripcion)
+    def cargar_moneda(self,moneda_id,moneda_descripcion):
+        self.ref_moneda.add(moneda_id,moneda_descripcion)
+    def cargar_tipo_proyecto(self,tipo_proyecto_id,tipo_proyecto_descripcion):
+        self.ref_tipo_proyecto.add(tipo_proyecto_id,tipo_proyecto_descripcion)
+    def cargar_proyecto_disciplina(self,proyecto_id,disciplina_id):
+        self.proyecto_disciplina.add(proyecto_id,disciplina_id)
+    def cargar_proyecto_participante(self,proyecto_id,participante_id):
+        self.proyecto_participante.add(proyecto_id,participante_id)     
             
 class Analisis:
     def __init__(self):
         pass
+    ##########CAMBIAR TATI#############
     #Visualizar el porcentaje de participación de las mujeres en los diferentes proyectos según el rol que desempeñan versus la participación de los hombres.
     def porcentaje_participacion_generos(self):
         cantidad_mujeres=0
@@ -100,3 +115,16 @@ class Analisis:
         porcentaje_hombres=(cantidad_hombres*100)/total
         print("El porcentaje de mujeres es: ",porcentaje_mujeres)
         print("El porcentaje de hombres es: ",porcentaje_hombres)
+    #guardar y visualizar una lista de proyectos y la fecha de inicio por la fecha de iniciación del proyecto creciente.
+    def lista_proyectos_fecha(self):
+        lista=[]
+        for proyecto in self.proyectotal:
+            lista.append((proyecto.fecha_inicio,proyecto.titulo))
+        lista.sort()
+        #escribo en el csv 'proyectos_fecha.csv' usando el metodo escribir de discoDuro
+        carpeta= 'proyectos_fecha.csv'
+        instance.DiscoDuro.escribir(carpeta,lista)  #######NO SE QUE PASA CON EL INSTANCE#######
+        print(lista)
+
+
+  
