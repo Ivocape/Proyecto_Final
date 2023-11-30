@@ -1,25 +1,30 @@
-#Mostrar la distribución de los proyectos por área de investigación (por ejemplo, ciencias sociales,ciencias naturales, tecnología, etc.) y sus correspondientes sub áreas ( por ejemplo de cienciasnaturales las sub áreas de matemáticas, ciencias de la computación, ciencias físicas....)
+import datetime
 import pandas as pd
 class Proyecto:
     def __init__ (self, proyecto_id,fuente, titulo,fecha_inicio,fecha_fin,resumen,moneda_id,monto_total_solicitado,monto_total_adjudicado,monto_financiado_solicitado,monto_financiado_adjudicado,tipo_proyecto_id,codigo_identificacion,palabras_clave,estado_id,fondo_anpcyt,cantidad_miembros_F,cantidad_miembros_M,sexo_director):
         self.proyecto_id=proyecto_id
         self.fuente=fuente
         self.titulo=titulo
+        self.fecha_inicio = datetime.datetime.strptime(fecha_inicio, '%Y/%m/%d %H:%M:%S.%f')
+        if fecha_fin == "":
+            self.fecha_fin = ''
+        else: 
+            self.fecha_fin = datetime.datetime.strptime(fecha_fin, '%Y/%m/%d %H:%M:%S.%f')
         self.fecha_inicio=fecha_inicio
         self.fecha_fin=fecha_fin
         self.resumen=resumen
         self.moneda_id=moneda_id
-        self.monto_total_solicitado=monto_total_solicitado
-        self.monto_total_adjudicado=monto_total_adjudicado
-        self.monto_financiado_solicitado=monto_financiado_solicitado
-        self.monto_financiado_adjudicado=monto_financiado_adjudicado
+        self.monto_total_solicitado=float(monto_total_solicitado)
+        self.monto_total_adjudicado=float(monto_total_adjudicado)
+        self.monto_financiado_solicitado=float(monto_financiado_solicitado)
+        self.monto_financiado_adjudicado=float(monto_financiado_adjudicado)
         self.tipo_proyecto_id=tipo_proyecto_id
         self.codigo_identificacion=codigo_identificacion
         self.palabras_clave=palabras_clave
         self.estado_id=estado_id
         self.fondo_anpcyt=fondo_anpcyt
-        self.cantidad_miembros_F=cantidad_miembros_F
-        self.cantidad_miembros_M=cantidad_miembros_M
+        self.cantidad_miembros_F=int(cantidad_miembros_F)
+        self.cantidad_miembros_M=int(cantidad_miembros_M)
         self.sexo_director=sexo_director
 
 class Disciplina:
@@ -40,11 +45,15 @@ class Funcion:
         self.funcion_id=funcion_id
         self.funcion_descripcion=funcion_descripcion
 class Moneda:
-    def __init__(self,moneda_id,moneda_descripcion):
+    def __init__(self,moneda_id,moneda_descripcion,codigo_iso):
         self.moneda_id=moneda_id
         self.moneda_descripcion=moneda_descripcion
+        self.codigo_iso=codigo_iso
 class Tipo_proyecto:
-    def __init__(self,tipo_proyecto_id,tipo_proyecto_descripcion):
+    def __init__(self,id,sigla,descripcion,tipo_proyecto_id,tipo_proyecto_descripcion):
+        self.id=id
+        self.sigla=sigla
+        self.descripcion=descripcion
         self.tipo_proyecto_id=tipo_proyecto_id
         self.tipo_proyecto_descripcion=tipo_proyecto_descripcion    
 class Proyecto_disciplina:
@@ -78,7 +87,12 @@ class Cache:
         self.proyecto_participante=set()
         
     def cargar(self,año,proyecto_id,fuente, titulo,fecha_inicio,fecha_fin,resumen,moneda_id,monto_total_solicitado,monto_total_adjudicado,monto_financiado_solicitado,monto_financiado_adjudicado,tipo_proyecto_id,codigo_identificacion,palabras_clave,estado_id,fondo_anpcyt,cantidad_miembros_F,cantidad_miembros_M,sexo_director):
+        if cantidad_miembros_F=='':
+            cantidad_miembros_F=0
+        if cantidad_miembros_M=='':
+            cantidad_miembros_M=0
         proyecto=Proyecto(proyecto_id,fuente, titulo,fecha_inicio,fecha_fin,resumen,moneda_id,monto_total_solicitado,monto_total_adjudicado,monto_financiado_solicitado,monto_financiado_adjudicado,tipo_proyecto_id,codigo_identificacion,palabras_clave,estado_id,fondo_anpcyt,cantidad_miembros_F,cantidad_miembros_M,sexo_director)
+        
         if año==2015:
             self.proyec2015.add(proyecto)
             self.proyectotal.add(proyecto)
@@ -102,11 +116,11 @@ class Cache:
     def cargar_funcion(self,funcion_id,funcion_descripcion):
         funcion=Funcion(funcion_id,funcion_descripcion)
         self.ref_funcion.add(funcion)
-    def cargar_moneda(self,moneda_id,moneda_descripcion):
-        moneda=Moneda(moneda_id,moneda_descripcion)
+    def cargar_moneda(self,moneda_id,moneda_descripcion,codigo_iso):
+        moneda=Moneda(moneda_id,moneda_descripcion,codigo_iso)
         self.ref_moneda.add(moneda)
-    def cargar_tipo_proyecto(self,tipo_proyecto_id,tipo_proyecto_descripcion):
-        tipo_proyecto=Tipo_proyecto(tipo_proyecto_id,tipo_proyecto_descripcion)
+    def cargar_tipo_proyecto(self,id,sigla,descripcion,tipo_proyecto_id,tipo_proyecto_descripcion):
+        tipo_proyecto=Tipo_proyecto(id,sigla,descripcion,tipo_proyecto_id,tipo_proyecto_descripcion)
         self.ref_tipo_proyecto.add(tipo_proyecto)
     def cargar_proyecto_disciplina(self,proyecto_id,disciplina_id):
         proyecto_disciplina=Proyecto_disciplina(proyecto_id,disciplina_id)
@@ -115,3 +129,11 @@ class Cache:
         proyecto_participante=Proyecto_participante(proyecto_id,participante_id,funcion_id,fecha_inicio,fecha_fin)
         self.proyecto_participante.add(proyecto_participante)     
             
+
+     
+ 
+
+
+
+
+

@@ -14,6 +14,7 @@ class DiscoDuro():
         with open(carpeta,'r', newline='',encoding='utf-8') as csvfile: 
             # Crear un objeto lector CSV
             reader = csv.reader(csvfile, delimiter=';', quotechar='"')
+            next(reader)
             match carpeta:
                 case "proyectos_2015.csv":
                             
@@ -23,8 +24,8 @@ class DiscoDuro():
                         proyecto_id = row[0]
                         fuente = row[1]
                         titulo = row[2]
-                        fecha_inicio = row[3]
-                        fecha_fin = row[4]
+                        fecha_inicio=row[3]
+                        fecha_fin=row[4]
                         resumen = row[5]
                         moneda_id = row[6]
                         monto_total_solicitado = row[7]
@@ -48,8 +49,8 @@ class DiscoDuro():
                         proyecto_id = row[0]
                         fuente = row[1]
                         titulo = row[2]
-                        fecha_inicio = row[3]
-                        fecha_fin = row[4]
+                        fecha_inicio=row[3]
+                        fecha_fin=row[4]
                         resumen = row[5]
                         moneda_id = row[6]
                         monto_total_solicitado = row[7]
@@ -73,8 +74,8 @@ class DiscoDuro():
                         proyecto_id = row[0]
                         fuente = row[1]
                         titulo = row[2]
-                        fecha_inicio = row[3]
-                        fecha_fin = row[4]
+                        fecha_inicio=row[3]
+                        fecha_fin=row[4]
                         resumen = row[5]
                         moneda_id = row[6]
                         monto_total_solicitado = row[7]
@@ -98,8 +99,8 @@ class DiscoDuro():
                         proyecto_id = row[0]
                         fuente = row[1]
                         titulo = row[2]
-                        fecha_inicio = row[3]
-                        fecha_fin = row[4]
+                        fecha_inicio=row[3]
+                        fecha_fin=row[4]
                         resumen = row[5]
                         moneda_id = row[6]
                         monto_total_solicitado = row[7]
@@ -147,15 +148,19 @@ class DiscoDuro():
                         # Extraigo la informacion de cada fila de las monedas
                         moneda_id=row[0]
                         moneda_descripcion=row[1]
+                        codigo_iso=row[2]
                         from GUI import instance
-                        instance.backend.cache.cargar_moneda(moneda_id,moneda_descripcion)
+                        instance.backend.cache.cargar_moneda(moneda_id,moneda_descripcion,codigo_iso)
                 case "ref_tipo_proyecto.csv":
                     for row in reader:
                         # Extraigo la informacion de cada fila de los tipos de proyectos
-                        tipo_proyecto_id=row[0]
-                        tipo_proyecto_descripcion=row[1]
+                        id=row[0]
+                        sigla=row[1]
+                        descripcion=row[2]
+                        tipo_proyecto_id=row[3]
+                        tipo_proyecto_descripcion=row[4]
                         from GUI import instance
-                        instance.backend.cache.cargar_tipo_proyecto(tipo_proyecto_id,tipo_proyecto_descripcion)
+                        instance.backend.cache.cargar_tipo_proyecto(id,sigla,descripcion,tipo_proyecto_id,tipo_proyecto_descripcion)
                 case "proyecto_disciplina.csv":
                     for row in reader:
                         # Extraigo la informacion de cada fila de los proyectos y sus disciplinas
