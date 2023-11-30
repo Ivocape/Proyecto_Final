@@ -41,7 +41,7 @@ class DiscoDuro():
                         cantidad_miembros_M = row[17]
                         sexo_director = row[18]
                         from GUI import instance
-                        instance.cache.cargar(año,proyecto_id,fuente, titulo,fecha_inicio,fecha_fin,resumen,moneda_id,monto_total_solicitado,monto_total_adjudicado,monto_financiado_solicitado,monto_financiado_adjudicado,tipo_proyecto_id,codigo_identificacion,palabras_clave,estado_id,fondo_anpcyt,cantidad_miembros_F,cantidad_miembros_M,sexo_director)
+                        instance.backend.cache.cargar(año,proyecto_id,fuente, titulo,fecha_inicio,fecha_fin,resumen,moneda_id,monto_total_solicitado,monto_total_adjudicado,monto_financiado_solicitado,monto_financiado_adjudicado,tipo_proyecto_id,codigo_identificacion,palabras_clave,estado_id,fondo_anpcyt,cantidad_miembros_F,cantidad_miembros_M,sexo_director)
                 case "proyectos_2016.csv":
                     for row in reader:
                         # Extraigo la informacion de cada fila de los proyectos del 2016
@@ -66,7 +66,7 @@ class DiscoDuro():
                         cantidad_miembros_M = row[17]
                         sexo_director = row[18]
                         from GUI import instance
-                        instance.cache.cargar(año,proyecto_id,fuente, titulo,fecha_inicio,fecha_fin,resumen,moneda_id,monto_total_solicitado,monto_total_adjudicado,monto_financiado_solicitado,monto_financiado_adjudicado,tipo_proyecto_id,codigo_identificacion,palabras_clave,estado_id,fondo_anpcyt,cantidad_miembros_F,cantidad_miembros_M,sexo_director)
+                        instance.backend.cache.cargar(año,proyecto_id,fuente, titulo,fecha_inicio,fecha_fin,resumen,moneda_id,monto_total_solicitado,monto_total_adjudicado,monto_financiado_solicitado,monto_financiado_adjudicado,tipo_proyecto_id,codigo_identificacion,palabras_clave,estado_id,fondo_anpcyt,cantidad_miembros_F,cantidad_miembros_M,sexo_director)
                 case "proyectos_2017.csv":
                     for row in reader:
                         # Extraigo la informacion de cada fila de los proyectos del 2017
@@ -91,7 +91,7 @@ class DiscoDuro():
                         cantidad_miembros_M = row[17]
                         sexo_director = row[18]
                         from GUI import instance
-                        instance.cache.cargar(año,proyecto_id,fuente, titulo,fecha_inicio,fecha_fin,resumen,moneda_id,monto_total_solicitado,monto_total_adjudicado,monto_financiado_solicitado,monto_financiado_adjudicado,tipo_proyecto_id,codigo_identificacion,palabras_clave,estado_id,fondo_anpcyt,cantidad_miembros_F,cantidad_miembros_M,sexo_director)
+                        instance.backend.cache.cargar(año,proyecto_id,fuente, titulo,fecha_inicio,fecha_fin,resumen,moneda_id,monto_total_solicitado,monto_total_adjudicado,monto_financiado_solicitado,monto_financiado_adjudicado,tipo_proyecto_id,codigo_identificacion,palabras_clave,estado_id,fondo_anpcyt,cantidad_miembros_F,cantidad_miembros_M,sexo_director)
                 case "proyectos_2018.csv":
                     for row in reader:
                         # Extraigo la informacion de cada fila de los proyectos del 2018
@@ -116,7 +116,7 @@ class DiscoDuro():
                         cantidad_miembros_M = row[17]
                         sexo_director = row[18]
                         from GUI import instance
-                        instance.cache.cargar(año,proyecto_id,fuente, titulo,fecha_inicio,fecha_fin,resumen,moneda_id,monto_total_solicitado,monto_total_adjudicado,monto_financiado_solicitado,monto_financiado_adjudicado,tipo_proyecto_id,codigo_identificacion,palabras_clave,estado_id,fondo_anpcyt,cantidad_miembros_F,cantidad_miembros_M,sexo_director)
+                        instance.backend.cache.cargar(año,proyecto_id,fuente, titulo,fecha_inicio,fecha_fin,resumen,moneda_id,monto_total_solicitado,monto_total_adjudicado,monto_financiado_solicitado,monto_financiado_adjudicado,tipo_proyecto_id,codigo_identificacion,palabras_clave,estado_id,fondo_anpcyt,cantidad_miembros_F,cantidad_miembros_M,sexo_director)
                 case "ref_disciplina.csv":
                     for row in reader:
                         # Extraigo la informacion de cada fila de las disciplinas
@@ -128,21 +128,21 @@ class DiscoDuro():
                         disciplina_codigo=row[5]
                         disciplina_descripcion=row[6]
                         from GUI import instance
-                        instance.cache.cargar_disciplina(disciplina_id,gran_area_codigo,gran_area_descripcion,area_codigo,area_descripcion,disciplina_codigo,disciplina_descripcion)
+                        instance.backend.cache.cargar_disciplina(disciplina_id,gran_area_codigo,gran_area_descripcion,area_codigo,area_descripcion,disciplina_codigo,disciplina_descripcion)
                 case "ref_estado_proyecto.csv":
                     for row in reader:
                         # Extraigo la informacion de cada fila de los estados de los proyectos
                         estado_id=row[0]
                         estado_descripcion=row[1]
                         from GUI import instance
-                        instance.cache.cargar_estado_proyecto(estado_id,estado_descripcion)
+                        instance.backend.cache.cargar_estado_proyecto(estado_id,estado_descripcion)
                 case "ref_funcion.csv":
                     for row in reader:
                         # Extraigo la informacion de cada fila de las funciones
                         funcion_id=row[0]
                         funcion_descripcion=row[1]
                         from GUI import instance
-                        instance.cache.cargar_funcion(funcion_id,funcion_descripcion)
+                        instance.backend.cache.cargar_funcion(funcion_id,funcion_descripcion)
                 case "ref_moneda.csv":
                     for row in reader:
                         # Extraigo la informacion de cada fila de las monedas
@@ -150,7 +150,7 @@ class DiscoDuro():
                         moneda_descripcion=row[1]
                         codigo_iso=row[2]
                         from GUI import instance
-                        instance.cache.cargar_moneda(moneda_id,moneda_descripcion,codigo_iso)
+                        instance.backend.cache.cargar_moneda(moneda_id,moneda_descripcion,codigo_iso)
                 case "ref_tipo_proyecto.csv":
                     for row in reader:
                         # Extraigo la informacion de cada fila de los tipos de proyectos
@@ -160,14 +160,14 @@ class DiscoDuro():
                         tipo_proyecto_id=row[3]
                         tipo_proyecto_descripcion=row[4]
                         from GUI import instance
-                        instance.cache.cargar_tipo_proyecto(id,sigla,descripcion,tipo_proyecto_id,tipo_proyecto_descripcion)
+                        instance.backend.cache.cargar_tipo_proyecto(id,sigla,descripcion,tipo_proyecto_id,tipo_proyecto_descripcion)
                 case "proyecto_disciplina.csv":
                     for row in reader:
                         # Extraigo la informacion de cada fila de los proyectos y sus disciplinas
                         proyecto_id=row[0]
                         disciplina_id=row[1]
                         from GUI import instance
-                        instance.cache.cargar_proyecto_disciplina(proyecto_id,disciplina_id)
+                        instance.backend.cache.cargar_proyecto_disciplina(proyecto_id,disciplina_id)
                 case "proyecto_participante.csv":
                     for row in reader:
                         # Extraigo la informacion de cada fila de los proyectos y sus participantes
@@ -177,4 +177,4 @@ class DiscoDuro():
                         fecha_inicio=row[3]
                         fecha_fin=row[4]
                         from GUI import instance
-                        instance.cache.cargar_proyecto_participante(proyecto_id,persona_id,funcion_id,fecha_inicio,fecha_fin)
+                        instance.backend.cache.cargar_proyecto_participante(proyecto_id,persona_id,funcion_id,fecha_inicio,fecha_fin)
