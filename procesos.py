@@ -31,23 +31,51 @@ class Disciplina:
         self.area_descripcion=area_descripcion
         self.disciplina_codigo=disciplina_codigo
         self.disciplina_descripcion=disciplina_descripcion
-                       
+class Estado_proyecto:
+    def __init__(self,estado_id,estado_descripcion):
+        self.estado_id=estado_id
+        self.estado_descripcion=estado_descripcion
+class Funcion:
+    def __init__(self,funcion_id,funcion_descripcion):
+        self.funcion_id=funcion_id
+        self.funcion_descripcion=funcion_descripcion
+class Moneda:
+    def __init__(self,moneda_id,moneda_descripcion):
+        self.moneda_id=moneda_id
+        self.moneda_descripcion=moneda_descripcion
+class Tipo_proyecto:
+    def __init__(self,tipo_proyecto_id,tipo_proyecto_descripcion):
+        self.tipo_proyecto_id=tipo_proyecto_id
+        self.tipo_proyecto_descripcion=tipo_proyecto_descripcion    
+class Proyecto_disciplina:
+    def __init__(self,proyecto_id,disciplina_id):
+        self.proyecto_id=proyecto_id
+        self.disciplina_id=disciplina_id
+class Proyecto_participante:
+    def __init__(self,proyecto_id,participante_id,funcion_id,fecha_inicio,fecha_fin):
+        self.proyecto_id=proyecto_id
+        self.participante_id=participante_id
+        self.funcion_id=funcion_id
+        self.fecha_inicio=fecha_inicio
+        self.fecha_fin=fecha_fin
+        
+       
 
 
 class Cache:
     def __init__(self):
-        self.proyec2015={}
-        self.proyec2016={}
-        self.proyec2017={}
-        self.proyec2018={}
-        self.proyectotal={}
-        self.ref_disciplina={}
-        self.ref_estado_proyecto={}
-        self.ref_funcion={}
-        self.ref_moneda={}
-        self.ref_tipo_proyecto={}
-        self.proyecto_disciplina={}
-        self.proyecto_participante={}
+        self.proyec2015=set()
+        self.proyec2016=set()
+        self.proyec2017=set()
+        self.proyec2018=set()
+        self.proyectotal=set()
+        self.ref_disciplina=set()
+        self.ref_estado_proyecto=set()
+        self.ref_funcion=set()
+        self.ref_moneda=set()
+        self.ref_tipo_proyecto=set()
+        self.proyecto_disciplina=set()
+        self.proyecto_participante=set()
         
     def cargar(self,año,proyecto_id,fuente, titulo,fecha_inicio,fecha_fin,resumen,moneda_id,monto_total_solicitado,monto_total_adjudicado,monto_financiado_solicitado,monto_financiado_adjudicado,tipo_proyecto_id,codigo_identificacion,palabras_clave,estado_id,fondo_anpcyt,cantidad_miembros_F,cantidad_miembros_M,sexo_director):
         proyecto=Proyecto(proyecto_id,fuente, titulo,fecha_inicio,fecha_fin,resumen,moneda_id,monto_total_solicitado,monto_total_adjudicado,monto_financiado_solicitado,monto_financiado_adjudicado,tipo_proyecto_id,codigo_identificacion,palabras_clave,estado_id,fondo_anpcyt,cantidad_miembros_F,cantidad_miembros_M,sexo_director)
@@ -69,15 +97,21 @@ class Cache:
         disciplina=Disciplina(disciplina_id,gran_area_codigo,gran_area_descripcion,area_codigo,area_descripcion,disciplina_codigo,disciplina_descripcion)
         self.ref_disciplina.add(disciplina)   
     def cargar_estado_proyecto(self,estado_id,estado_descripcion):
-        self.ref_estado_proyecto.add(estado_id,estado_descripcion)
+        estado=Estado_proyecto(estado_id,estado_descripcion)
+        self.ref_estado_proyecto.add(estado)
     def cargar_funcion(self,funcion_id,funcion_descripcion):
-        self.ref_funcion.add(funcion_id,funcion_descripcion)
+        funcion=Funcion(funcion_id,funcion_descripcion)
+        self.ref_funcion.add(funcion)
     def cargar_moneda(self,moneda_id,moneda_descripcion):
-        self.ref_moneda.add(moneda_id,moneda_descripcion)
+        moneda=Moneda(moneda_id,moneda_descripcion)
+        self.ref_moneda.add(moneda)
     def cargar_tipo_proyecto(self,tipo_proyecto_id,tipo_proyecto_descripcion):
-        self.ref_tipo_proyecto.add(tipo_proyecto_id,tipo_proyecto_descripcion)
+        tipo_proyecto=Tipo_proyecto(tipo_proyecto_id,tipo_proyecto_descripcion)
+        self.ref_tipo_proyecto.add(tipo_proyecto)
     def cargar_proyecto_disciplina(self,proyecto_id,disciplina_id):
-        self.proyecto_disciplina.add(proyecto_id,disciplina_id)
-    def cargar_proyecto_participante(self,proyecto_id,participante_id):
-        self.proyecto_participante.add(proyecto_id,participante_id)     
+        proyecto_disciplina=Proyecto_disciplina(proyecto_id,disciplina_id)
+        self.proyecto_disciplina.add(proyecto_disciplina)
+    def cargar_proyecto_participante(self,proyecto_id,participante_id,funcion_id,fecha_inicio,fecha_fin):
+        proyecto_participante=Proyecto_participante(proyecto_id,participante_id,funcion_id,fecha_inicio,fecha_fin)
+        self.proyecto_participante.add(proyecto_participante)     
             
