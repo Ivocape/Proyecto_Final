@@ -42,6 +42,8 @@ class HistogramGUI:
         self.button = Button(self.frame, text="Financiamiento Solicitado/Otorgado", command=self.histogramas.show_histogram)
         self.button.pack()
 
+        self.button = Button(self.frame, text="Salir", command=self.root.destroy)
+
     def setup(self):
 
         listacsv=['proyectos_2015.csv','proyectos_2016.csv','proyectos_2017.csv','proyectos_2018.csv','proyecto_disciplina.csv','proyecto_participante.csv','ref_disciplina.csv','ref_estado_proyecto.csv','ref_funcion.csv','ref_moneda.csv','ref_tipo_proyecto.csv']
