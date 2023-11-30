@@ -49,9 +49,6 @@ class GUI:
         self.boton7.place(relx=0.5, rely=0.9, anchor="center")  # Posiciona el botón en el centro
         self.aplicar_efecto_brillo(self.boton7)
         
-    def toggle_fullscreen(window):
-        window.attributes("-fullscreen", True)
-
     def on_button_click(self):
         print("Botón clickeado")
 
