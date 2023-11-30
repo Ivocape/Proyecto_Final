@@ -147,8 +147,17 @@ class Analisis:
                         if proyecto_disciplina.disciplina_id==id_disciplina:
                             cantidad+=1
             print("La cantidad de proyectos en el gran area",area,"es:",cantidad)
+            return cantidad
+            
 
-    
+    def cantidad_proyectos_total_areas(self):
+        from GUI import instance
+        cantidadxarea=[]
+        areas=set(disciplina.area_descripcion.upper() for disciplina in instance.cache.ref_disciplina)
+        for area in areas:
+            
+            cantidadxarea.append(self.cantidad_proyectos_area(area))
+            
     def tiempo_promedio_proyectos_area(self,area): #Visualizar el tiempo promedio de terminación de los proyectos según el área al que pertenecen.
         from GUI import instance
         
