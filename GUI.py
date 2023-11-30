@@ -33,7 +33,7 @@ class HistogramGUI:
             self.discoDuro.leerSETUP(carpeta)
         
     def run(self):
-        self.analisis.lista_proyectos_fecha()
+        self.root.mainloop()
             
 instance=HistogramGUI()
 #instance.setup()
