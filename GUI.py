@@ -3,6 +3,7 @@ from tkinter import Tk, Frame, Canvas, Button
 from procesos import *
 from discoDuro import *
 from menus import *
+from analisis import *
 from histogramas import *
 from tkinter import *
   
@@ -12,6 +13,7 @@ class HistogramGUI:
         self.discoDuro=DiscoDuro()
         self.cache=Cache()
         self.histogramas=histogramas()
+        self.analisis=Analisis()
     
         self.root = Tk()
         self.root.title("Histograma")
@@ -31,7 +33,7 @@ class HistogramGUI:
             self.discoDuro.leerSETUP(carpeta)
         
     def run(self):
-        self.root.mainloop()
+        self.analisis.lista_proyectos_fecha()
             
 instance=HistogramGUI()
 #instance.setup()

@@ -171,11 +171,3 @@ class DiscoDuro():
                         funcion_id=row[2]
                         from GUI import instance
                         instance.cache.cargar_proyecto_participante(proyecto_id,persona_id,funcion_id)
-
-def escribir(self, carpeta,**kwargs):
-    match carpeta:
-        case 'proyectos_fecha.csv':
-            with open(carpeta,'a', newline='') as csvfile:
-                writer = csv.writer(csvfile, delimiter=';', quotechar='"')
-                for proyecto in self.proyectotal:
-                    writer.writerow([proyecto.proyecto_id,proyecto.fecha_inicio]) ########NO USO EL KWARGS PERO NO SE SI ASI VOY A PODER USAR EL MISMO METODO PARA EL RESTO DE LAS COSAS QUE TENGA QUE ESCRIBIR####
