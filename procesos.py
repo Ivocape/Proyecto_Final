@@ -204,5 +204,14 @@ class Analisis:
             lista.append((proyecto.monto_financiado_adjudicado*100)/proyecto.monto_financiado_solicitado)
         print(lista)
 
-#Visualizar el porcentaje de proyectos que han utilizado tecnologías emergentes (Tecnología e innovación).
 
+# Visualizar el porcentaje de proyectos que han utilizado tecnologías emergentes (Tecnología e innovación)
+    def porcentaje_proyectos_tecnologia(self):
+        cantidad=0
+        from GUI import cache
+        for proyecto in self.proyectotal:
+            if proyecto.tipo_proyecto_id==1:
+                cantidad+=1
+        total=len(self.proyectotal)
+        porcentaje=(cantidad*100)/total
+        print("El porcentaje de proyectos de tecnologia es: ",porcentaje)
