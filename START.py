@@ -1,3 +1,3 @@
-from GUI import instance
-instance.setup()
+from prueba import instance
+#instance.setup()
 instance.run()
