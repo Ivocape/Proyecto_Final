@@ -1,3 +1,4 @@
+#Mostrar la distribución de los proyectos por área de investigación (por ejemplo, ciencias sociales,ciencias naturales, tecnología, etc.) y sus correspondientes sub áreas ( por ejemplo de cienciasnaturales las sub áreas de matemáticas, ciencias de la computación, ciencias físicas....)
 import pandas as pd
 class Proyecto:
     def __init__ (self, proyecto_id,fuente, titulo,fecha_inicio,fecha_fin,resumen,moneda_id,monto_total_solicitado,monto_total_adjudicado,monto_financiado_solicitado,monto_financiado_adjudicado,tipo_proyecto_id,codigo_identificacion,palabras_clave,estado_id,fondo_anpcyt,cantidad_miembros_F,cantidad_miembros_M,sexo_director):
@@ -196,5 +197,12 @@ class Analisis:
         promedio=sum(lista)/len(lista)
         print("El tiempo promedio de terminacion de los proyectos del area ",area," es: ",promedio) 
 
+#Visualizar que porcentaje del monto de financiamiento solicitado efectivamente se le otorgó, segun el monto financiado adjudicado por proyecto. quiero el porcentaje de cada proyecto, no el promedio.
+    def porcentaje_monto_financiamiento(self):
+        lista=[]
+        for proyecto in self.proyectotal:
+            lista.append((proyecto.monto_financiado_adjudicado*100)/proyecto.monto_financiado_solicitado)
+        print(lista)
 
+#Visualizar el porcentaje de proyectos que han utilizado tecnologías emergentes (Tecnología e innovación).
 
