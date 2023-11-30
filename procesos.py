@@ -84,7 +84,7 @@ class Cache:
 class Analisis:
     def __init__(self):
         pass
-    ##########CAMBIAR TATI#############
+
     #Visualizar el porcentaje de participación de las mujeres en los diferentes proyectos según el rol que desempeñan versus la participación de los hombres.
     def porcentaje_participacion_generos(self):
         cantidad_mujeres=0
@@ -98,6 +98,24 @@ class Analisis:
         print("El porcentaje de mujeres es: ",porcentaje_mujeres)
         print("El porcentaje de hombres es: ",porcentaje_hombres)
         
+        #Visualizar el porcentaje de participación de las mujeres en los diferentes proyectos según el gran area en el que estan versus la participación de los hombres.
+    def porcentaje_participacion_gran_areas(self,gran_area):    
+        cantidad_mujeres=0
+        cantidad_hombres=0
+        from GUI import cache
+        for disciplina in self.ref_disciplina:
+            if disciplina.gran_area_descripcion==gran_area:
+                id_disciplina=disciplina.disciplina_id
+        for proyecto in self.proyectotal:
+            if proyecto.tipo_proyecto_id==id_disciplina:
+                cantidad_mujeres+=proyecto.cantidad_miembros_F
+                cantidad_hombres+=proyecto.cantidad_miembros_M
+        total=cantidad_mujeres+cantidad_hombres
+        porcentaje_mujeres=(cantidad_mujeres*100)/total
+        porcentaje_hombres=(cantidad_hombres*100)/total
+        print("El porcentaje de mujeres es: ",porcentaje_mujeres)
+        print("El porcentaje de hombres es: ",porcentaje_hombres)
+
     def porcentaje_participacion_areas(self,area):
         #Visualizar el porcentaje de participación de las mujeres en los diferentes proyectos según el area de investigación que desempeñan versus la participación de los hombres.
         cantidad_mujeres=0
@@ -115,15 +133,31 @@ class Analisis:
         porcentaje_hombres=(cantidad_hombres*100)/total
         print("El porcentaje de mujeres es: ",porcentaje_mujeres)
         print("El porcentaje de hombres es: ",porcentaje_hombres)
+
+#Visualizar el porcentaje de participación de las mujeres en los diferentes proyectos según la discplina versus la participación de lso hombres.
+    def porcentaje_participacion_disciplinas(self,disciplina):
+        cantidad_mujeres=0
+        cantidad_hombres=0
+        from GUI import cache
+        for disciplina in self.ref_disciplina:
+            if disciplina.disciplina_descripcion==disciplina:
+                id_disciplina=disciplina.disciplina_id
+        for proyecto in self.proyectotal:
+            if proyecto.tipo_proyecto_id==id_disciplina:
+                cantidad_mujeres+=proyecto.cantidad_miembros_F
+                cantidad_hombres+=proyecto.cantidad_miembros_M
+        total=cantidad_mujeres+cantidad_hombres
+        porcentaje_mujeres=(cantidad_mujeres*100)/total
+        porcentaje_hombres=(cantidad_hombres*100)/total
+        print("El porcentaje de mujeres es: ",porcentaje_mujeres)
+        print("El porcentaje de hombres es: ",porcentaje_hombres)
+    
     #guardar y visualizar una lista de proyectos y la fecha de inicio por la fecha de iniciación del proyecto creciente.
     def lista_proyectos_fecha(self):
         lista=[]
         for proyecto in self.proyectotal:
             lista.append((proyecto.fecha_inicio,proyecto.titulo))
         lista.sort()
-        #escribo en el csv 'proyectos_fecha.csv' usando el metodo escribir de discoDuro
-        carpeta= 'proyectos_fecha.csv'
-        instance.DiscoDuro.escribir(carpeta,lista)  #######NO SE QUE PASA CON EL INSTANCE#######
         print(lista)
 
 
