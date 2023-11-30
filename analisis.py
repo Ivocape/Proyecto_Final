@@ -1,7 +1,7 @@
 class Analisis:
     def __init__(self):
         pass
-
+    ##########CAMBIAR TATI#############
 
     def porcentaje_participacion_generos(self):    #Visualizar el porcentaje de participación de las mujeres en los diferentes proyectos según el rol que desempeñan versus la participación de los hombres.
         cantidad_mujeres=0
@@ -49,14 +49,14 @@ class Analisis:
     def porcentaje_participacion_areas(self,area):#Visualizar el porcentaje de participación de las mujeres en los diferentes proyectos según el  area versus la participación de los hombres.
         from GUI import instance
         
-        areas=set(disciplina.area_descripcion.upper() for disciplina in instance.backend.cache.ref_disciplina)
+        areas=set(disciplina.area_descripcion.upper() for disciplina in instance.cache.ref_disciplina)
         if area.upper() not in areas:
             print('El area ingresada no es válida.')
         else:
             cantidad_mujeres=0
             cantidad_hombres=0
             
-            for disciplina in instance.backend.cache.ref_disciplina:
+            for disciplina in instance.cache.ref_disciplina:
                 if disciplina.area_descripcion.upper() ==area.upper():
                     id_disciplina=disciplina.disciplina_id
                     for proyecto_disciplina in instance.cache.proyecto_disciplina:
@@ -78,7 +78,7 @@ class Analisis:
     def porcentaje_participacion_disciplinas(self,disciplinafiltrar):#Visualizar el porcentaje de participación de las mujeres en los diferentes proyectos según la disciplina versus la participación de los hombres.
         from GUI import instance
         
-        disciplinas=[disciplina.disciplina_descripcion.upper() for disciplina in instance.backend.cache.ref_disciplina]
+        disciplinas=[disciplina.disciplina_descripcion.upper() for disciplina in instance.cache.ref_disciplina]
         if disciplinafiltrar.upper() not in disciplinas:
             print("El área ingresada no es válida.")
         else:
@@ -117,7 +117,7 @@ class Analisis:
     def cantidad_proyectos_gran_area(self,gran_area):# cantidad de proyectos por gran area
         from GUI import instance
         
-        gran_areas=[disciplina.gran_area_descripcion.upper() for disciplina in instance.backend.cache.ref_disciplina]
+        gran_areas=[disciplina.gran_area_descripcion.upper() for disciplina in instance.cache.ref_disciplina]
         if gran_area.upper() not in gran_areas:
             print("El gran area ingresada no es válida.")
         else:
@@ -156,7 +156,17 @@ class Analisis:
         areas=set(disciplina.area_descripcion.upper() for disciplina in instance.cache.ref_disciplina)
         for area in areas:
             
-            cantidadxarea.append(self.cantidad_proyectos_area(area))
+            cantidadxarea.append((area,self.cantidad_proyectos_area(area)))
+            
+    def gran_area_mas_proyectos(self):
+        from GUI import instance
+        listaareas=[]
+        for proyecto in instance.backend.cache.proyectotal:
+            for disciplina in instance.backend.cache.ref_disciplina:
+                if proyecto.disciplina_id==disciplina.disciplina_id:
+                    listaareas.append(disciplina.gran_area_descripcion)
+        return listaareas
+                    
             
     def tiempo_promedio_proyectos_area(self,area): #Visualizar el tiempo promedio de terminación de los proyectos según el área al que pertenecen.
         from GUI import instance
