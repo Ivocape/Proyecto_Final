@@ -33,7 +33,8 @@ class HistogramGUI:
             self.discoDuro.leerSETUP(carpeta)
         
     def run(self):
-        self.root.mainloop()
+        #self.root.mainloop()
+        self.analisis.porcentaje_proyectos_tecnologia()
             
 instance=HistogramGUI()
 instance.setup()
