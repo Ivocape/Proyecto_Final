@@ -1,6 +1,4 @@
 import matplotlib.pyplot as plt
-from procesos import *
-
 class histogramas():
     def __init__(self):
       pass
