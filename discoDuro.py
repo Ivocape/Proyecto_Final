@@ -11,7 +11,7 @@ class DiscoDuro():
 
     def leerSETUP (self, carpeta):    
         # Abrir el archivo CSV
-        with open(carpeta,'r', newline='') as csvfile: 
+        with open(carpeta,'r', newline='',encoding='utf-8') as csvfile: 
             # Crear un objeto lector CSV
             reader = csv.reader(csvfile, delimiter=';', quotechar='"')
             match carpeta:
@@ -169,5 +169,7 @@ class DiscoDuro():
                         proyecto_id=row[0]
                         persona_id=row[1]
                         funcion_id=row[2]
+                        fecha_inicio=row[3]
+                        fecha_fin=row[4]
                         from GUI import instance
-                        instance.cache.cargar_proyecto_participante(proyecto_id,persona_id,funcion_id)
+                        instance.cache.cargar_proyecto_participante(proyecto_id,persona_id,funcion_id,fecha_inicio,fecha_fin)

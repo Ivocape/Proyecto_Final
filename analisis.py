@@ -21,7 +21,7 @@ class Analisis:
         cantidad_mujeres=0
         cantidad_hombres=0
         from GUI import instance
-        for disciplina in self.ref_disciplina:
+        for disciplina in instance.cache.ref_disciplina:
             if disciplina.disciplina_descripcion==area:
                 id_disciplina=disciplina.disciplina_id
         for proyecto in instance.cache.proyectotal:
