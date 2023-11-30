@@ -21,7 +21,7 @@ class HistogramGUI:
         self.frame = Frame(self.root)
         self.frame.pack()
 
-        self.canvas = Canvas(self.frame, width=400, height=300)
+        self.canvas = Canvas(self.frame, width=70, height=300)
         self.canvas.pack()
 
         self.button = Button(self.frame, text="distribución de los proyectos por área de investigación", command=self.histogramas.show_histogram)
@@ -42,7 +42,8 @@ class HistogramGUI:
         self.button = Button(self.frame, text="Financiamiento Solicitado/Otorgado", command=self.histogramas.show_histogram)
         self.button.pack()
 
-        self.button = Button(self.frame, text="Salir", command=self.root.destroy)
+        self.button = Button(self.frame, text="Cerrar", command=self.root.destroy)
+        self.button.pack()
 
     def setup(self):
 
