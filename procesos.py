@@ -20,7 +20,18 @@ class Proyecto:
         self.fondo_anpcyt=fondo_anpcyt
         self.cantidad_miembros_F=cantidad_miembros_F
         self.cantidad_miembros_M=cantidad_miembros_M
-        self.sexo_director=sexo_director                        
+        self.sexo_director=sexo_director
+
+class Disciplina:
+    def __init__(self,disciplina_id,gran_area_codigo,gran_area_descripcion,area_codigo,area_descripcion,disciplina_codigo,disciplina_descripcion):
+        self.disciplina_id=disciplina_id
+        self.gran_area_codigo=gran_area_codigo
+        self.gran_area_descripcion=gran_area_descripcion
+        self.area_codigo=area_codigo
+        self.area_descripcion=area_descripcion
+        self.disciplina_codigo=disciplina_codigo
+        self.disciplina_descripcion=disciplina_descripcion
+                       
 
 
 class Cache:
@@ -29,6 +40,7 @@ class Cache:
         self.proyec2016={}
         self.proyec2017={}
         self.proyec2018={}
+        self.proyectotal={}
         self.ref_disciplina={}
         self.ref_estado_proyecto={}
         self.ref_funcion={}
@@ -41,12 +53,78 @@ class Cache:
         proyecto=Proyecto(proyecto_id,fuente, titulo,fecha_inicio,fecha_fin,resumen,moneda_id,monto_total_solicitado,monto_total_adjudicado,monto_financiado_solicitado,monto_financiado_adjudicado,tipo_proyecto_id,codigo_identificacion,palabras_clave,estado_id,fondo_anpcyt,cantidad_miembros_F,cantidad_miembros_M,sexo_director)
         if año==2015:
             self.proyec2015.add(proyecto)
+            self.proyectotal.add(proyecto)
         elif año==2016:
             self.proyec2016.add(proyecto)
+            self.proyectotal.add(proyecto)
         elif año==2017:
             self.proyec2017.add(proyecto)
+            self.proyectotal.add(proyecto)
         elif año==2018:
             self.proyec2018.add(proyecto)
+            self.proyectotal.add(proyecto)
         else:
             print("Año incorrecto")
+    def cargar_disciplina(self,disciplina_id,gran_area_codigo,gran_area_descripcion,area_codigo,area_descripcion,disciplina_codigo,disciplina_descripcion):
+        disciplina=Disciplina(disciplina_id,gran_area_codigo,gran_area_descripcion,area_codigo,area_descripcion,disciplina_codigo,disciplina_descripcion)
+        self.ref_disciplina.add(disciplina)   
+    def cargar_estado_proyecto(self,estado_id,estado_descripcion):
+        self.ref_estado_proyecto.add(estado_id,estado_descripcion)
+    def cargar_funcion(self,funcion_id,funcion_descripcion):
+        self.ref_funcion.add(funcion_id,funcion_descripcion)
+    def cargar_moneda(self,moneda_id,moneda_descripcion):
+        self.ref_moneda.add(moneda_id,moneda_descripcion)
+    def cargar_tipo_proyecto(self,tipo_proyecto_id,tipo_proyecto_descripcion):
+        self.ref_tipo_proyecto.add(tipo_proyecto_id,tipo_proyecto_descripcion)
+    def cargar_proyecto_disciplina(self,proyecto_id,disciplina_id):
+        self.proyecto_disciplina.add(proyecto_id,disciplina_id)
+    def cargar_proyecto_participante(self,proyecto_id,participante_id):
+        self.proyecto_participante.add(proyecto_id,participante_id)     
             
+class Analisis:
+    def __init__(self):
+        pass
+    ##########CAMBIAR TATI#############
+    #Visualizar el porcentaje de participación de las mujeres en los diferentes proyectos según el rol que desempeñan versus la participación de los hombres.
+    def porcentaje_participacion_generos(self):
+        cantidad_mujeres=0
+        cantidad_hombres=0
+        for proyecto in self.proyectotal:
+            cantidad_mujeres+=proyecto.cantidad_miembros_F
+            cantidad_hombres+=proyecto.cantidad_miembros_M
+        total=cantidad_mujeres+cantidad_hombres
+        porcentaje_mujeres=(cantidad_mujeres*100)/total
+        porcentaje_hombres=(cantidad_hombres*100)/total
+        print("El porcentaje de mujeres es: ",porcentaje_mujeres)
+        print("El porcentaje de hombres es: ",porcentaje_hombres)
+        
+    def porcentaje_participacion_areas(self,area):
+        #Visualizar el porcentaje de participación de las mujeres en los diferentes proyectos según el area de investigación que desempeñan versus la participación de los hombres.
+        cantidad_mujeres=0
+        cantidad_hombres=0
+        from GUI import cache
+        for disciplina in self.ref_disciplina:
+            if disciplina.disciplina_descripcion==area:
+                id_disciplina=disciplina.disciplina_id
+        for proyecto in self.proyectotal:
+            if proyecto.tipo_proyecto_id==id_disciplina:
+                cantidad_mujeres+=proyecto.cantidad_miembros_F
+                cantidad_hombres+=proyecto.cantidad_miembros_M
+        total=cantidad_mujeres+cantidad_hombres
+        porcentaje_mujeres=(cantidad_mujeres*100)/total
+        porcentaje_hombres=(cantidad_hombres*100)/total
+        print("El porcentaje de mujeres es: ",porcentaje_mujeres)
+        print("El porcentaje de hombres es: ",porcentaje_hombres)
+    #guardar y visualizar una lista de proyectos y la fecha de inicio por la fecha de iniciación del proyecto creciente.
+    def lista_proyectos_fecha(self):
+        lista=[]
+        for proyecto in self.proyectotal:
+            lista.append((proyecto.fecha_inicio,proyecto.titulo))
+        lista.sort()
+        #escribo en el csv 'proyectos_fecha.csv' usando el metodo escribir de discoDuro
+        carpeta= 'proyectos_fecha.csv'
+        instance.DiscoDuro.escribir(carpeta,lista)  #######NO SE QUE PASA CON EL INSTANCE#######
+        print(lista)
+
+
+  
