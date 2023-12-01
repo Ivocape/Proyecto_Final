@@ -1,20 +1,26 @@
+from histogramas import *
 class Analisis:
     def __init__(self):
-        pass
+        self.cantidad_mujeres = 0
+        self.cantidad_hombres = 0
     ##########CAMBIAR TATI#############
+    def __str__(self) -> str:
+        return 
+    
+    def tuma(self):
+        return 60,40
 
-    def porcentaje_participacion_generos(self):    #Visualizar el porcentaje de participación de las mujeres en los diferentes proyectos según el rol que desempeñan versus la participación de los hombres.
-        cantidad_mujeres=0
-        cantidad_hombres=0
-        from GUI import instance   
+    def porcentaje_participacion_generos(self):
+     
+        from GUI import instance  # Esto puede causar problemas de acoplamiento
         for proyecto in instance.backend.cache.proyectotal:
-            cantidad_mujeres+=proyecto.cantidad_miembros_F
-            cantidad_hombres+=proyecto.cantidad_miembros_M
-        total=cantidad_mujeres+cantidad_hombres
-        porcentaje_mujeres=(cantidad_mujeres*100)/total
-        porcentaje_hombres=(cantidad_hombres*100)/total
-        print("El porcentaje de mujeres es: ",porcentaje_mujeres)
-        print("El porcentaje de hombres es: ",porcentaje_hombres)
+            self.cantidad_mujeres += proyecto.cantidad_miembros_F
+            self.cantidad_hombres += proyecto.cantidad_miembros_M
+        total = self.cantidad_mujeres + self.cantidad_hombres
+        porcentaje_mujeres = (self.cantidad_mujeres * 100) / total
+        porcentaje_hombres = (self.cantidad_hombres * 100) / total
+        instance.backend.histogramas.grafico_de_tortas(porcentaje_mujeres, porcentaje_hombres)
+
         
     def porcentaje_participacion_gran_areas(self,gran_area):#Visualizar el porcentaje de participación de las mujeres en los diferentes proyectos según el gran area versus la participación de los hombres.
         from GUI import instance
@@ -116,7 +122,6 @@ class Analisis:
     
     def cantidad_proyectos_gran_area(self,gran_area):# cantidad de proyectos por gran area
         from GUI import instance
-        
         gran_areas=[disciplina.gran_area_descripcion.upper() for disciplina in instance.backend.cache.ref_disciplina]
         if gran_area.upper() not in gran_areas:
             print("El gran area ingresada no es válida.")
@@ -130,6 +135,7 @@ class Analisis:
                         if proyecto_disciplina.disciplina_id==id_disciplina:
                             cantidad+=1
             print("La cantidad de proyectos en el gran area",gran_area,"es:",cantidad)
+            instance.backend.histogramas.mostrar_dato(cantidad)
 
     def cantidad_proyectos_area(self,area):# cantidad de proyectos por  area
         from GUI import instance
@@ -171,7 +177,8 @@ class Analisis:
                                 pass
                             else:
                                 listaareas.append(disciplina.area_descripcion)
-        return listaareas
+        instance.backend.histogramas.crear_histograma(listaareas)
+
                 
         
         
@@ -223,4 +230,5 @@ class Analisis:
         total=len(instance.backend.cache.proyectotal)
         porcentaje=(cantidad*100)/total
         print("El porcentaje de proyectos de tecnologia es:",porcentaje)
-    
+
+

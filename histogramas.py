@@ -1,67 +1,62 @@
 import tkinter as tk
 from matplotlib.figure import Figure
+from collections import Counter
+import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-import numpy as np
 
 class histogramas:
   def __init__(self):
     pass
-  def crear_histograma(self):
+  def crear_histograma(self,categorias):
+    # Contar la frecuencia de cada categoría
+    frecuencia = Counter(categorias)
+
+    # Obtener las categorías y las frecuencias por separado
+    categorias = list(frecuencia.keys())
+    valores = list(frecuencia.values())
+
+    # Crear el gráfico de barras
+    plt.bar(categorias, valores, color='blue')
+
+    # Añadir etiquetas y título
+    plt.xlabel('Categorías')
+    plt.ylabel('Frecuencia')
+    plt.title('Gráfico de Barras de Frecuencia')
+
+    # Mostrar el gráfico
+    plt.show()
+
+    
+  def grafico_de_tortas(self,porcentaje1,porcentaje2):
     # Datos para el histograma
     from GUI import instance
     instance.ventana = tk.Tk()
-    instance.ventana.title("Histograma con Matplotlib")
     
-    datos = np.random.randn(1000)  # Genera datos aleatorios para el ejemplo
-
+    instance.ventana.title("Tortas con Matplotlib")
+    print(porcentaje1,porcentaje2)
+    porcentajes = [porcentaje1,porcentaje2]
     # Crear figura de Matplotlib
     fig = Figure(figsize=(6, 4), dpi=100)
     ax = fig.add_subplot(111)
 
-    # Crear el histograma
-    ax.hist(datos, bins=30, alpha=0.7, color='#2BB179', edgecolor='black')
+    # Etiquetas para cada sección del gráfico
+    etiquetas = ['Porcentaje A', 'Porcentaje B']
 
-    # Configuraciones adicionales del histograma
-    ax.set_title('Histograma de datos aleatorios')
-    ax.set_xlabel('Valores')
-    ax.set_ylabel('Frecuencia')
+    # Colores para cada sección del gráfico
+    colores = ['blue', 'orange']
 
-    # Crear el lienzo para el histograma en tkinter
-    
+    # Crear el gráfico de torta
+    ax.pie(porcentajes, labels=etiquetas, colors=colores, autopct='%1.1f%%', startangle=90)
+
+    # Configuraciones adicionales del gráfico
+    ax.set_title('Gráfico de Torta de Dos Porcentajes')
+
+    # Crear el lienzo para el gráfico en tkinter
     canvas = FigureCanvasTkAgg(fig, master=instance.ventana)
     canvas.draw()
     canvas.get_tk_widget().pack()
-
+  def mostrar_dato(self,categoria):
+    from GUI import instance
+    instance.ventana = tk.Tk()
     
-
-  #   # Datos para el histograma
-  #   # 
-  #   datos= ["mate","mate","fisica","quimica"]
-  #   # Crear figura de Matplotlib
-  #   fig = Figure(figsize=(6, 4), dpi=100)
-  #   ax = fig.add_subplot(111)
-
-  #   # Crear el histograma
-  #   ax.hist(datos, bins=30, alpha=0.7, color='blue', edgecolor='black')
-
-  #   # Configuraciones adicionales del histograma
-  #   ax.set_title('Histograma de datos aleatorios')
-  #   ax.set_xlabel('Valores')
-  #   ax.set_ylabel('Frecuencia')
-
-  #   # Crear el lienzo para el histograma en tkinter
-  #   canvas = FigureCanvasTkAgg(fig, master=ventana)
-  #   canvas.draw()
-  #   canvas.get_tk_widget().pack()
-
-  # # Crear la ventana
-  # ventana = tk.Tk()
-  # ventana.title("Histograma con Matplotlib")
-
-  # # Crear el botón para generar el histograma
-  # boton_histograma = tk.Button(ventana, text="Generar Histograma", command=crear_histograma)
-  # boton_histograma.pack()
-
-  # # Ejecutar el bucle principal de la ventana
-  # ventana.mainloop()
-
+    instance.ventana.title("Mostrar Dato")
