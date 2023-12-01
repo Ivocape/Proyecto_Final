@@ -4,7 +4,7 @@ from discoDuro import *
 from menus import *
 from analisis import *
 from histogramas import *
-class Backend ():
+class Backend():
    def __init__(self):
       self.discoDuro=DiscoDuro()
       self.cache=Cache()

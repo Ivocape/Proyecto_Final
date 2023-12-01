@@ -48,13 +48,9 @@ class GUI:
         self.boton7 = tk.Button(self.ventana, text="Cerrar", bg="black", fg="white", command=self.ventana.destroy) 
         self.boton7.place(relx=0.5, rely=0.9, anchor="center")  # Posiciona el botón en el centro
         self.aplicar_efecto_brillo(self.boton7)
-        
-        boton_histograma = tk.Button(self.ventana, text="Generar Histograma", command=crear_histograma)
-        boton_histograma.pack()
-        
+      
     def on_button_click(self):
-        print("Botón clickeado")
-
+        self.backend.histogramas.crear_histograma()
     def on_enter(self, event):
         event.widget.config(bg='gray')  # Cambiar color al pasar el mouse
 
