@@ -1,13 +1,13 @@
 class Analisis:
     def __init__(self):
         pass
-
+    ##########CAMBIAR TATI#############
 
     def porcentaje_participacion_generos(self):    #Visualizar el porcentaje de participación de las mujeres en los diferentes proyectos según el rol que desempeñan versus la participación de los hombres.
         cantidad_mujeres=0
         cantidad_hombres=0
         from GUI import instance   
-        for proyecto in instance.cache.proyectotal:
+        for proyecto in instance.backend.cache.proyectotal:
             cantidad_mujeres+=proyecto.cantidad_miembros_F
             cantidad_hombres+=proyecto.cantidad_miembros_M
         total=cantidad_mujeres+cantidad_hombres
@@ -19,19 +19,19 @@ class Analisis:
     def porcentaje_participacion_gran_areas(self,gran_area):#Visualizar el porcentaje de participación de las mujeres en los diferentes proyectos según el gran area versus la participación de los hombres.
         from GUI import instance
         
-        gran_areas=[disciplina.gran_area_descripcion.upper() for disciplina in instance.cache.ref_disciplina]
+        gran_areas=[disciplina.gran_area_descripcion.upper() for disciplina in instance.backend.cache.ref_disciplina]
         if gran_area.upper() not in gran_areas:
             print("El gran area ingresada no es válida.")
         else:
             cantidad_mujeres=0
             cantidad_hombres=0
             
-            for disciplina in instance.cache.ref_disciplina:
+            for disciplina in instance.backend.cache.ref_disciplina:
                 if disciplina.gran_area_descripcion.upper() ==gran_area.upper():
                     id_disciplina=disciplina.disciplina_id
-                    for proyecto_disciplina in instance.cache.proyecto_disciplina:
+                    for proyecto_disciplina in instance.backend.cache.proyecto_disciplina:
                         if proyecto_disciplina.disciplina_id==id_disciplina:
-                            for proyecto in instance.cache.proyectotal:
+                            for proyecto in instance.backend.cache.proyectotal:
                                 if proyecto.proyecto_id==proyecto_disciplina.proyecto_id:
                                     cantidad_mujeres+=proyecto.cantidad_miembros_F
                                     cantidad_hombres+=proyecto.cantidad_miembros_M
@@ -59,9 +59,9 @@ class Analisis:
             for disciplina in instance.backend.cache.ref_disciplina:
                 if disciplina.area_descripcion.upper() ==area.upper():
                     id_disciplina=disciplina.disciplina_id
-                    for proyecto_disciplina in instance.cache.proyecto_disciplina:
+                    for proyecto_disciplina in instance.backend.cache.proyecto_disciplina:
                         if proyecto_disciplina.disciplina_id==id_disciplina:
-                            for proyecto in instance.cache.proyectotal:
+                            for proyecto in instance.backend.cache.proyectotal:
                                 if proyecto.proyecto_id==proyecto_disciplina.proyecto_id:
                                     cantidad_mujeres+=proyecto.cantidad_miembros_F
                                     cantidad_hombres+=proyecto.cantidad_miembros_M
@@ -85,12 +85,12 @@ class Analisis:
             cantidad_mujeres=0
             cantidad_hombres=0
             
-            for disciplina in instance.cache.ref_disciplina:
+            for disciplina in instance.backend.cache.ref_disciplina:
                 if disciplina.disciplina_descripcion.upper() ==disciplinafiltrar.upper():
                     id_disciplina=disciplina.disciplina_id
-                    for proyecto_disciplina in instance.cache.proyecto_disciplina:
+                    for proyecto_disciplina in instance.backend.cache.proyecto_disciplina:
                         if proyecto_disciplina.disciplina_id==id_disciplina:
-                            for proyecto in instance.cache.proyectotal:
+                            for proyecto in instance.backend.cache.proyectotal:
                                 if proyecto.proyecto_id==proyecto_disciplina.proyecto_id:
                                     cantidad_mujeres+=proyecto.cantidad_miembros_F
                                     cantidad_hombres+=proyecto.cantidad_miembros_M
@@ -108,7 +108,7 @@ class Analisis:
     def lista_proyectos_fecha(self):#guardar y visualizar una lista de proyectos y la fecha de inicio por la fecha de iniciación del proyecto creciente.
         lista=[]
         from GUI import instance  
-        for proyecto in instance.cache.proyectotal:
+        for proyecto in instance.backend.cache.proyectotal:
             lista.append((proyecto.fecha_inicio,proyecto.titulo))
         lista.sort()
         print(lista)
@@ -123,10 +123,10 @@ class Analisis:
         else:
             cantidad=0
             
-            for disciplina in instance.cache.ref_disciplina:
+            for disciplina in instance.backend.cache.ref_disciplina:
                 if disciplina.gran_area_descripcion.upper() ==gran_area.upper():
                     id_disciplina=disciplina.disciplina_id
-                    for proyecto_disciplina in instance.cache.proyecto_disciplina:
+                    for proyecto_disciplina in instance.backend.cache.proyecto_disciplina:
                         if proyecto_disciplina.disciplina_id==id_disciplina:
                             cantidad+=1
             print("La cantidad de proyectos en el gran area",gran_area,"es:",cantidad)
@@ -134,16 +134,16 @@ class Analisis:
     def cantidad_proyectos_area(self,area):# cantidad de proyectos por  area
         from GUI import instance
         
-        areas=set(disciplina.area_descripcion.upper() for disciplina in instance.cache.ref_disciplina)
+        areas=set(disciplina.area_descripcion.upper() for disciplina in instance.backend.cache.ref_disciplina)
         if area.upper() not in areas:
             print('El area ingresada no es válida.')
         else:
             cantidad=0
             from GUI import instance
-            for disciplina in instance.cache.ref_disciplina:
+            for disciplina in instance.backend.cache.ref_disciplina:
                 if disciplina.area_descripcion ==area.upper():
                     id_disciplina=disciplina.disciplina_id
-                    for proyecto_disciplina in instance.cache.proyecto_disciplina:
+                    for proyecto_disciplina in instance.backend.cache.proyecto_disciplina:
                         if proyecto_disciplina.disciplina_id==id_disciplina:
                             cantidad+=1
             print("La cantidad de proyectos en el gran area",area,"es:",cantidad)
@@ -156,23 +156,42 @@ class Analisis:
         areas=set(disciplina.area_descripcion.upper() for disciplina in instance.backend.cache.ref_disciplina)
         for area in areas:
             
-            cantidadxarea.append(self.cantidad_proyectos_area(area))
+            cantidadxarea.append((area,self.cantidad_proyectos_area(area)))
+            
+
+    def listaareas(self):#lista de areas en los proyectos
+        from GUI import instance
+        listaareas=[]
+        for proyecto in instance.backend.cache.proyectotal:
+            for proyecto_disciplina in instance.backend.cache.proyecto_disciplina:
+                if proyecto.proyecto_id==proyecto_disciplina.proyecto_id:
+                    for disciplina in instance.backend.cache.ref_disciplina:
+                        if proyecto_disciplina.disciplina_id==disciplina.disciplina_id:
+                            if disciplina.area_descripcion == 'SIN DATOS':
+                                pass
+                            else:
+                                listaareas.append(disciplina.area_descripcion)
+        return listaareas
+                
+        
+        
+                        
             
     def tiempo_promedio_proyectos_area(self,area): #Visualizar el tiempo promedio de terminación de los proyectos según el área al que pertenecen.
         from GUI import instance
         
-        areas=set(disciplina.area_descripcion.upper() for disciplina in instance.cache.ref_disciplina)
+        areas=set(disciplina.area_descripcion.upper() for disciplina in instance.backend.cache.ref_disciplina)
         dias=0
         contadorproyectos=0
         if area.upper() not in areas:
             print('El area ingresada no es válida.')
         else:
-            for disciplina in instance.cache.ref_disciplina:
+            for disciplina in instance.backend.cache.ref_disciplina:
                 if disciplina.area_descripcion.upper() ==area.upper():
                     id_disciplina=disciplina.disciplina_id
-                    for proyecto_disciplina in instance.cache.proyecto_disciplina:
+                    for proyecto_disciplina in instance.backend.cache.proyecto_disciplina:
                         if proyecto_disciplina.disciplina_id==id_disciplina:
-                            for proyecto in instance.cache.proyectotal:
+                            for proyecto in instance.backend.cache.proyectotal:
                                 if proyecto.estado_id=='1' and proyecto.proyecto_id==proyecto_disciplina.proyecto_id:
                                 
                                     dias+=(proyecto.fecha_fin-proyecto.fecha_inicio).days
@@ -184,7 +203,7 @@ class Analisis:
     def porcentaje_monto_financiamiento(self):#Visualizar que porcentaje del monto de financiamiento solicitado efectivamente se le otorgó, segun el monto financiado adjudicado por proyecto.         lista=[]
         lista_financiamiento_proyectos=[]
         from GUI import instance
-        for proyecto in instance.cache.proyectotal:
+        for proyecto in instance.backend.cache.proyectotal:
             if proyecto.monto_financiado_solicitado==0:
                 porcentaje_adjudicado=0
                 lista_financiamiento_proyectos.append(porcentaje_adjudicado)                
@@ -197,11 +216,11 @@ class Analisis:
     def porcentaje_proyectos_tecnologia(self): # Visualizar el porcentaje de proyectos que han utilizado tecnologías emergentes (Tecnología e innovación)
         cantidad=0
         from GUI import instance
-        for proyecto in instance.cache.proyectotal:
-            for tipo in instance.cache.ref_tipo_proyecto:
+        for proyecto in instance.backend.cache.proyectotal:
+            for tipo in instance.backend.cache.ref_tipo_proyecto:
                 if proyecto.tipo_proyecto_id==tipo.tipo_proyecto_id and tipo.tipo_proyecto_descripcion == 'Tecnología e Innovación': 
                     cantidad+=1
-        total=len(instance.cache.proyectotal)
+        total=len(instance.backend.cache.proyectotal)
         porcentaje=(cantidad*100)/total
         print("El porcentaje de proyectos de tecnologia es:",porcentaje)
     
