@@ -56,7 +56,7 @@ class GUI:
         
 
     def histograma1(self):
-        self.backend.analisis.listaareas()
+        self.backend.analisis.areas()
     def grafico_de_tortas(self):
         self.backend.analisis.porcentaje_participacion_generos()
     def mostrar_data(self):

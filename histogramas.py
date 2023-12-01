@@ -1,8 +1,10 @@
 import tkinter as tk
+from tkinter import ttk
 from matplotlib.figure import Figure
 from collections import Counter
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from prettytable import PrettyTable
 
 class histogramas:
   def __init__(self):
@@ -19,10 +21,10 @@ class histogramas:
     plt.bar(categorias, valores, color='blue')
 
     # Añadir etiquetas y título
-    plt.xlabel('Categorías')
+    plt.xlabel('Codigo de Areas')
     plt.ylabel('Frecuencia')
     plt.title('Gráfico de Barras de Frecuencia')
-
+    
     # Mostrar el gráfico
     plt.show()
 
@@ -60,3 +62,47 @@ class histogramas:
     instance.ventana = tk.Tk()
     
     instance.ventana.title("Mostrar Dato")
+  
+  
+  
+#TRABAJO DUSTINNN################################################################################
+  def histograma_tabla(self,categorias,listaareas):
+    
+    from GUI import instance
+      # Contar la frecuencia de cada categoría
+    frecuencia = Counter(categorias)
+
+    # Obtener las categorías y las frecuencias por separado
+    categorias = list(frecuencia.keys())
+    valores = list(frecuencia.values())
+
+    # Crear el gráfico de barras
+    fig, ax = plt.subplots()
+    ax.bar(categorias, valores, color='blue')
+
+    # Añadir etiquetas y título
+    ax.set_xlabel('Codigo de Areas')
+    ax.set_ylabel('Frecuencia')
+    ax.set_title('Gráfico de Barras de Frecuencia')
+
+    # Mostrar el gráfico
+    canvas = FigureCanvasTkAgg(fig, master=instance.ventana)
+    canvas_widget = canvas.get_tk_widget()
+    canvas_widget.pack(side='left', padx=10, pady=10)
+
+    # Crear la tabla PrettyTable
+    tabla = PrettyTable(['Código', 'Referencia'])
+    for codigo, descripcion in listaareas:
+        tabla.add_row([codigo, descripcion])
+
+    # Crear el Treeview y agregar las columnas
+    tree = ttk.Treeview(instance.ventana, columns=('Código', 'Referencia'), show='headings')
+    tree.heading('Código', text='Código')
+    tree.heading('Referencia', text='Referencia')
+
+    # Agregar filas al Treeview desde PrettyTable
+    for row in tabla:
+        tree.insert('', 'end', values=row)
+
+    # Mostrar el Treeview
+    tree.pack(side='right', padx=10, pady=10)

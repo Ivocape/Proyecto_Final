@@ -3,7 +3,9 @@ class Analisis:
     def __init__(self):
         self.cantidad_mujeres = 0
         self.cantidad_hombres = 0
-    ##########CAMBIAR TATI#############
+        self.listaareascodigo=[]
+        self.listaareas=set()
+    
     def __str__(self) -> str:
         return 
     
@@ -165,9 +167,9 @@ class Analisis:
             cantidadxarea.append((area,self.cantidad_proyectos_area(area)))
             
 
-    def listaareas(self):#lista de areas en los proyectos
+    def areas(self):#lista de areas en los proyectos
         from GUI import instance
-        listaareas=[]
+        
         for proyecto in instance.backend.cache.proyectotal:
             for proyecto_disciplina in instance.backend.cache.proyecto_disciplina:
                 if proyecto.proyecto_id==proyecto_disciplina.proyecto_id:
@@ -176,8 +178,10 @@ class Analisis:
                             if disciplina.area_descripcion == 'SIN DATOS':
                                 pass
                             else:
-                                listaareas.append(disciplina.area_descripcion)
-        instance.backend.histogramas.crear_histograma(listaareas)
+                                self.listaareascodigo.append(disciplina.area_codigo)
+                                self.listaareas.add((disciplina.area_codigo,disciplina.area_descripcion))
+        instance.backend.histogramas.histograma_tabla(self.listaareascodigo,self.listaareas)
+        
 
                 
         
