@@ -153,7 +153,7 @@ class Analisis:
     def cantidad_proyectos_total_areas(self):
         from GUI import instance
         cantidadxarea=[]
-        areas=set(disciplina.area_descripcion.upper() for disciplina in instance.cache.ref_disciplina)
+        areas=set(disciplina.area_descripcion.upper() for disciplina in instance.backend.cache.ref_disciplina)
         for area in areas:
             
             cantidadxarea.append(self.cantidad_proyectos_area(area))
