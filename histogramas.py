@@ -70,6 +70,7 @@ class histogramas:
     
     from GUI import instance
       # Contar la frecuencia de cada categoría
+    instance.ventana=tk.Tk()
     frecuencia = Counter(categorias)
 
     # Obtener las categorías y las frecuencias por separado
@@ -88,12 +89,8 @@ class histogramas:
     # Mostrar el gráfico
     canvas = FigureCanvasTkAgg(fig, master=instance.ventana)
     canvas_widget = canvas.get_tk_widget()
-    canvas_widget.pack(side='left', padx=10, pady=10)
+    canvas_widget.pack(side='left', padx=10, pady=10,fill='both', expand=True)
 
-    # Crear la tabla PrettyTable
-    tabla = PrettyTable(['Código', 'Referencia'])
-    for codigo, descripcion in listaareas:
-        tabla.add_row([codigo, descripcion])
 
     # Crear el Treeview y agregar las columnas
     tree = ttk.Treeview(instance.ventana, columns=('Código', 'Referencia'), show='headings')
@@ -101,8 +98,10 @@ class histogramas:
     tree.heading('Referencia', text='Referencia')
 
     # Agregar filas al Treeview desde PrettyTable
-    for row in tabla:
+    for row in listaareas:
         tree.insert('', 'end', values=row)
 
     # Mostrar el Treeview
-    tree.pack(side='right', padx=10, pady=10)
+    tree.pack(side='right', padx=10, pady=10, fill='both')
+    
+    
