@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import ttk
 from backend import Backend
 class GUI:
     def __init__(self):
@@ -53,12 +54,14 @@ class GUI:
         self.boton8.place(relx=0.1, rely=0.9, anchor="center")
         self.aplicar_efecto_brillo(self.boton8)
 
+        #Combobox
+        self.crear_combobox(['Matemáticas','Ciencias Físicas'])
         
-
+        
     def histograma1(self):
         self.backend.analisis.areas()
-    def grafico_de_tortas(self):
-        self.backend.analisis.porcentaje_participacion_generos()
+    def grafico_de_tortas(self,area):
+        self.backend.analisis.porcentaje_participacion_areas(area)
     def mostrar_data(self):
         self.backend.analisis.cantidad_proyectos_gran_area("CIENCIAS NATURALES Y EXACTAS")
     def on_enter(self, event):
@@ -71,6 +74,17 @@ class GUI:
         boton.bind("<Enter>", self.on_enter)
         boton.bind("<Leave>", self.on_leave)
 
+    def crear_combobox(self,opciones):
+        self.valorelegido = tk.StringVar()
+        self.combobox = ttk.Combobox(self.ventana, width=30,values=opciones)
+        self.combobox.bind("<<ComboboxSelected>>", self.on_select)  
+        self.combobox.place(relx=0.5, rely=0.1, anchor="center")
+        self.boton9 = tk.Button(self.ventana, text="Participacion de generos en el area seleccionada ", bg="black", fg="white", command=self.grafico_de_tortas(self.valorelegido))
+        self.boton9.place(relx=0.5, rely=0.2, anchor="center")  # Posiciona el botón en el centro
+
+    def on_select(self, event):
+        self.valorelegido.set(self.combobox.get())
+        
     def run(self):
         self.backend.setup()
         self.ventana.mainloop()

@@ -9,8 +9,6 @@ class Analisis:
     def __str__(self) -> str:
         return 
     
-    def tuma(self):
-        return 60,40
 
     def porcentaje_participacion_generos(self):
      
@@ -48,6 +46,7 @@ class Analisis:
             if total>0:
                 porcentaje_mujeres=(cantidad_mujeres*100)/total
                 porcentaje_hombres=(cantidad_hombres*100)/total
+                
                 print("El porcentaje de mujeres es: ",porcentaje_mujeres)
                 print("El porcentaje de hombres es: ",porcentaje_hombres)
             else:
@@ -78,6 +77,7 @@ class Analisis:
             if total>0:
                 porcentaje_mujeres=(cantidad_mujeres*100)/total
                 porcentaje_hombres=(cantidad_hombres*100)/total
+                instance.backend.histogramas.grafico_de_tortas(porcentaje_mujeres, porcentaje_hombres)
                 print("El porcentaje de mujeres es: ",porcentaje_mujeres)
                 print("El porcentaje de hombres es: ",porcentaje_hombres)
             else:
