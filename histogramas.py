@@ -4,31 +4,23 @@ from matplotlib.figure import Figure
 from collections import Counter
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-from prettytable import PrettyTable
 
+
+  
 class histogramas:
   def __init__(self):
     pass
-  def crear_histograma(self,categorias):
-    # Contar la frecuencia de cada categoría
-    frecuencia = Counter(categorias)
+ 
+  def mostrar_popup(self,texto,tipo):
+    from GUI import instance
+    instance.ventana = tk.Tk()
+    instance.ventana.title("No hay data para mostrar POPUP")
+    instance.ventana.geometry("600x100")
+    instance.ventana.configure(bg="red")
+    label = tk.Label(instance.ventana, text=(texto + str(tipo)), bg="black", fg="orange")
+    label.pack()
+    instance.ventana.mainloop()
 
-    # Obtener las categorías y las frecuencias por separado
-    categorias = list(frecuencia.keys())
-    valores = list(frecuencia.values())
-
-    # Crear el gráfico de barras
-    plt.bar(categorias, valores, color='blue')
-
-    # Añadir etiquetas y título
-    plt.xlabel('Codigo de Areas')
-    plt.ylabel('Frecuencia')
-    plt.title('Gráfico de Barras de Frecuencia')
-    
-    # Mostrar el gráfico
-    plt.show()
-
-    
   def grafico_de_tortas(self,porcentaje1,porcentaje2):
     # Datos para el histograma
     from GUI import instance
@@ -42,10 +34,10 @@ class histogramas:
     ax = fig.add_subplot(111)
 
     # Etiquetas para cada sección del gráfico
-    etiquetas = ['Porcentaje A', 'Porcentaje B']
+    etiquetas = ['Porcentaje Mujeres', 'Porcentaje Hombres']
 
     # Colores para cada sección del gráfico
-    colores = ['blue', 'orange']
+    colores = ['purple', 'blue']
 
     # Crear el gráfico de torta
     ax.pie(porcentajes, labels=etiquetas, colors=colores, autopct='%1.1f%%', startangle=90)
@@ -65,7 +57,7 @@ class histogramas:
   
   
   
-#TRABAJO DUSTINNN################################################################################
+  #TRABAJO DUSTINNN###
   def histograma_tabla(self,categorias,listaareas):
     
     from GUI import instance

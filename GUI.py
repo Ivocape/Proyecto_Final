@@ -6,7 +6,7 @@ class GUI:
         self.ventana = tk.Tk()
         self.backend = Backend()
         self.ventana.title("CENTRO DE COMPUTO DE LA NACION ARGENTINA")
-        
+       
         # Configurar las dimensiones de la ventana
         self.ancho_ventana = 700
         self.alto_ventana = 600
@@ -20,73 +20,49 @@ class GUI:
         self.canvas = tk.Canvas(self.ventana, width=self.ancho_ventana, height=self.alto_ventana)
         self.canvas.pack(fill="both", expand=True)
         self.canvas.create_image(0, 0,anchor="nw" ,image=self.imagen_fondo)
-
-        # Crear los botones y aplicar el efecto de brillo a cada uno
-        self.boton1 = tk.Button(self.ventana, text="distribución de los proyectos por área de investigación", bg="black", fg="white", command=self.histograma1)
-        self.boton1.place(relx=0.5, rely=0.3, anchor="center")  # Posiciona el botón en el centro
-        self.aplicar_efecto_brillo(self.boton1)  # Aplicar el efecto de brillo al botón
-
-        self.boton2 = tk.Button(self.ventana, text="porcentaje de participación de las mujeres en los diferentes proyectos según el rol quedesempeña", bg="black", fg="white", command=self.histograma1)
-        self.boton2.place(relx=0.5, rely=0.4, anchor="center")  # Posiciona el botón en el centro
-        self.aplicar_efecto_brillo(self.boton2)  # Aplicar el efecto de brillo al botón
-
-        self.boton3 = tk.Button(self.ventana, text="tiempo promedio de terminación", bg="black", fg="white", command=self.histograma1)
-        self.boton3.place(relx=0.5, rely=0.5, anchor="center")  # Posiciona el botón en el centro
-        self.aplicar_efecto_brillo(self.boton3)
-
-        self.boton4 = tk.Button(self.ventana, text="porcentaje de proyectos que han utilizado tecnologías emergentes", bg="black", fg="white", command=self.histograma1)
-        self.boton4.place(relx=0.5, rely=0.6, anchor="center")  # Posiciona el botón en el centro
-        self.aplicar_efecto_brillo(self.boton4)
-
-        self.boton5 = tk.Button(self.ventana, text="lista de proyectos", bg="black", fg="white", command=self.histograma1)
-        self.boton5.place(relx=0.5, rely=0.7, anchor="center")  # Posiciona el botón en el centro
-        self.aplicar_efecto_brillo(self.boton5)
-
-        self.boton6 = tk.Button(self.ventana, text="Financiamiento Solicitado/Otorgado", bg="black", fg="white", command=self.grafico_de_tortas)
-        self.boton6.place(relx=0.5, rely=0.8, anchor="center")  # Posiciona el botón en el centro
-        self.aplicar_efecto_brillo(self.boton6)
-
-        self.boton7 = tk.Button(self.ventana, text="Cerrar", bg="black", fg="white", command=self.ventana.destroy) 
-        self.boton7.place(relx=0.5, rely=0.9, anchor="center")  # Posiciona el botón en el centro
-        self.aplicar_efecto_brillo(self.boton7)
-
-        self.boton8 = tk.Button(self.ventana, text="Cantidad de proyectos por Gran Area ", bg="black", fg="white", command=self.mostrar_data)
-        self.boton8.place(relx=0.1, rely=0.9, anchor="center")
-        self.aplicar_efecto_brillo(self.boton8)
-
-        #Combobox
-        self.crear_combobox(['Matemáticas','Ciencias Físicas'])
         
+
+    #   Metodo modularizado de creacion de combobox y sus botones correspondientes
+    def crear_combobox(self, opciones, rely_combobox, texto_boton,relx_boton ,rely_boton,pin):
+        valorelegido = tk.StringVar()
+        combobox = ttk.Combobox(self.ventana, width=80, values=opciones)
+        combobox.place(relx=0.5, rely=rely_combobox, anchor="center")
+        combobox.bind("<<ComboboxSelected>>", lambda event, valorelegido=valorelegido: self.on_select(event, valorelegido))
         
+        self.crear_boton(texto_boton,relx_boton,rely_boton,lambda valorelegido=valorelegido: self.grafico_de_tortas(valorelegido.get(),pin))
+        
+    def crear_boton(self,texto,relx_boton,rely_boton,funcion):
+        boton = tk.Button(self.ventana, text=texto, bg="black", fg="white", command=funcion)
+        boton.place(relx=relx_boton, rely=rely_boton, anchor="center")
+        self.aplicar_efecto_brillo(boton)
+    def on_select(self, event, valorelegido):
+        valorelegido.set(event.widget.get())
+                
     def histograma1(self):
         self.backend.analisis.areas()
-    def grafico_de_tortas(self,area):
-        self.backend.analisis.porcentaje_participacion_areas(area)
+    def grafico_de_tortas(self,area,pin):
+        #elige el grafico a mostrar segun el pin
+        match pin:
+            case 0:
+                self.backend.analisis.porcentaje_participacion_areas(area)
+            case 1:
+                self.backend.analisis.porcentaje_participacion_disciplinas(area)
     def mostrar_data(self):
         self.backend.analisis.cantidad_proyectos_gran_area("CIENCIAS NATURALES Y EXACTAS")
+        
     def on_enter(self, event):
         event.widget.config(bg='gray')  # Cambiar color al pasar el mouse
-
     def on_leave(self, event):
         event.widget.config(bg='black')  # Restaurar color al quitar el mouse
-
     def aplicar_efecto_brillo(self, boton):
         boton.bind("<Enter>", self.on_enter)
         boton.bind("<Leave>", self.on_leave)
-
-    def crear_combobox(self,opciones):
-        self.valorelegido = tk.StringVar()
-        self.combobox = ttk.Combobox(self.ventana, width=30,values=opciones)
-        self.combobox.bind("<<ComboboxSelected>>", self.on_select)  
-        self.combobox.place(relx=0.5, rely=0.1, anchor="center")
-        self.boton9 = tk.Button(self.ventana, text="Participacion de generos en el area seleccionada ", bg="black", fg="white", command=lambda: self.grafico_de_tortas(self.valorelegido.get()))
-        self.boton9.place(relx=0.5, rely=0.2, anchor="center")  # Posiciona el botón en el centro
-
-    def on_select(self, event):
-        self.valorelegido.set(self.combobox.get())
-        
     def run(self):
-        self.backend.setup()
+        # Aca creo varios combobox y sus botones correspondientes de manera dinamica y que reutilizo codigo al haber modularizado la creacion de los mismos
+        self.crear_combobox(list(self.backend.cache.lista_Areas), 0.1, "Participacion de generos en el area seleccionada ",0.5 ,0.2,0)
+        self.crear_combobox((list(self.backend.cache.lista_Disciplinas)), 0.3, "Participacion de generos en la disciplina seleccionada ", 0.5,0.4,1)
+        
+        self.crear_boton("Ver Histograma",0.5,0.6,self.histograma1)     
         self.ventana.mainloop()
 
 # Crear una instancia de la clase GUI y ejecutar la aplicación

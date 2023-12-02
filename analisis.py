@@ -51,8 +51,9 @@ class Analisis:
                 print("El porcentaje de hombres es: ",porcentaje_hombres)
             else:
                 print("No hay proyectos en el gran area ",gran_area)
-        
-        
+                instance.backend.histogramas.mostrar_popup("No hay proyectos en el gran area: ",gran_area)
+
+################################### ------Aplicado en un boton ya------ ################################################
     def porcentaje_participacion_areas(self,area):#Visualizar el porcentaje de participación de las mujeres en los diferentes proyectos según el  area versus la participación de los hombres.
         
         from GUI import instance
@@ -78,12 +79,15 @@ class Analisis:
             if total>0:
                 porcentaje_mujeres=(cantidad_mujeres*100)/total
                 porcentaje_hombres=(cantidad_hombres*100)/total
+                #linkeo a histogramas Grafico de tortas
                 instance.backend.histogramas.grafico_de_tortas(porcentaje_mujeres, porcentaje_hombres)
                 print("El porcentaje de mujeres es: ",porcentaje_mujeres)
                 print("El porcentaje de hombres es: ",porcentaje_hombres)
             else:
+                instance.backend.histogramas.mostrar_popup("No hay proyectos en el area",area)
                 print("No hay proyectos en el area",area)    
 
+    
     def porcentaje_participacion_disciplinas(self,disciplinafiltrar):#Visualizar el porcentaje de participación de las mujeres en los diferentes proyectos según la disciplina versus la participación de los hombres.
         from GUI import instance
         
@@ -108,11 +112,14 @@ class Analisis:
             if total>0:
                 porcentaje_mujeres=(cantidad_mujeres*100)/total
                 porcentaje_hombres=(cantidad_hombres*100)/total
+                #linkeo a histogramas Grafico de tortas
+                instance.backend.histogramas.grafico_de_tortas(porcentaje_mujeres, porcentaje_hombres)
                 print("El porcentaje de mujeres es: ",porcentaje_mujeres)
                 print("El porcentaje de hombres es: ",porcentaje_hombres)
             else:
                 print("No hay proyectos en la ",disciplinafiltrar)
-    
+                instance.backend.histogramas.mostrar_popup("No hay proyectos en la disciplina: ",disciplinafiltrar)
+                
  
     def lista_proyectos_fecha(self):#guardar y visualizar una lista de proyectos y la fecha de inicio por la fecha de iniciación del proyecto creciente.
         lista=[]
@@ -122,7 +129,7 @@ class Analisis:
         lista.sort()
         print(lista)
     
-    
+################################### ------Aplicado en un boton ya------ ################################################
     def cantidad_proyectos_gran_area(self,gran_area):# cantidad de proyectos por gran area
         from GUI import instance
         gran_areas=[disciplina.gran_area_descripcion.upper() for disciplina in instance.backend.cache.ref_disciplina]
@@ -138,6 +145,7 @@ class Analisis:
                         if proyecto_disciplina.disciplina_id==id_disciplina:
                             cantidad+=1
             print("La cantidad de proyectos en el gran area",gran_area,"es:",cantidad)
+            #linkeo a histogramas mostrar dato
             instance.backend.histogramas.mostrar_dato(cantidad)
 
     def cantidad_proyectos_area(self,area):# cantidad de proyectos por  area
@@ -167,7 +175,7 @@ class Analisis:
             
             cantidadxarea.append((area,self.cantidad_proyectos_area(area)))
             
-
+################################### ------Aplicado en un boton ya------ ################################################
     def areas(self):#lista de areas en los proyectos
         from GUI import instance
         
