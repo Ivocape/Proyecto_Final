@@ -21,7 +21,7 @@ class histogramas:
     label.pack()
     instance.ventana.mainloop()
 
-  def grafico_de_tortas(self,porcentaje1,porcentaje2,texto1,texto2):
+  def grafico_de_tortas(self,porcentaje1,porcentaje2,texto1,texto2,titulo):
     # Datos para el histograma
     from GUI import instance
     instance.ventana = tk.Tk()
@@ -43,7 +43,7 @@ class histogramas:
     ax.pie(porcentajes, labels=etiquetas, colors=colores, autopct='%1.1f%%', startangle=90)
 
     # Configuraciones adicionales del gráfico
-    ax.set_title('Gráfico de Torta de Dos Porcentajes')
+    ax.set_title(titulo)
 
     # Crear el lienzo para el gráfico en tkinter
     canvas = FigureCanvasTkAgg(fig, master=instance.ventana)
