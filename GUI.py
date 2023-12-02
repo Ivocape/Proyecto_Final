@@ -56,6 +56,10 @@ class GUI:
                 self.backend.analisis.porcentaje_participacion_areas(area)
             case 1:
                 self.backend.analisis.porcentaje_participacion_disciplinas(area)
+            case 2:
+                self.backend.analisis.porcentaje_monto_financiamiento()
+            case 3:
+                pass
     def mostrar_data(self):
         self.backend.analisis.cantidad_proyectos_gran_area("CIENCIAS NATURALES Y EXACTAS")
         
@@ -83,6 +87,7 @@ class GUI:
         self.agregar_texto("Seleccione la funcion de su interes", 0.5, 0.45)
 
         # Aca creo varios combobox y sus botones correspondientes de manera dinamica y que reutilizo codigo al haber modularizado la creacion de los mismos
+        self.crear_combobox(list(self.backend.cache.lista_Gran_Areas), 0.15, "% Hombre/Mujer",0.45 ,0.2,0)
         self.crear_combobox(list(self.backend.cache.lista_Areas), 0.15, "% Hombre/Mujer",0.45 ,0.2,0)
         self.crear_combobox((list(self.backend.cache.lista_Disciplinas)), 0.3, "% Hombre/Mujer", 0.45,0.35,1)
         
@@ -92,7 +97,7 @@ class GUI:
         self.crear_boton("Ver Histograma",0.2,0.35,self.histograma1)
         self.crear_boton("Tiempo Promedio Finalizacion",0.8,0.35,self.histograma1)#cambiar funcion
 
-        self.crear_boton("Ver Data",0.2,0.5,self.mostrar_data)
+        self.crear_boton("Estadisticas Finacieras",0.2,0.5,lambda :self.grafico_de_tortas(0,2))
         self.crear_boton("Ver Histograma",0.45,0.5,self.histograma1)     
         self.crear_boton2("Salir",0.7,0.5,quit)
         self.ventana.mainloop()

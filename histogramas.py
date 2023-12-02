@@ -21,7 +21,7 @@ class histogramas:
     label.pack()
     instance.ventana.mainloop()
 
-  def grafico_de_tortas(self,porcentaje1,porcentaje2):
+  def grafico_de_tortas(self,porcentaje1,porcentaje2,texto1,texto2):
     # Datos para el histograma
     from GUI import instance
     instance.ventana = tk.Tk()
@@ -34,7 +34,7 @@ class histogramas:
     ax = fig.add_subplot(111)
 
     # Etiquetas para cada sección del gráfico
-    etiquetas = ['Porcentaje Mujeres', 'Porcentaje Hombres']
+    etiquetas = [texto1, texto2]
 
     # Colores para cada sección del gráfico
     colores = ['purple', 'blue']
@@ -49,6 +49,7 @@ class histogramas:
     canvas = FigureCanvasTkAgg(fig, master=instance.ventana)
     canvas.draw()
     canvas.get_tk_widget().pack()
+    
   def mostrar_dato(self,categoria):
     from GUI import instance
     instance.ventana = tk.Tk()
