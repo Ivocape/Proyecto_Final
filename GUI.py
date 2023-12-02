@@ -79,7 +79,7 @@ class GUI:
         self.combobox = ttk.Combobox(self.ventana, width=30,values=opciones)
         self.combobox.bind("<<ComboboxSelected>>", self.on_select)  
         self.combobox.place(relx=0.5, rely=0.1, anchor="center")
-        self.boton9 = tk.Button(self.ventana, text="Participacion de generos en el area seleccionada ", bg="black", fg="white", command=self.grafico_de_tortas(self.valorelegido))
+        self.boton9 = tk.Button(self.ventana, text="Participacion de generos en el area seleccionada ", bg="black", fg="white", command=lambda: self.grafico_de_tortas(self.valorelegido.get()))
         self.boton9.place(relx=0.5, rely=0.2, anchor="center")  # Posiciona el botón en el centro
 
     def on_select(self, event):

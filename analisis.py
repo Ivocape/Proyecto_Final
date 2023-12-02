@@ -1,4 +1,4 @@
-from histogramas import *
+
 class Analisis:
     def __init__(self):
         self.cantidad_mujeres = 0
@@ -54,6 +54,7 @@ class Analisis:
         
         
     def porcentaje_participacion_areas(self,area):#Visualizar el porcentaje de participación de las mujeres en los diferentes proyectos según el  area versus la participación de los hombres.
+        
         from GUI import instance
         
         areas=set(disciplina.area_descripcion.upper() for disciplina in instance.backend.cache.ref_disciplina)
