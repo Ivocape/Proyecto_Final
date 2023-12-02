@@ -19,7 +19,7 @@ class Analisis:
         total = self.cantidad_mujeres + self.cantidad_hombres
         porcentaje_mujeres = (self.cantidad_mujeres * 100) / total
         porcentaje_hombres = (self.cantidad_hombres * 100) / total
-        instance.backend.histogramas.grafico_de_tortas(porcentaje_mujeres, porcentaje_hombres)
+        instance.backend.histogramas.grafico_de_tortas(porcentaje_mujeres, porcentaje_hombres,"porcentaje de Mujeres ","Porcentaje de Hombres")
 
         
     def porcentaje_participacion_gran_areas(self,gran_area):#Visualizar el porcentaje de participación de las mujeres en los diferentes proyectos según el gran area versus la participación de los hombres.
@@ -46,7 +46,7 @@ class Analisis:
             if total>0:
                 porcentaje_mujeres=(cantidad_mujeres*100)/total
                 porcentaje_hombres=(cantidad_hombres*100)/total
-                
+                instance.backend.histogramas.grafico_de_tortas(porcentaje_mujeres, porcentaje_hombres,"porcentaje de Mujeres ","Porcentaje de Hombres")
                 print("El porcentaje de mujeres es: ",porcentaje_mujeres)
                 print("El porcentaje de hombres es: ",porcentaje_hombres)
             else:
@@ -80,14 +80,14 @@ class Analisis:
                 porcentaje_mujeres=(cantidad_mujeres*100)/total
                 porcentaje_hombres=(cantidad_hombres*100)/total
                 #linkeo a histogramas Grafico de tortas
-                instance.backend.histogramas.grafico_de_tortas(porcentaje_mujeres, porcentaje_hombres)
+                instance.backend.histogramas.grafico_de_tortas(porcentaje_mujeres, porcentaje_hombres,"porcentaje de Mujeres ","Porcentaje de Hombres")
                 print("El porcentaje de mujeres es: ",porcentaje_mujeres)
                 print("El porcentaje de hombres es: ",porcentaje_hombres)
             else:
                 instance.backend.histogramas.mostrar_popup("No hay proyectos en el area",area)
                 print("No hay proyectos en el area",area)    
 
-    
+ ################################## ------Aplicado en un boton ya------ ################################################
     def porcentaje_participacion_disciplinas(self,disciplinafiltrar):#Visualizar el porcentaje de participación de las mujeres en los diferentes proyectos según la disciplina versus la participación de los hombres.
         from GUI import instance
         
@@ -113,7 +113,7 @@ class Analisis:
                 porcentaje_mujeres=(cantidad_mujeres*100)/total
                 porcentaje_hombres=(cantidad_hombres*100)/total
                 #linkeo a histogramas Grafico de tortas
-                instance.backend.histogramas.grafico_de_tortas(porcentaje_mujeres, porcentaje_hombres)
+                instance.backend.histogramas.grafico_de_tortas(porcentaje_mujeres, porcentaje_hombres,"Porcentaje de Mujeres ","Porcentaje de Hombres")   
                 print("El porcentaje de mujeres es: ",porcentaje_mujeres)
                 print("El porcentaje de hombres es: ",porcentaje_hombres)
             else:
@@ -222,16 +222,22 @@ class Analisis:
 
     def porcentaje_monto_financiamiento(self):#Visualizar que porcentaje del monto de financiamiento solicitado efectivamente se le otorgó, segun el monto financiado adjudicado por proyecto.         lista=[]
         lista_financiamiento_proyectos=[]
+        cont=0
         from GUI import instance
         for proyecto in instance.backend.cache.proyectotal:
             if proyecto.monto_financiado_solicitado==0:
-                porcentaje_adjudicado=0
-                lista_financiamiento_proyectos.append(porcentaje_adjudicado)                
+                pass
+                #Aca yo creo que no tendriamos que sumar nada
+                #porcentaje_adjudicado=0
+                #lista_financiamiento_proyectos.append(porcentaje_adjudicado)                
             else:
-               porcentaje_adjudicado=(proyecto.monto_financiado_adjudicado*100)/proyecto.monto_financiado_solicitado
-               lista_financiamiento_proyectos.append(porcentaje_adjudicado)
-            
-        print(lista_financiamiento_proyectos)
+                porcentaje_adjudicado=(proyecto.monto_financiado_adjudicado*100)/proyecto.monto_financiado_solicitado
+                lista_financiamiento_proyectos.append(porcentaje_adjudicado)
+                cont+=1
+        total=sum(lista_financiamiento_proyectos)
+        promedio=total/cont
+        instance.backend.histogramas.grafico_de_tortas(promedio, 100-promedio, "Porcentaje de financiamiento adjudicado", "Porcentaje de financiamiento no adjudicado")
+        
 
     def porcentaje_proyectos_tecnologia(self): # Visualizar el porcentaje de proyectos que han utilizado tecnologías emergentes (Tecnología e innovación)
         cantidad=0
