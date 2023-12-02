@@ -1,3 +1,3 @@
 from GUI import instance
-#instance.setup()
+instance.backend.setup()
 instance.run()

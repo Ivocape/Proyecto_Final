@@ -1,6 +1,4 @@
 import csv
-import pandas as pd
-import datetime
 #####################################################################################
 # ESTE DISCO DURO DEBE DE ENCARGARSE DE GUARDAR TODA INFORMACION DE USUARIOS, CLIENTES, PERSONAL, ADMINS,
 #####################################################################################
