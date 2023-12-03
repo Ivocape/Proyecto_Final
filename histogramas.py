@@ -48,7 +48,7 @@ class histogramas:
     # Crear el lienzo para el gráfico en tkinter
     canvas = FigureCanvasTkAgg(fig, master=instance.ventana)
     canvas.draw()
-    canvas.get_tk_widget().pack()
+    canvas.get_tk_widget().pack(expand=True,fill='both')
     
   def mostrar_dato(self,categoria):
     from GUI import instance
