@@ -58,8 +58,8 @@ class histogramas:
   
   
   
-  #TRABAJO DUSTINNN###
-  def histograma_tabla(self,categorias,listaareas):
+ 
+  def histograma_tabla(self,categorias,lista,referencia):
     
     from GUI import instance
       # Contar la frecuencia de cada categoría
@@ -75,9 +75,14 @@ class histogramas:
     ax.bar(categorias, valores, color='blue')
 
     # Añadir etiquetas y título
-    ax.set_xlabel('Codigo de Areas')
-    ax.set_ylabel('Frecuencia')
-    ax.set_title('Gráfico de Barras de Frecuencia')
+    
+    ax.set_ylabel('Cantidad de proyectos')
+    if referencia == 'area':
+        ax.set_title('Cantidad de proyectos por area')
+        ax.set_xlabel('Codigo de area')
+    elif referencia == 'gran_area':
+        ax.set_title('Cantidad de proyectos por gran area')
+        ax.set_xlabel('Codigo de gran area')
 
     # Mostrar el gráfico
     canvas = FigureCanvasTkAgg(fig, master=instance.ventana)
@@ -91,7 +96,7 @@ class histogramas:
     tree.heading('Referencia', text='Referencia')
 
     # Agregar filas al Treeview desde PrettyTable
-    for row in listaareas:
+    for row in lista:
         tree.insert('', 'end', values=row)
 
     # Mostrar el Treeview

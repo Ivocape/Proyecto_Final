@@ -114,9 +114,18 @@ class Cache:
         disciplina=Disciplina(disciplina_id,gran_area_codigo,gran_area_descripcion,area_codigo,area_descripcion,disciplina_codigo,disciplina_descripcion)
         self.ref_disciplina.add(disciplina)   
         #Creo listas para Combobox
-        self.lista_Gran_Areas.add(disciplina.gran_area_descripcion)
-        self.lista_Areas.add(disciplina.area_descripcion)
-        self.lista_Disciplinas.add(disciplina.disciplina_descripcion)
+        if disciplina.gran_area_descripcion == 'SIN DATOS':
+            pass
+        else:
+            self.lista_Gran_Areas.add(disciplina.gran_area_descripcion)
+        if disciplina.area_descripcion == 'SIN DATOS':
+            pass
+        else:
+            self.lista_Areas.add(disciplina.area_descripcion)
+        if disciplina.disciplina_descripcion == 'SIN DATOS':
+            pass
+        else:
+            self.lista_Disciplinas.add(disciplina.disciplina_descripcion)
 
     def cargar_estado_proyecto(self,estado_id,estado_descripcion):
         estado=Estado_proyecto(estado_id,estado_descripcion)

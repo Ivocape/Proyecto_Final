@@ -47,8 +47,10 @@ class GUI:
     def on_select(self, event, valorelegido):
         valorelegido.set(event.widget.get())
 
-    def histograma1(self):
-        self.backend.analisis.areas()
+    def histograma1(self,gran_area):
+        self.backend.analisis.areas(gran_area)
+    def histograma2(self):
+        self.backend.analisis.gran_areas()
     def grafico_de_tortas(self,area,pin):
         #elige el grafico a mostrar segun el pin
         match pin:
@@ -82,24 +84,25 @@ class GUI:
     def run(self):
         # Aca creo varios textos de manera dinamica y que reutilizo codigo al haber modularizado la creacion de los mismos
         self.agregar_texto("Bienvenido al Centro de Computo de la Nacion Argentina", 0.5, 0.05)
-        self.agregar_texto("Seleccione el area de su interes", 0.5, 0.1)
-        self.agregar_texto("Seleccione la disciplina de su interes", 0.5, 0.25)
-        self.agregar_texto("Seleccione la funcion de su interes", 0.5, 0.45)
+        self.agregar_texto("Seleccione el gran area de su interes", 0.5, 0.1)
+        self.agregar_texto("Seleccione el area de su interes", 0.5, 0.25)
+        self.agregar_texto("Seleccione la disciplina de su interes", 0.5, 0.45)
+        self.agregar_texto("Seleccione la funcion de su interes", 0.5, 0.65)
 
         # Aca creo varios combobox y sus botones correspondientes de manera dinamica y que reutilizo codigo al haber modularizado la creacion de los mismos
-        self.crear_combobox(list(self.backend.cache.lista_Gran_Areas), 0.15, "% Hombre/Mujer",0.45 ,0.2,0)
-        self.crear_combobox(list(self.backend.cache.lista_Areas), 0.15, "% Hombre/Mujer",0.45 ,0.2,0)
-        self.crear_combobox((list(self.backend.cache.lista_Disciplinas)), 0.3, "% Hombre/Mujer", 0.45,0.35,1)
+        self.crear_combobox(list(self.backend.cache.lista_Gran_Areas), 0.15, "% Hombre/Mujer",0.5 ,0.2,0)
+        self.crear_combobox(list(self.backend.cache.lista_Areas), 0.3, "% Hombre/Mujer",0.45 ,0.35,0)
+        self.crear_combobox((list(self.backend.cache.lista_Disciplinas)), 0.5, "% Hombre/Mujer", 0.45,0.55,1)
         
-        self.crear_boton("Ver Histograma",0.2,0.2,self.histograma1)
+        self.crear_boton("Ver Histograma en el Gran Area seleccionada",0.2,0.2,self.histograma1)
         self.crear_boton("Tiempo Promedio Finalizacion",0.8,0.2,self.histograma1)#cambiar funcion
 
-        self.crear_boton("Ver Histograma",0.2,0.35,self.histograma1)
+        self.crear_boton("Ver Histograma",0.2,0.35,self.histograma1) ######################ESTE NO SE VA A USAR
         self.crear_boton("Tiempo Promedio Finalizacion",0.8,0.35,self.histograma1)#cambiar funcion
 
-        self.crear_boton("Estadisticas Finacieras",0.2,0.5,lambda :self.grafico_de_tortas(0,2))
-        self.crear_boton("Ver Histograma",0.45,0.5,self.histograma1)     
-        self.crear_boton2("Salir",0.7,0.5,quit)
+        self.crear_boton("Estadisticas Finacieras",0.2,0.75,lambda :self.grafico_de_tortas(0,2))
+        self.crear_boton("Ver Histograma General",0.45,0.75,self.histograma2)     
+        self.crear_boton2("Salir",0.7,0.75,quit)
         self.ventana.mainloop()
 
 # Crear una instancia de la clase GUI y ejecutar la aplicación

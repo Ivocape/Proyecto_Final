@@ -5,6 +5,8 @@ class Analisis:
         self.cantidad_hombres = 0
         self.listaareascodigo=[]
         self.listaareas=set()
+        self.listagranareascodigo=[]
+        self.listagranareas=set()
     
     def __str__(self) -> str:
         return 
@@ -178,7 +180,7 @@ class Analisis:
             cantidadxarea.append((area,self.cantidad_proyectos_area(area)))
             
 ################################### ------Aplicado en un boton ya------ ################################################
-    def areas(self):#lista de areas en los proyectos
+    def areas(self,gran_area):#lista de areas en los proyectos
         from GUI import instance
         
         for proyecto in instance.backend.cache.proyectotal:
@@ -188,12 +190,24 @@ class Analisis:
                         if proyecto_disciplina.disciplina_id==disciplina.disciplina_id:
                             if disciplina.area_descripcion == 'SIN DATOS':
                                 pass
-                            else:
+                            elif disciplina.gran_area_descripcion.upper() == gran_area.upper():
                                 self.listaareascodigo.append(disciplina.area_codigo)
                                 self.listaareas.add((disciplina.area_codigo,disciplina.area_descripcion))
-        instance.backend.histogramas.histograma_tabla(self.listaareascodigo,self.listaareas)
+        instance.backend.histogramas.histograma_tabla(self.listaareascodigo,self.listaareas,'area')
         
-
+    def gran_areas(self):#lista de gran areas en los proyectos
+        from GUI import instance
+        for proyecto in instance.backend.cache.proyectotal:
+            for proyecto_disciplina in instance.backend.cache.proyecto_disciplina:
+                if proyecto.proyecto_id==proyecto_disciplina.proyecto_id:
+                    for disciplina in instance.backend.cache.ref_disciplina:
+                        if proyecto_disciplina.disciplina_id==disciplina.disciplina_id:
+                            if disciplina.gran_area_descripcion == 'SIN DATOS':
+                                pass
+                            else:
+                                self.listagranareascodigo.append(disciplina.gran_area_codigo)
+                                self.listagranareas.add((disciplina.gran_area_codigo,disciplina.gran_area_descripcion))
+        instance.backend.histogramas.histograma_tabla(self.listagranareascodigo,self.listagranareas,'gran area')
                 
         
         
