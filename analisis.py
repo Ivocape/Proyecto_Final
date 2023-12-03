@@ -247,7 +247,7 @@ class Analisis:
                     for proyecto_disciplina in instance.backend.cache.proyecto_disciplina:
                         if proyecto_disciplina.disciplina_id==id_disciplina:
                             for proyecto in instance.backend.cache.proyectotal:
-                                if proyecto.estado_id=='1' and proyecto.proyecto_id==proyecto_disciplina.proyecto_id:
+                                if proyecto.estado_id=='1' and proyecto.proyecto_id==proyecto_disciplina.proyecto_id and proyecto.fecha_fin!='':
                                 
                                     dias+=(proyecto.fecha_fin-proyecto.fecha_inicio).days
                                     contadorproyectos+=1

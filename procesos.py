@@ -10,8 +10,7 @@ class Proyecto:
             self.fecha_fin = ''
         else: 
             self.fecha_fin = datetime.datetime.strptime(fecha_fin, '%Y/%m/%d %H:%M:%S.%f')
-        self.fecha_inicio=fecha_inicio
-        self.fecha_fin=fecha_fin
+        
         self.resumen=resumen
         self.moneda_id=moneda_id
         self.monto_total_solicitado=float(monto_total_solicitado)
