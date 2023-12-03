@@ -3,12 +3,7 @@ class Analisis:
     def __init__(self):
         self.cantidad_mujeres = 0
         self.cantidad_hombres = 0
-        self.listaareascodigo=[]
-        self.listaareas=set()
-        self.listagranareascodigo=[]
-        self.listagranareas=set()
-        self.listadisciplinascodigo=[]
-        self.listadisciplinas=set()
+        
     
     def __str__(self) -> str:
         return 
@@ -184,7 +179,8 @@ class Analisis:
 ################################### ------Aplicado en un boton ya------ ################################################
     def areas(self,gran_area):#lista de areas en los proyectos
         from GUI import instance
-        
+        listaareascodigo=[]
+        listaareas=set()
         for proyecto in instance.backend.cache.proyectotal:
             for proyecto_disciplina in instance.backend.cache.proyecto_disciplina:
                 if proyecto.proyecto_id==proyecto_disciplina.proyecto_id:
@@ -194,14 +190,15 @@ class Analisis:
                                 if disciplina.area_descripcion == 'SIN DATOS':
                                     pass
                                 else:
-                                    self.listaareascodigo.append(disciplina.area_codigo)
-                                    self.listaareas.add((disciplina.area_codigo,disciplina.area_descripcion))
-        instance.backend.histogramas.histograma_tabla(self.listaareascodigo,self.listaareas,'area')
-        self.listaareascodigo=[]
-        self.listaareas=set()
+                                    listaareascodigo.append(disciplina.area_codigo)
+                                    listaareas.add((disciplina.area_codigo,disciplina.area_descripcion))
+        instance.backend.histogramas.histograma_tabla(listaareascodigo,listaareas,'area')
+        
         
     def gran_areas(self):#lista de gran areas en los proyectos
         from GUI import instance
+        listagranareascodigo=[]
+        listagranareas=set()
         for proyecto in instance.backend.cache.proyectotal:
             for proyecto_disciplina in instance.backend.cache.proyecto_disciplina:
                 if proyecto.proyecto_id==proyecto_disciplina.proyecto_id:
@@ -210,14 +207,15 @@ class Analisis:
                             if disciplina.gran_area_descripcion == 'SIN DATOS':
                                 pass
                             else:
-                                self.listagranareascodigo.append(disciplina.gran_area_codigo)
-                                self.listagranareas.add((disciplina.gran_area_codigo,disciplina.gran_area_descripcion))
-        instance.backend.histogramas.histograma_tabla(self.listagranareascodigo,self.listagranareas,'gran area')
-        self.listagranareascodigo=[]
-        self.listagranareas=set()
+                                listagranareascodigo.append(disciplina.gran_area_codigo)
+                                listagranareas.add((disciplina.gran_area_codigo,disciplina.gran_area_descripcion))
+        instance.backend.histogramas.histograma_tabla(listagranareascodigo,listagranareas,'gran area')
+        
                 
     def disciplinasgrafico(self,area):
             from GUI import instance
+            listadisciplinascodigo=[]
+            listadisciplinas=set()
             for proyecto in instance.backend.cache.proyectotal:
                 for proyecto_disciplina in instance.backend.cache.proyecto_disciplina:
                     if proyecto.proyecto_id==proyecto_disciplina.proyecto_id:
@@ -227,11 +225,10 @@ class Analisis:
                                     if disciplina.disciplina_descripcion == 'SIN DATOS':
                                         pass
                                     else:
-                                        self.listadisciplinascodigo.append(disciplina.disciplina_codigo)
-                                        self.listadisciplinas.add((disciplina.disciplina_codigo,disciplina.disciplina_descripcion))
-            instance.backend.histogramas.histograma_tabla(self.listadisciplinascodigo,self.listadisciplinas,'disciplina')
-            self.listadisciplinascodigo=[]
-            self.listadisciplinas=set()
+                                        listadisciplinascodigo.append(disciplina.disciplina_codigo)
+                                        listadisciplinas.add((disciplina.disciplina_codigo,disciplina.disciplina_descripcion))
+            instance.backend.histogramas.histograma_tabla(listadisciplinascodigo,listadisciplinas,'disciplina')
+            
         
                         
             
