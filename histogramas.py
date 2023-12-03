@@ -10,16 +10,37 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 class histogramas:
   def __init__(self):
     pass
- 
-  def mostrar_popup(self,texto,tipo):
+
+  def mostrar_popup(self, mensaje_principal, datos=None):
     from GUI import instance
     instance.ventana = tk.Tk()
-    instance.ventana.title("No hay data para mostrar POPUP")
-    instance.ventana.geometry("600x100")
-    instance.ventana.configure(bg="red")
-    label = tk.Label(instance.ventana, text=(texto + str(tipo)), bg="black", fg="orange")
-    label.pack()
+    instance.ventana.title("Popup")
+    instance.ventana.geometry("600x200")
+    instance.ventana.configure(bg="lightblue")
+
+    #crear una etiqueta con el mensaje principal
+    label_principal = tk.Label(instance.ventana, text=mensaje_principal, bg="white", fg="black", justify="left")
+    label_principal.pack()
+
+    if datos is not None:
+      #crear una etiqueta con los datos
+      label_datos = tk.Label(instance.ventana, text=datos, bg="white", fg="black", justify="left")
+      label_datos.pack()
+    else:
+       #mostrar mensaje indicando que no hay datos
+       label_no_datos = tk.Label(instance.ventana, text="No hay datos para mostrar", bg="red", fg="black", justify="left")
+       label_no_datos.pack()
     instance.ventana.mainloop()
+
+  # def mostrar_popup(self,texto,tipo):
+  #   from GUI import instance
+  #   instance.ventana = tk.Tk()
+  #   instance.ventana.title("No hay data para mostrar POPUP")
+  #   instance.ventana.geometry("600x100")
+  #   instance.ventana.configure(bg="red")
+  #   label = tk.Label(instance.ventana, text=(texto + str(tipo)), bg="black", fg="orange")
+  #   label.pack()
+  #   instance.ventana.mainloop()
 
   def grafico_de_tortas(self,porcentaje1,porcentaje2,texto1,texto2,titulo):
     # Datos para el histograma
