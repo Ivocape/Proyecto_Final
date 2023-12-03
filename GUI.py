@@ -65,8 +65,16 @@ class GUI:
                 self.backend.analisis.porcentaje_monto_financiamiento()
             case 3:
                 self.backend.analisis.porcentaje_participacion_areas(categoria)
+    def grafico_de_tortas2(self, pin):
+        match pin:
+            case 1:
+                self.backend.analisis.porcentaje_proyectos_tecnologia()
+
     def mostrar_data(self):
         self.backend.analisis.cantidad_proyectos_gran_area("CIENCIAS NATURALES Y EXACTAS")
+
+    def mostrar_popup(self, categoria):
+        self.backend.analisis.tiempo_promedio_proyectos_gran_area(categoria)
         
     def on_enter(self, event):
         event.widget.config(bg='gray')  # Cambiar color al pasar el mouse
@@ -96,7 +104,7 @@ class GUI:
         self.crear_combobox(1,list(self.backend.cache.lista_Gran_Areas), 0.15)
         self.crear_boton("Ver Histograma en el Gran Area seleccionada",0.2,0.2,lambda valorelegido=self.valoreselegidos[1]: self.histograma1(valorelegido.get()))
         self.crear_boton("% Hombre/Mujer",0.5,0.2,lambda valorelegido=self.valoreselegidos[1]: self.grafico_de_tortas(valorelegido.get(),0))
-        self.crear_boton("Tiempo Promedio Finalizacion",0.8,0.2,self.histograma1)#cambiar funcion
+        self.crear_boton("Tiempo Promedio Finalizacion",0.8,0.2,lambda valorelegido=self.valoreselegidos[1]: self.mostrar_popup(valorelegido.get()))#cambiar funcion
         
         self.crear_combobox(2,list(self.backend.cache.lista_Areas), 0.3)
         self.crear_boton("Ver Histograma en el Area seleccionada",0.2,0.35,lambda valorelegido=self.valoreselegidos[2]: self.histograma3(valorelegido.get()))
@@ -108,7 +116,7 @@ class GUI:
         
 
        
-        self.crear_boton('Tecnologias empleadas',0.2,0.9,lambda :self.grafico_de_tortas(0,0))##### HACER
+        self.crear_boton('Tecnologias empleadas',0.2,0.9,lambda:self.grafico_de_tortas2(1))
         self.crear_boton("Estadisticas Finacieras",0.5,0.9,lambda :self.grafico_de_tortas(0,2)) #### HACER
         self.crear_boton("Ver Histograma General",0.2,0.75,self.histograma2)
         self.crear_boton('Participacion generos general',0.5,0.75,lambda :self.grafico_de_tortas(0,0))#### HACER'
