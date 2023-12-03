@@ -236,7 +236,7 @@ class Analisis:
                                         listadisciplinas.add((disciplina.disciplina_codigo,disciplina.disciplina_descripcion))
             instance.backend.histogramas.histograma_tabla(listadisciplinascodigo,listadisciplinas,'disciplina')
     
-    ### DUSIN tiempo promedio de finalización AREA                           
+    ### DUSTIN tiempo promedio de finalización AREA                           
     #Visualizar el tiempo promedio de terminación de los proyectos según el área al que pertenecen.
     def tiempo_promedio_proyectos_area(self,area):
         from GUI import instance
@@ -263,7 +263,7 @@ class Analisis:
             else:
                 promedio=dias/contadorproyectos
                 print("El tiempo promedio de terminacion de los proyectos del area",area,"es:",promedio,'dias')
-                instance.backend.histogramas.mostrar_popup('El tiempo promedio de terminacion de los proyectos del area: '+ area + ' es: ' + str(promedio) + 'dias')
+                instance.backend.histogramas.mostrar_popup('El tiempo promedio de terminacion de los proyectos del area: '+ area + ' es: ' + str(promedio) + 'dias', datos=promedio)
     
     #### DUSTIN tiempo promedio de finalización GRAN AREA
     #Visualizar el tiempo promedio de terminación de los proyectos según el gran área al que pertenecen.
@@ -290,7 +290,7 @@ class Analisis:
             else:
                 promedio=dias/contadorproyectos
                 print("El tiempo promedio de terminacion de los proyectos del gran area",gran_area,"es:",promedio,'dias')
-                instance.backend.histogramas.mostrar_popup('El tiempo promedio de terminacion de los proyectos del gran area: '+ gran_area + ' es: ' + str(promedio) + 'dias')      
+                instance.backend.histogramas.mostrar_popup('El tiempo promedio de terminacion de los proyectos del gran area: '+ gran_area + ' es: ' + str(promedio) + 'dias', datos=promedio)      
 
     def porcentaje_monto_financiamiento(self):#Visualizar que porcentaje del monto de financiamiento solicitado efectivamente se le otorgó, segun el monto financiado adjudicado por proyecto.         lista=[]
         lista_financiamiento_proyectos=[]
