@@ -101,5 +101,6 @@ class histogramas:
 
     # Mostrar el Treeview
     tree.pack(side='right', padx=10, pady=10, fill='both')
-    
+  
+
     
