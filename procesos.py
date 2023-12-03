@@ -85,7 +85,10 @@ class Cache:
         self.ref_tipo_proyecto=set()
         self.proyecto_disciplina=set()
         self.proyecto_participante=set()
-        
+        #listas para combobox
+        self.lista_Gran_Areas=set()
+        self.lista_Areas=set()
+        self.lista_Disciplinas=set()
     def cargar(self,año,proyecto_id,fuente, titulo,fecha_inicio,fecha_fin,resumen,moneda_id,monto_total_solicitado,monto_total_adjudicado,monto_financiado_solicitado,monto_financiado_adjudicado,tipo_proyecto_id,codigo_identificacion,palabras_clave,estado_id,fondo_anpcyt,cantidad_miembros_F,cantidad_miembros_M,sexo_director):
         if cantidad_miembros_F=='':
             cantidad_miembros_F=0
@@ -110,6 +113,20 @@ class Cache:
     def cargar_disciplina(self,disciplina_id,gran_area_codigo,gran_area_descripcion,area_codigo,area_descripcion,disciplina_codigo,disciplina_descripcion):
         disciplina=Disciplina(disciplina_id,gran_area_codigo,gran_area_descripcion,area_codigo,area_descripcion,disciplina_codigo,disciplina_descripcion)
         self.ref_disciplina.add(disciplina)   
+        #Creo listas para Combobox
+        if disciplina.gran_area_descripcion == 'SIN DATOS':
+            pass
+        else:
+            self.lista_Gran_Areas.add(disciplina.gran_area_descripcion)
+        if disciplina.area_descripcion == 'SIN DATOS':
+            pass
+        else:
+            self.lista_Areas.add(disciplina.area_descripcion)
+        if disciplina.disciplina_descripcion == 'SIN DATOS':
+            pass
+        else:
+            self.lista_Disciplinas.add(disciplina.disciplina_descripcion)
+
     def cargar_estado_proyecto(self,estado_id,estado_descripcion):
         estado=Estado_proyecto(estado_id,estado_descripcion)
         self.ref_estado_proyecto.add(estado)

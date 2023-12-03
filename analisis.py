@@ -1,15 +1,17 @@
-from histogramas import *
+
 class Analisis:
     def __init__(self):
         self.cantidad_mujeres = 0
         self.cantidad_hombres = 0
-    ##########CAMBIAR TATI#############
+        self.listaareascodigo=[]
+        self.listaareas=set()
+        self.listagranareascodigo=[]
+        self.listagranareas=set()
+    
     def __str__(self) -> str:
         return 
     
-    def tuma(self):
-        return 60,40
-
+    #Porcentaje de participacion de las mujeres en los diferentes proyectos versus la participación de los hombres en todos los proyectos.
     def porcentaje_participacion_generos(self):
      
         from GUI import instance  # Esto puede causar problemas de acoplamiento
@@ -19,10 +21,10 @@ class Analisis:
         total = self.cantidad_mujeres + self.cantidad_hombres
         porcentaje_mujeres = (self.cantidad_mujeres * 100) / total
         porcentaje_hombres = (self.cantidad_hombres * 100) / total
-        instance.backend.histogramas.grafico_de_tortas(porcentaje_mujeres, porcentaje_hombres)
+        instance.backend.histogramas.grafico_de_tortas(porcentaje_mujeres, porcentaje_hombres,"porcentaje de Mujeres ","Porcentaje de Hombres")
 
-        
-    def porcentaje_participacion_gran_areas(self,gran_area):#Visualizar el porcentaje de participación de las mujeres en los diferentes proyectos según el gran area versus la participación de los hombres.
+    #Porcentaje de participación de las mujeres en los diferentes proyectos según el GRAN AREA versus la participación de los hombres.
+    def porcentaje_participacion_gran_areas(self,gran_area):
         from GUI import instance
         
         gran_areas=[disciplina.gran_area_descripcion.upper() for disciplina in instance.backend.cache.ref_disciplina]
@@ -46,13 +48,17 @@ class Analisis:
             if total>0:
                 porcentaje_mujeres=(cantidad_mujeres*100)/total
                 porcentaje_hombres=(cantidad_hombres*100)/total
+                instance.backend.histogramas.grafico_de_tortas(porcentaje_mujeres, porcentaje_hombres,"Porcentaje de Mujeres ","Porcentaje de Hombres",'Distribucion de generos en el gran area: '+gran_area)
                 print("El porcentaje de mujeres es: ",porcentaje_mujeres)
                 print("El porcentaje de hombres es: ",porcentaje_hombres)
             else:
                 print("No hay proyectos en el gran area ",gran_area)
+                instance.backend.histogramas.mostrar_popup("No hay proyectos en el gran area: ",gran_area)
+
+################################### ------Aplicado en un boton ya------ ################################################
+# Porcentaje de participación de las mujeres en los diferentes proyectos según el AREA (sub area) versus la participación de los hombres.
+    def porcentaje_participacion_areas(self,area):
         
-        
-    def porcentaje_participacion_areas(self,area):#Visualizar el porcentaje de participación de las mujeres en los diferentes proyectos según el  area versus la participación de los hombres.
         from GUI import instance
         
         areas=set(disciplina.area_descripcion.upper() for disciplina in instance.backend.cache.ref_disciplina)
@@ -76,12 +82,17 @@ class Analisis:
             if total>0:
                 porcentaje_mujeres=(cantidad_mujeres*100)/total
                 porcentaje_hombres=(cantidad_hombres*100)/total
+                # linkeo a histogramas Grafico de tortas
+                instance.backend.histogramas.grafico_de_tortas(porcentaje_mujeres, porcentaje_hombres,"Porcentaje de Mujeres ","Porcentaje de Hombres",'Distribucion de generos en el sub area: ' +area)
                 print("El porcentaje de mujeres es: ",porcentaje_mujeres)
                 print("El porcentaje de hombres es: ",porcentaje_hombres)
             else:
+                instance.backend.histogramas.mostrar_popup("No hay proyectos en el area",area)
                 print("No hay proyectos en el area",area)    
 
-    def porcentaje_participacion_disciplinas(self,disciplinafiltrar):#Visualizar el porcentaje de participación de las mujeres en los diferentes proyectos según la disciplina versus la participación de los hombres.
+ ################################## ------Aplicado en un boton ya------ ################################################
+ # Porcentaje de participación de las mujeres en los diferentes proyectos según la disciplina versus la participación de los hombres.
+    def porcentaje_participacion_disciplinas(self,disciplinafiltrar):
         from GUI import instance
         
         disciplinas=[disciplina.disciplina_descripcion.upper() for disciplina in instance.backend.cache.ref_disciplina]
@@ -105,13 +116,16 @@ class Analisis:
             if total>0:
                 porcentaje_mujeres=(cantidad_mujeres*100)/total
                 porcentaje_hombres=(cantidad_hombres*100)/total
+                #linkeo a histogramas Grafico de tortas
+                instance.backend.histogramas.grafico_de_tortas(porcentaje_mujeres, porcentaje_hombres,"Porcentaje de Mujeres ","Porcentaje de Hombres",'Distribucion de generos en la disciplina: '+disciplinafiltrar)   
                 print("El porcentaje de mujeres es: ",porcentaje_mujeres)
                 print("El porcentaje de hombres es: ",porcentaje_hombres)
             else:
                 print("No hay proyectos en la ",disciplinafiltrar)
-    
+                instance.backend.histogramas.mostrar_popup("No hay proyectos en la disciplina: ",disciplinafiltrar)
+                
  
-    def lista_proyectos_fecha(self):#guardar y visualizar una lista de proyectos y la fecha de inicio por la fecha de iniciación del proyecto creciente.
+    def lista_proyectos_fecha(self):# guardar y visualizar una lista de proyectos y la fecha de inicio por la fecha de iniciación del proyecto creciente.
         lista=[]
         from GUI import instance  
         for proyecto in instance.backend.cache.proyectotal:
@@ -119,7 +133,7 @@ class Analisis:
         lista.sort()
         print(lista)
     
-    
+################################### ------Aplicado en un boton ya------ ################################################
     def cantidad_proyectos_gran_area(self,gran_area):# cantidad de proyectos por gran area
         from GUI import instance
         gran_areas=[disciplina.gran_area_descripcion.upper() for disciplina in instance.backend.cache.ref_disciplina]
@@ -135,6 +149,7 @@ class Analisis:
                         if proyecto_disciplina.disciplina_id==id_disciplina:
                             cantidad+=1
             print("La cantidad de proyectos en el gran area",gran_area,"es:",cantidad)
+            #linkeo a histogramas mostrar dato
             instance.backend.histogramas.mostrar_dato(cantidad)
 
     def cantidad_proyectos_area(self,area):# cantidad de proyectos por  area
@@ -164,10 +179,10 @@ class Analisis:
             
             cantidadxarea.append((area,self.cantidad_proyectos_area(area)))
             
-
-    def listaareas(self):#lista de areas en los proyectos
+################################### ------Aplicado en un boton ya------ ################################################
+    def areas(self,gran_area):#lista de areas en los proyectos
         from GUI import instance
-        listaareas=[]
+        
         for proyecto in instance.backend.cache.proyectotal:
             for proyecto_disciplina in instance.backend.cache.proyecto_disciplina:
                 if proyecto.proyecto_id==proyecto_disciplina.proyecto_id:
@@ -175,10 +190,24 @@ class Analisis:
                         if proyecto_disciplina.disciplina_id==disciplina.disciplina_id:
                             if disciplina.area_descripcion == 'SIN DATOS':
                                 pass
+                            elif disciplina.gran_area_descripcion.upper() == gran_area.upper():
+                                self.listaareascodigo.append(disciplina.area_codigo)
+                                self.listaareas.add((disciplina.area_codigo,disciplina.area_descripcion))
+        instance.backend.histogramas.histograma_tabla(self.listaareascodigo,self.listaareas,'area')
+        
+    def gran_areas(self):#lista de gran areas en los proyectos
+        from GUI import instance
+        for proyecto in instance.backend.cache.proyectotal:
+            for proyecto_disciplina in instance.backend.cache.proyecto_disciplina:
+                if proyecto.proyecto_id==proyecto_disciplina.proyecto_id:
+                    for disciplina in instance.backend.cache.ref_disciplina:
+                        if proyecto_disciplina.disciplina_id==disciplina.disciplina_id:
+                            if disciplina.gran_area_descripcion == 'SIN DATOS':
+                                pass
                             else:
-                                listaareas.append(disciplina.area_descripcion)
-        instance.backend.histogramas.crear_histograma(listaareas)
-
+                                self.listagranareascodigo.append(disciplina.gran_area_codigo)
+                                self.listagranareas.add((disciplina.gran_area_codigo,disciplina.gran_area_descripcion))
+        instance.backend.histogramas.histograma_tabla(self.listagranareascodigo,self.listagranareas,'gran area')
                 
         
         
@@ -209,16 +238,22 @@ class Analisis:
 
     def porcentaje_monto_financiamiento(self):#Visualizar que porcentaje del monto de financiamiento solicitado efectivamente se le otorgó, segun el monto financiado adjudicado por proyecto.         lista=[]
         lista_financiamiento_proyectos=[]
+        cont=0
         from GUI import instance
         for proyecto in instance.backend.cache.proyectotal:
             if proyecto.monto_financiado_solicitado==0:
-                porcentaje_adjudicado=0
-                lista_financiamiento_proyectos.append(porcentaje_adjudicado)                
+                pass
+                #Aca yo creo que no tendriamos que sumar nada
+                #porcentaje_adjudicado=0
+                #lista_financiamiento_proyectos.append(porcentaje_adjudicado)                
             else:
-               porcentaje_adjudicado=(proyecto.monto_financiado_adjudicado*100)/proyecto.monto_financiado_solicitado
-               lista_financiamiento_proyectos.append(porcentaje_adjudicado)
-            
-        print(lista_financiamiento_proyectos)
+                porcentaje_adjudicado=(proyecto.monto_financiado_adjudicado*100)/proyecto.monto_financiado_solicitado
+                lista_financiamiento_proyectos.append(porcentaje_adjudicado)
+                cont+=1
+        total=sum(lista_financiamiento_proyectos)
+        promedio=total/cont
+        instance.backend.histogramas.grafico_de_tortas(promedio, 100-promedio, "Porcentaje de financiamiento adjudicado", "Porcentaje de financiamiento no adjudicado")
+        
 
     def porcentaje_proyectos_tecnologia(self): # Visualizar el porcentaje de proyectos que han utilizado tecnologías emergentes (Tecnología e innovación)
         cantidad=0
