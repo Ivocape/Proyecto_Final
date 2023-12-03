@@ -283,6 +283,9 @@ class Analisis:
                     cantidad+=1
         total=len(instance.backend.cache.proyectotal)
         porcentaje=(cantidad*100)/total
-        print("El porcentaje de proyectos de tecnologia es:",porcentaje)
+        print("El porcentaje de proyectos con tecnologias emergentes es:",porcentaje)
+        instance.backend.histogramas.grafico_de_tortas(porcentaje, (100-porcentaje), "Porcentaje de proyectos con tecnologias emergentes", "Porcentaje de proyectos sin tecnologias emergentes", "Tecnologias emergentes")
+        
+
 
 
