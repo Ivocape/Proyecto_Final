@@ -59,7 +59,7 @@ class GUI:
             case 2:
                 self.backend.analisis.porcentaje_monto_financiamiento()
             case 3:
-                pass
+                self.backend.analisis.porcentaje_proyectos_tecnologia()
     def mostrar_data(self):
         self.backend.analisis.cantidad_proyectos_gran_area("CIENCIAS NATURALES Y EXACTAS")
         
@@ -98,8 +98,9 @@ class GUI:
         self.crear_boton("Tiempo Promedio Finalizacion",0.8,0.35,self.histograma1)#cambiar funcion
 
         self.crear_boton("Estadisticas Finacieras",0.2,0.5,lambda :self.grafico_de_tortas(0,2))
-        self.crear_boton("Ver Histograma",0.45,0.5,self.histograma1)     
-        self.crear_boton2("Salir",0.7,0.5,quit)
+        self.crear_boton("Ver Histograma",0.45,0.5,self.histograma1)
+        self.crear_boton("Tecnologia en Proyetos",0.7,0.5,lambda :self.grafico_de_tortas(0,3))    
+        self.crear_boton2("Salir",0.7,0.9,quit)
         self.ventana.mainloop()
 
 # Crear una instancia de la clase GUI y ejecutar la aplicación

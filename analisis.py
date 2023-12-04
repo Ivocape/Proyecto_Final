@@ -243,11 +243,10 @@ class Analisis:
         cantidad=0
         from GUI import instance
         for proyecto in instance.backend.cache.proyectotal:
-            for tipo in instance.backend.cache.ref_tipo_proyecto:
-                if proyecto.tipo_proyecto_id==tipo.tipo_proyecto_id and tipo.tipo_proyecto_descripcion == 'Tecnología e Innovación': 
+                if proyecto.tipo_proyecto_id==23: 
                     cantidad+=1
         total=len(instance.backend.cache.proyectotal)
         porcentaje=(cantidad*100)/total
-        print("El porcentaje de proyectos de tecnologia es:",porcentaje)
+        instance.backend.histogramas.grafico_de_tortas(porcentaje, 100-porcentaje, "Porcentaje de proyectos de tecnologia", "Porcentaje de proyectos que no son de tecnologia")
 
 
