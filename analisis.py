@@ -278,7 +278,7 @@ class Analisis:
                 instance.backend.histogramas.mostrar_popup('No hay proyectos en el area: '+ area)
             else:
                 promedio=dias/contadorproyectos
-                round(promedio,0)
+                promedio=round(promedio,0)
                 print("El tiempo promedio de terminacion de los proyectos del area",area,"es:",promedio,'dias')
                 instance.backend.histogramas.mostrar_popup('El tiempo promedio de terminacion de los proyectos del area: '+ area + ' es: ' + str(promedio) + 'dias', datos=promedio)
     
@@ -314,19 +314,19 @@ class Analisis:
     def porcentaje_monto_financiamiento(self):#Visualizar que porcentaje del monto de financiamiento solicitado efectivamente se le otorgó, segun el monto financiado adjudicado por proyecto.         lista=[]
         lista_financiamiento_proyectos=[]
         cont=0
+        suma=0
         from GUI import instance
         for proyecto in instance.backend.cache.proyectotal:
             if proyecto.monto_financiado_solicitado==0:
                 pass
-                #Aca yo creo que no tendriamos que sumar nada
-                #porcentaje_adjudicado=0
-                #lista_financiamiento_proyectos.append(porcentaje_adjudicado)                
+                                
             else:
                 porcentaje_adjudicado=(proyecto.monto_financiado_adjudicado*100)/proyecto.monto_financiado_solicitado
-                lista_financiamiento_proyectos.append(porcentaje_adjudicado)
+                suma+=porcentaje_adjudicado
                 cont+=1
-        total=sum(lista_financiamiento_proyectos)
-        promedio=total/cont
+        
+        promedio=suma/cont
+        promedio=round(promedio,2) 
         instance.backend.histogramas.grafico_de_tortas(promedio, 100-promedio, "Porcentaje de financiamiento adjudicado", "Porcentaje de financiamiento no adjudicado", "Financiamiento de proyectos")
         
 
