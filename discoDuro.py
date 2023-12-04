@@ -9,7 +9,7 @@ class DiscoDuro():
 
     def leerSETUP (self, carpeta):    
         # Abrir el archivo CSV
-        with open(carpeta,'r', newline='',encoding='utf-8') as csvfile: 
+        with open("../" + carpeta,'r', newline='',encoding='utf-8') as csvfile: 
             # Crear un objeto lector CSV
             reader = csv.reader(csvfile, delimiter=';', quotechar='"')
             next(reader)

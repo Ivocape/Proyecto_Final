@@ -12,42 +12,40 @@ class histogramas:
     pass
 
   def mostrar_popup(self, mensaje_principal, datos=None):
-    from GUI import instance
-    instance.ventana = tk.Tk()
-    instance.ventana.title("Popup")
-    instance.ventana.geometry("600x200")
-    instance.ventana.configure(bg="lightblue")
+    nuevaventana = tk.Tk()
+    nuevaventana.title("Popup")
+    nuevaventana.geometry("600x200")
+    nuevaventana.configure(bg="lightblue")
 
     #crear una etiqueta con el mensaje principal
-    label_principal = tk.Label(instance.ventana, text=mensaje_principal, bg="white", fg="black", justify="left", font=("Arial", 30))
+    label_principal = tk.Label(nuevaventana, text=mensaje_principal, bg="white", fg="black", justify="left", font=("Arial", 30))
     label_principal.pack()
 
     if datos is not None:
       #crear una etiqueta con los datos
-      label_datos = tk.Label(instance.ventana, text=datos, bg="white", fg="black", justify="left")
+      label_datos = tk.Label(nuevaventana, text=datos, bg="white", fg="black", justify="left")
       label_datos.pack()
     else:
        #mostrar mensaje indicando que no hay datos
-       label_no_datos = tk.Label(instance.ventana, text="No hay datos para mostrar", bg="red", fg="black", justify="left", font=("Arial", 26))
+       label_no_datos = tk.Label(nuevaventana, text="No hay datos para mostrar", bg="red", fg="black", justify="left", font=("Arial", 26))
        label_no_datos.pack()
-    instance.ventana.mainloop()
+    nuevaventana.mainloop()
 
   # def mostrar_popup(self,texto,tipo):
   #   from GUI import instance
-  #   instance.ventana = tk.Tk()
-  #   instance.ventana.title("No hay data para mostrar POPUP")
-  #   instance.ventana.geometry("600x100")
-  #   instance.ventana.configure(bg="red")
-  #   label = tk.Label(instance.ventana, text=(texto + str(tipo)), bg="black", fg="orange")
+  #   nuevaventana = tk.Tk()
+  #   nuevaventana.title("No hay data para mostrar POPUP")
+  #   nuevaventana.geometry("600x100")
+  #   nuevaventana.configure(bg="red")
+  #   label = tk.Label(nuevaventana, text=(texto + str(tipo)), bg="black", fg="orange")
   #   label.pack()
-  #   instance.ventana.mainloop()
+  #   nuevaventana.mainloop()
 
   def grafico_de_tortas(self,porcentaje1,porcentaje2,texto1,texto2,titulo):
     # Datos para el histograma
-    from GUI import instance
-    instance.ventana = tk.Tk()
+    nuevaventana = tk.Tk()
     
-    instance.ventana.title("Grafico de tortas")
+    nuevaventana.title("Grafico de tortas")
     print(porcentaje1,porcentaje2)
     porcentajes = [porcentaje1,porcentaje2]
     # Crear figura de Matplotlib
@@ -67,21 +65,19 @@ class histogramas:
     ax.set_title(titulo)
 
     # Crear el lienzo para el gráfico en tkinter
-    canvas = FigureCanvasTkAgg(fig, master=instance.ventana)
+    canvas = FigureCanvasTkAgg(fig, master=nuevaventana)
     canvas.draw()
     canvas.get_tk_widget().pack(expand=True,fill='both',)
     
   def mostrar_dato(self,categoria):
-    from GUI import instance
-    instance.ventana = tk.Tk()
+    nuevaventana = tk.Tk()
     
-    instance.ventana.title("Mostrar Dato")
+    nuevaventana.title("Mostrar Dato")
   
   
   def tabla(self,lista):
-    from GUI import instance
-    instance.ventana = tk.Tk()
-    tree = ttk.Treeview(instance.ventana, columns=('Fecha', 'Titulo'), show='headings')
+    nuevaventana = tk.Tk()
+    tree = ttk.Treeview(nuevaventana, columns=('Fecha', 'Titulo'), show='headings')
     tree.heading('Fecha', text='Fecha')
     tree.heading('Titulo', text='Titulo')
     tree.column('Fecha', width=100)
@@ -96,9 +92,8 @@ class histogramas:
  
   def histograma_tabla(self,categorias,lista,referencia):
     
-    from GUI import instance
       # Contar la frecuencia de cada categoría
-    instance.ventana=tk.Tk()
+    nuevaventana=tk.Tk()
     frecuencia = Counter(categorias)
 
     # Obtener las categorías y las frecuencias por separado
@@ -120,13 +115,13 @@ class histogramas:
         ax.set_xlabel('Codigo de gran area')
 
     # Mostrar el gráfico
-    canvas = FigureCanvasTkAgg(fig, master=instance.ventana)
+    canvas = FigureCanvasTkAgg(fig, master=nuevaventana)
     canvas_widget = canvas.get_tk_widget()
     canvas_widget.pack(side='left', padx=10, pady=10,fill='both', expand=True)
 
 
     # Crear el Treeview y agregar las columnas
-    tree = ttk.Treeview(instance.ventana, columns=('Código', 'Referencia'), show='headings')
+    tree = ttk.Treeview(nuevaventana, columns=('Código', 'Referencia'), show='headings')
     tree.heading('Código', text='Código')
     tree.heading('Referencia', text='Referencia')
 

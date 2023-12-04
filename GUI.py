@@ -13,7 +13,7 @@ class GUI:
         self.ventana.geometry(f"{self.ancho_ventana}x{self.alto_ventana}")
        
         # Cargar la imagen de fondo
-        self.ruta_imagen = "fotoArg.png"  # Reemplaza con la ruta de tu imagen
+        self.ruta_imagen = "../fotoArg.png"  # Reemplaza con la ruta de tu imagen
         self.imagen_fondo = tk.PhotoImage(file=self.ruta_imagen)
 
         # Crear un widget Canvas para la imagen de fondo
@@ -124,7 +124,7 @@ class GUI:
         self.crear_boton("Estadisticas Finacieras",0.5,0.82,lambda :self.grafico_de_tortas(0,2)) #### HACER
         self.crear_boton("Ver Histograma General",0.2,0.75,self.histograma2)
         self.crear_boton('Participacion generos general',0.5,0.75,lambda :self.grafico_de_tortas(0,5))#### HACER'
-        self.crear_boton2("Salir",0.8,0.9,quit)
+        self.crear_boton2("Salir",0.8,0.9,lambda:self.ventana.destroy())
         self.crear_boton('Ver Proyectos',0.8,0.75,lambda:self.mostrar_proyectos())
         self.crear_boton('Ver Financiacion Proyectos',0.8,0.82,lambda:self.backend.analisis.lista_proyectos_financiacion())
         self.ventana.mainloop()
