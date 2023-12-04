@@ -19,7 +19,7 @@ class histogramas:
     instance.ventana.configure(bg="lightblue")
 
     #crear una etiqueta con el mensaje principal
-    label_principal = tk.Label(instance.ventana, text=mensaje_principal, bg="white", fg="black", justify="left")
+    label_principal = tk.Label(instance.ventana, text=mensaje_principal, bg="white", fg="black", justify="left", font=("Arial", 30))
     label_principal.pack()
 
     if datos is not None:
@@ -28,7 +28,7 @@ class histogramas:
       label_datos.pack()
     else:
        #mostrar mensaje indicando que no hay datos
-       label_no_datos = tk.Label(instance.ventana, text="No hay datos para mostrar", bg="red", fg="black", justify="left")
+       label_no_datos = tk.Label(instance.ventana, text="No hay datos para mostrar", bg="red", fg="black", justify="left", font=("Arial", 26))
        label_no_datos.pack()
     instance.ventana.mainloop()
 
@@ -47,18 +47,18 @@ class histogramas:
     from GUI import instance
     instance.ventana = tk.Tk()
     
-    instance.ventana.title("Tortas con Matplotlib")
+    instance.ventana.title("Grafico de tortas")
     print(porcentaje1,porcentaje2)
     porcentajes = [porcentaje1,porcentaje2]
     # Crear figura de Matplotlib
-    fig = Figure(figsize=(6, 4), dpi=100)
+    fig = Figure(figsize=(9, 5), dpi=100)
     ax = fig.add_subplot(111)
 
     # Etiquetas para cada sección del gráfico
     etiquetas = [texto1, texto2]
 
     # Colores para cada sección del gráfico
-    colores = ['purple', 'blue']
+    colores = ['#E74C3C', '#85C1E9']
 
     # Crear el gráfico de torta
     ax.pie(porcentajes, labels=etiquetas, colors=colores, autopct='%1.1f%%', startangle=90)
@@ -69,7 +69,7 @@ class histogramas:
     # Crear el lienzo para el gráfico en tkinter
     canvas = FigureCanvasTkAgg(fig, master=instance.ventana)
     canvas.draw()
-    canvas.get_tk_widget().pack(expand=True,fill='both')
+    canvas.get_tk_widget().pack(expand=True,fill='both',)
     
   def mostrar_dato(self,categoria):
     from GUI import instance
@@ -107,7 +107,7 @@ class histogramas:
 
     # Crear el gráfico de barras
     fig, ax = plt.subplots()
-    ax.bar(categorias, valores, color='blue')
+    ax.bar(categorias, valores, color='#95EBF7')
 
     # Añadir etiquetas y título
     

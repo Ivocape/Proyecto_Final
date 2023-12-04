@@ -64,13 +64,10 @@ class GUI:
             case 2:
                 self.backend.analisis.porcentaje_monto_financiamiento()
             case 3:
-                self.backend.analisis.porcentaje_proyectos_tecnologia()
                 self.backend.analisis.porcentaje_participacion_areas(categoria)
-    def grafico_de_tortas2(self, pin):
-        match pin:
-            case 1:
+            case 4:
                 self.backend.analisis.porcentaje_proyectos_tecnologia()
-            case 2:
+            case 5:
                 self.backend.analisis.porcentaje_participacion_generos()
 
     def mostrar_data(self):
@@ -123,10 +120,10 @@ class GUI:
         
 
        
-        self.crear_boton('Tecnologias empleadas',0.2,0.9,lambda:self.grafico_de_tortas2(1))
+        self.crear_boton('Tecnologias empleadas',0.2,0.9,lambda:self.grafico_de_tortas(0,4))
         self.crear_boton("Estadisticas Finacieras",0.5,0.9,lambda :self.grafico_de_tortas(0,2)) #### HACER
         self.crear_boton("Ver Histograma General",0.2,0.75,self.histograma2)
-        self.crear_boton('Participacion generos general',0.5,0.75,lambda :self.grafico_de_tortas2(2))#### HACER'
+        self.crear_boton('Participacion generos general',0.5,0.75,lambda :self.grafico_de_tortas(0,5))#### HACER'
         self.crear_boton2("Salir",0.8,0.9,quit)
         self.crear_boton('Ver Proyectos',0.8,0.75,lambda:self.mostrar_proyectos())#### HACER
         self.ventana.mainloop()

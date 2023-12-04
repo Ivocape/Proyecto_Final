@@ -94,19 +94,15 @@ class Cache:
         if cantidad_miembros_M=='':
             cantidad_miembros_M=0
         proyecto=Proyecto(proyecto_id,fuente, titulo,fecha_inicio,fecha_fin,resumen,moneda_id,monto_total_solicitado,monto_total_adjudicado,monto_financiado_solicitado,monto_financiado_adjudicado,tipo_proyecto_id,codigo_identificacion,palabras_clave,estado_id,fondo_anpcyt,cantidad_miembros_F,cantidad_miembros_M,sexo_director)
-        
+        self.proyectotal.add(proyecto)
         if año==2015:
             self.proyec2015.add(proyecto)
-            self.proyectotal.add(proyecto)
         elif año==2016:
             self.proyec2016.add(proyecto)
-            self.proyectotal.add(proyecto)
         elif año==2017:
             self.proyec2017.add(proyecto)
-            self.proyectotal.add(proyecto)
         elif año==2018:
             self.proyec2018.add(proyecto)
-            self.proyectotal.add(proyecto)
         else:
             print("Año incorrecto")
     def cargar_disciplina(self,disciplina_id,gran_area_codigo,gran_area_descripcion,area_codigo,area_descripcion,disciplina_codigo,disciplina_descripcion):

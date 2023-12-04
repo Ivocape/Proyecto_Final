@@ -47,10 +47,8 @@ class Analisis:
                 porcentaje_mujeres=(cantidad_mujeres*100)/total
                 porcentaje_hombres=(cantidad_hombres*100)/total
                 instance.backend.histogramas.grafico_de_tortas(porcentaje_mujeres, porcentaje_hombres,"Porcentaje de Mujeres ","Porcentaje de Hombres",'Distribucion de generos en el gran area: '+gran_area)
-                print("El porcentaje de mujeres es: ",porcentaje_mujeres)
-                print("El porcentaje de hombres es: ",porcentaje_hombres)
+
             else:
-                print("No hay proyectos en el gran area ",gran_area)
                 instance.backend.histogramas.mostrar_popup("No hay proyectos en el gran area: " + gran_area)
 
 ################################### ------Aplicado en un boton ya------ ################################################
@@ -96,7 +94,7 @@ class Analisis:
         
         disciplinas=[disciplina.disciplina_descripcion.upper() for disciplina in instance.backend.cache.ref_disciplina]
         if disciplinafiltrar.upper() not in disciplinas:
-            print("El área ingresada no es válida.")
+            instance.backend.histogramas.mostrar_popup('La disciplina ingresada no es válida.')
         else:
             cantidad_mujeres=0
             cantidad_hombres=0
@@ -188,19 +186,22 @@ class Analisis:
         from GUI import instance
         listaareascodigo=[]
         listaareas=set()
-        for proyecto in instance.backend.cache.proyectotal:
-            for proyecto_disciplina in instance.backend.cache.proyecto_disciplina:
-                if proyecto.proyecto_id==proyecto_disciplina.proyecto_id:
-                    for disciplina in instance.backend.cache.ref_disciplina:
-                        if proyecto_disciplina.disciplina_id==disciplina.disciplina_id:
-                            if disciplina.gran_area_descripcion == gran_area:
-                                if disciplina.area_descripcion == 'SIN DATOS':
-                                    pass
-                                else:
-                                    listaareascodigo.append(disciplina.area_codigo)
-                                    listaareas.add((disciplina.area_codigo,disciplina.area_descripcion))
-        instance.backend.histogramas.histograma_tabla(listaareascodigo,listaareas,'area')
-        
+        if gran_area in instance.backend.cache.lista_Gran_Areas:    
+            for proyecto in instance.backend.cache.proyectotal:
+                for proyecto_disciplina in instance.backend.cache.proyecto_disciplina:
+                    if proyecto.proyecto_id==proyecto_disciplina.proyecto_id:
+                        for disciplina in instance.backend.cache.ref_disciplina:
+                            if proyecto_disciplina.disciplina_id==disciplina.disciplina_id:
+                                if disciplina.gran_area_descripcion == gran_area:
+                                    if disciplina.area_descripcion == 'SIN DATOS':
+                                        pass
+                                    else:
+                                        listaareascodigo.append(disciplina.area_codigo)
+                                        listaareas.add((disciplina.area_codigo,disciplina.area_descripcion))
+            instance.backend.histogramas.histograma_tabla(listaareascodigo,listaareas,'area')
+        else:
+            instance.backend.histogramas.mostrar_popup('No hay proyectos en el Gran area: '+ gran_area)
+    
     #lista de gran areas en los proyectos    
     def gran_areas(self):
         from GUI import instance
@@ -212,7 +213,7 @@ class Analisis:
                     for disciplina in instance.backend.cache.ref_disciplina:
                         if proyecto_disciplina.disciplina_id==disciplina.disciplina_id:
                             if disciplina.gran_area_descripcion == 'SIN DATOS':
-                                pass
+                               pass
                             else:
                                 listagranareascodigo.append(disciplina.gran_area_codigo)
                                 listagranareas.add((disciplina.gran_area_codigo,disciplina.gran_area_descripcion))
@@ -223,19 +224,21 @@ class Analisis:
             from GUI import instance
             listadisciplinascodigo=[]
             listadisciplinas=set()
-            for proyecto in instance.backend.cache.proyectotal:
-                for proyecto_disciplina in instance.backend.cache.proyecto_disciplina:
-                    if proyecto.proyecto_id==proyecto_disciplina.proyecto_id:
-                        for disciplina in instance.backend.cache.ref_disciplina:
-                            if proyecto_disciplina.disciplina_id==disciplina.disciplina_id:
-                                if disciplina.area_descripcion == area:
-                                    if disciplina.disciplina_descripcion == 'SIN DATOS':
-                                        pass
-                                    else:
-                                        listadisciplinascodigo.append(disciplina.disciplina_codigo)
-                                        listadisciplinas.add((disciplina.disciplina_codigo,disciplina.disciplina_descripcion))
-            instance.backend.histogramas.histograma_tabla(listadisciplinascodigo,listadisciplinas,'disciplina')
-    
+            if area in instance.backend.cache.lista_Areas:
+                for proyecto in instance.backend.cache.proyectotal:
+                    for proyecto_disciplina in instance.backend.cache.proyecto_disciplina:
+                        if proyecto.proyecto_id==proyecto_disciplina.proyecto_id:
+                            for disciplina in instance.backend.cache.ref_disciplina:
+                                if proyecto_disciplina.disciplina_id==disciplina.disciplina_id:
+                                    if disciplina.area_descripcion == area:
+                                        if disciplina.disciplina_descripcion == 'SIN DATOS':
+                                            pass
+                                        else:
+                                            listadisciplinascodigo.append(disciplina.disciplina_codigo)
+                                            listadisciplinas.add((disciplina.disciplina_codigo,disciplina.disciplina_descripcion))
+                instance.backend.histogramas.histograma_tabla(listadisciplinascodigo,listadisciplinas,'disciplina')
+            else:
+                instance.backend.histogramas.mostrar_popup('No hay proyectos en el area: '+ area)
                             
     #Visualizar el tiempo promedio de terminación de los proyectos según el área al que pertenecen.
     def tiempo_promedio_proyectos_area(self,area):
@@ -311,20 +314,24 @@ class Analisis:
                 cont+=1
         total=sum(lista_financiamiento_proyectos)
         promedio=total/cont
-        instance.backend.histogramas.grafico_de_tortas(promedio, 100-promedio, "Porcentaje de financiamiento adjudicado", "Porcentaje de financiamiento no adjudicado")
+        instance.backend.histogramas.grafico_de_tortas(promedio, 100-promedio, "Porcentaje de financiamiento adjudicado", "Porcentaje de financiamiento no adjudicado", "Financiamiento de proyectos")
         
 
     def porcentaje_proyectos_tecnologia(self): # Visualizar el porcentaje de proyectos que han utilizado tecnologías emergentes (Tecnología e innovación)
         cantidad=0
+        lista=[]
         from GUI import instance
+        for a in instance.backend.cache.ref_tipo_proyecto:
+            if a.tipo_proyecto_descripcion=='Tecnología e Innovación':
+                lista= a.id
+        print(lista)
         for proyecto in instance.backend.cache.proyectotal:
-                if proyecto.tipo_proyecto_id==23: 
-                    cantidad+=1
+            if proyecto.tipo_proyecto_id in lista:
+                cantidad+=1
         total=len(instance.backend.cache.proyectotal)
         porcentaje=(cantidad*100)/total
-        print("El porcentaje de proyectos con tecnologias emergentes es:",porcentaje)
-        instance.backend.histogramas.grafico_de_tortas(porcentaje, (100-porcentaje), "Porcentaje de proyectos con tecnologias emergentes", "Porcentaje de proyectos sin tecnologias emergentes", "Tecnologias emergentes")
-        
+        instance.backend.histogramas.grafico_de_tortas(porcentaje, (100-porcentaje), "Con tecnologias emergentes", "Sin tecnologias emergentes", "Tecnologias emergentes")
+
 
 
 
