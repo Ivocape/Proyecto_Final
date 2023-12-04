@@ -69,13 +69,18 @@ class GUI:
         match pin:
             case 1:
                 self.backend.analisis.porcentaje_proyectos_tecnologia()
+            case 2:
+                self.backend.analisis.porcentaje_participacion_generos()
 
     def mostrar_data(self):
         self.backend.analisis.cantidad_proyectos_gran_area("CIENCIAS NATURALES Y EXACTAS")
 
     def mostrar_popup(self, categoria):
         self.backend.analisis.tiempo_promedio_proyectos_gran_area(categoria)
-        
+    
+    def mostrar_proyectos(self):
+        self.backend.analisis.lista_proyectos_fecha()
+    
     def on_enter(self, event):
         event.widget.config(bg='gray')  # Cambiar color al pasar el mouse
     def on_leave(self, event):
@@ -93,6 +98,7 @@ class GUI:
         boton.bind("<Leave>", self.on_leave2)
 
     def run(self):
+        from GUI import instance
         # Aca creo varios textos de manera dinamica y que reutilizo codigo al haber modularizado la creacion de los mismos
         self.agregar_texto("Bienvenido al Centro de Computo de la Nacion Argentina", 0.5, 0.05)
         self.agregar_texto("Seleccione el gran area de su interes", 0.5, 0.1)
@@ -104,12 +110,12 @@ class GUI:
         self.crear_combobox(1,list(self.backend.cache.lista_Gran_Areas), 0.15)
         self.crear_boton("Ver Histograma en el Gran Area seleccionada",0.2,0.2,lambda valorelegido=self.valoreselegidos[1]: self.histograma1(valorelegido.get()))
         self.crear_boton("% Hombre/Mujer",0.5,0.2,lambda valorelegido=self.valoreselegidos[1]: self.grafico_de_tortas(valorelegido.get(),0))
-        self.crear_boton("Tiempo Promedio Finalizacion",0.8,0.2,lambda valorelegido=self.valoreselegidos[1]: self.mostrar_popup(valorelegido.get()))#cambiar funcion
+        self.crear_boton("Tiempo Promedio Finalizacion",0.8,0.2,lambda valorelegido=self.valoreselegidos[1]: instance.backend.analisis.tiempo_promedio_proyectos_gran_area(valorelegido.get()))#cambiar funcion
         
         self.crear_combobox(2,list(self.backend.cache.lista_Areas), 0.3)
         self.crear_boton("Ver Histograma en el Area seleccionada",0.2,0.35,lambda valorelegido=self.valoreselegidos[2]: self.histograma3(valorelegido.get()))
         self.crear_boton("% Hombre/Mujer",0.5,0.35,lambda valorelegido=self.valoreselegidos[2]: self.grafico_de_tortas(valorelegido.get(),3))
-        self.crear_boton("Tiempo Promedio Finalizacion",0.8,0.35,self.histograma1)#cambiar funcion
+        self.crear_boton("Tiempo Promedio Finalizacion",0.8,0.35,lambda valorelegido=self.valoreselegidos[2]:instance.backend.analisis.tiempo_promedio_proyectos_area(valorelegido.get()))#cambiar funcion
         
         self.crear_combobox(3,(list(self.backend.cache.lista_Disciplinas)),0.45)
         self.crear_boton("% Hombre/Mujer",0.5,0.5,lambda valorelegido=self.valoreselegidos[3]: self.grafico_de_tortas(valorelegido.get(),1))
@@ -119,10 +125,12 @@ class GUI:
         self.crear_boton('Tecnologias empleadas',0.2,0.9,lambda:self.grafico_de_tortas2(1))
         self.crear_boton("Estadisticas Finacieras",0.5,0.9,lambda :self.grafico_de_tortas(0,2)) #### HACER
         self.crear_boton("Ver Histograma General",0.2,0.75,self.histograma2)
-        self.crear_boton('Participacion generos general',0.5,0.75,lambda :self.grafico_de_tortas(0,0))#### HACER'
-        self.crear_boton('Ver Proyectos',0.8,0.75,self.mostrar_data)#### HACER
+        self.crear_boton('Participacion generos general',0.5,0.75,lambda :self.grafico_de_tortas2(2))#### HACER'
         self.crear_boton2("Salir",0.8,0.9,quit)
+        self.crear_boton('Ver Proyectos',0.8,0.75,lambda:self.mostrar_proyectos())#### HACER
         self.ventana.mainloop()
+        
+        
 
 # Crear una instancia de la clase GUI y ejecutar la aplicación
 instance= GUI()

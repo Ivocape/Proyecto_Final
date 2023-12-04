@@ -78,7 +78,21 @@ class histogramas:
     instance.ventana.title("Mostrar Dato")
   
   
-  
+  def tabla(self,lista):
+    from GUI import instance
+    instance.ventana = tk.Tk()
+    tree = ttk.Treeview(instance.ventana, columns=('Fecha', 'Titulo'), show='headings')
+    tree.heading('Fecha', text='Fecha')
+    tree.heading('Titulo', text='Titulo')
+    tree.column('Fecha', width=100)
+    tree.column('Titulo', width=600)
+
+    # Agregar filas al Treeview desde PrettyTable
+    for row in lista:
+        tree.insert('', 'end', values=row)
+
+    # Mostrar el Treeview
+    tree.pack(padx=10, pady=10, fill='both',expand=True)
  
   def histograma_tabla(self,categorias,lista,referencia):
     

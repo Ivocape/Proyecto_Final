@@ -18,7 +18,7 @@ class Analisis:
         total = self.cantidad_mujeres + self.cantidad_hombres
         porcentaje_mujeres = (self.cantidad_mujeres * 100) / total
         porcentaje_hombres = (self.cantidad_hombres * 100) / total
-        instance.backend.histogramas.grafico_de_tortas(porcentaje_mujeres, porcentaje_hombres,"porcentaje de Mujeres ","Porcentaje de Hombres")
+        instance.backend.histogramas.grafico_de_tortas(porcentaje_mujeres, porcentaje_hombres,"porcentaje de Mujeres ","Porcentaje de Hombres",'Distribucion de generos')
 
     #Porcentaje de participación de las mujeres en los diferentes proyectos según el GRAN AREA versus la participación de los hombres.
     def porcentaje_participacion_gran_areas(self,gran_area):
@@ -123,7 +123,7 @@ class Analisis:
                 print("No hay proyectos en la ",disciplinafiltrar)
                 instance.backend.histogramas.mostrar_popup("No hay proyectos en la disciplina: " + disciplinafiltrar)
 
-    ### DUSTIN ver proyectos             
+################################### ------Aplicado en un boton ya------ ################################################            
     #lista de proyectos ordenadas por fechas
     def lista_proyectos_fecha(self):
         lista=[]
@@ -134,8 +134,8 @@ class Analisis:
         if not lista:
             instance.backend.histogramas.mostrar_popup('No hay proyectos para mostrar.')
         else:
-            print(lista)
-            instance.backend.histogramas.mostrar_popup('Lista de proyectos',datos=lista)
+            
+            instance.backend.histogramas.tabla(lista)
     
 ################################### ------Aplicado en un boton ya------ ################################################
     def cantidad_proyectos_gran_area(self,gran_area):# cantidad de proyectos por gran area
@@ -236,15 +236,15 @@ class Analisis:
                                         listadisciplinas.add((disciplina.disciplina_codigo,disciplina.disciplina_descripcion))
             instance.backend.histogramas.histograma_tabla(listadisciplinascodigo,listadisciplinas,'disciplina')
     
-    ### DUSTIN tiempo promedio de finalización AREA                           
+                            
     #Visualizar el tiempo promedio de terminación de los proyectos según el área al que pertenecen.
     def tiempo_promedio_proyectos_area(self,area):
         from GUI import instance
         
-        areas=set(disciplina.area_descripcion.upper() for disciplina in instance.backend.cache.ref_disciplina)
+        
         dias=0
         contadorproyectos=0
-        if area.upper() not in areas:
+        if area not in instance.backend.cache.lista_Areas:
             print('El area ingresada no es válida.')
             instance.backend.histogramas.mostrar_popup('El area ingresada no es válida.')
         else:
@@ -262,22 +262,24 @@ class Analisis:
                 instance.backend.histogramas.mostrar_popup('No hay proyectos en el area: '+ area)
             else:
                 promedio=dias/contadorproyectos
+                round(promedio,0)
                 print("El tiempo promedio de terminacion de los proyectos del area",area,"es:",promedio,'dias')
                 instance.backend.histogramas.mostrar_popup('El tiempo promedio de terminacion de los proyectos del area: '+ area + ' es: ' + str(promedio) + 'dias', datos=promedio)
     
-    #### DUSTIN tiempo promedio de finalización GRAN AREA
+
     #Visualizar el tiempo promedio de terminación de los proyectos según el gran área al que pertenecen.
     def tiempo_promedio_proyectos_gran_area(self,gran_area): 
         from GUI import instance
-        gran_areas=[disciplina.gran_area_descripcion.upper() for disciplina in instance.backend.cache.ref_disciplina]
+        
         dias=0
         contadorproyectos=0
-        if gran_area.upper() not in gran_areas:
+        
+        if gran_area not in instance.backend.cache.lista_Gran_Areas:
             print("El gran area ingresada no es válida.")
             instance.backend.histogramas.mostrar_popup('El gran area ingresada no es válida.')
         else:
             for disciplina in instance.backend.cache.ref_disciplina:
-                if disciplina.gran_area_descripcion.upper() ==gran_area.upper():
+                if disciplina.gran_area_descripcion ==gran_area:
                     id_disciplina=disciplina.disciplina_id
                     for proyecto_disciplina in instance.backend.cache.proyecto_disciplina:
                         if proyecto_disciplina.disciplina_id==id_disciplina:
@@ -289,6 +291,7 @@ class Analisis:
                 instance.backend.histogramas.mostrar_popup('No hay proyectos en el gran area: '+ gran_area)
             else:
                 promedio=dias/contadorproyectos
+                promedio=round(promedio,0)
                 print("El tiempo promedio de terminacion de los proyectos del gran area",gran_area,"es:",promedio,'dias')
                 instance.backend.histogramas.mostrar_popup('El tiempo promedio de terminacion de los proyectos del gran area: '+ gran_area + ' es: ' + str(promedio) + 'dias', datos=promedio)      
 
