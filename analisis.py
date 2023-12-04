@@ -134,6 +134,19 @@ class Analisis:
         else:
             
             instance.backend.histogramas.tabla(lista)
+    ########## lista de proyectos  mostrando financiacion ##########        
+    def lista_proyectos_financiacion(self):
+        lista=[]
+        from GUI import instance
+        for proyecto in instance.backend.cache.proyectotal:
+            if proyecto.monto_financiado_solicitado==0:
+                porcentaje_adjudicado="No se solicito financiamiento"
+                lista.append((porcentaje_adjudicado,proyecto.titulo))
+
+            else:
+                porcentaje_adjudicado=str((proyecto.monto_financiado_adjudicado*100)/proyecto.monto_financiado_solicitado)+"%"
+                lista.append((porcentaje_adjudicado,proyecto.titulo))
+        instance.backend.histogramas.tabla(lista)
     
 ################################### ------Aplicado en un boton ya------ ################################################
     def cantidad_proyectos_gran_area(self,gran_area):# cantidad de proyectos por gran area
