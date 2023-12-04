@@ -10,18 +10,39 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 class histogramas:
   def __init__(self):
     pass
- 
-  def mostrar_popup(self,texto,tipo):
+
+  def mostrar_popup(self, mensaje_principal, datos=None):
     from GUI import instance
     instance.ventana = tk.Tk()
-    instance.ventana.title("No hay data para mostrar POPUP")
-    instance.ventana.geometry("600x100")
-    instance.ventana.configure(bg="red")
-    label = tk.Label(instance.ventana, text=(texto + str(tipo)), bg="black", fg="orange")
-    label.pack()
+    instance.ventana.title("Popup")
+    instance.ventana.geometry("600x200")
+    instance.ventana.configure(bg="lightblue")
+
+    #crear una etiqueta con el mensaje principal
+    label_principal = tk.Label(instance.ventana, text=mensaje_principal, bg="white", fg="black", justify="left")
+    label_principal.pack()
+
+    if datos is not None:
+      #crear una etiqueta con los datos
+      label_datos = tk.Label(instance.ventana, text=datos, bg="white", fg="black", justify="left")
+      label_datos.pack()
+    else:
+       #mostrar mensaje indicando que no hay datos
+       label_no_datos = tk.Label(instance.ventana, text="No hay datos para mostrar", bg="red", fg="black", justify="left")
+       label_no_datos.pack()
     instance.ventana.mainloop()
 
-  def grafico_de_tortas(self,porcentaje1,porcentaje2,texto1,texto2):
+  # def mostrar_popup(self,texto,tipo):
+  #   from GUI import instance
+  #   instance.ventana = tk.Tk()
+  #   instance.ventana.title("No hay data para mostrar POPUP")
+  #   instance.ventana.geometry("600x100")
+  #   instance.ventana.configure(bg="red")
+  #   label = tk.Label(instance.ventana, text=(texto + str(tipo)), bg="black", fg="orange")
+  #   label.pack()
+  #   instance.ventana.mainloop()
+
+  def grafico_de_tortas(self,porcentaje1,porcentaje2,texto1,texto2,titulo):
     # Datos para el histograma
     from GUI import instance
     instance.ventana = tk.Tk()
@@ -43,12 +64,12 @@ class histogramas:
     ax.pie(porcentajes, labels=etiquetas, colors=colores, autopct='%1.1f%%', startangle=90)
 
     # Configuraciones adicionales del gráfico
-    ax.set_title('Gráfico de Torta de Dos Porcentajes')
+    ax.set_title(titulo)
 
     # Crear el lienzo para el gráfico en tkinter
     canvas = FigureCanvasTkAgg(fig, master=instance.ventana)
     canvas.draw()
-    canvas.get_tk_widget().pack()
+    canvas.get_tk_widget().pack(expand=True,fill='both')
     
   def mostrar_dato(self,categoria):
     from GUI import instance
@@ -57,9 +78,23 @@ class histogramas:
     instance.ventana.title("Mostrar Dato")
   
   
-  
-  #TRABAJO DUSTINNN###
-  def histograma_tabla(self,categorias,listaareas):
+  def tabla(self,lista):
+    from GUI import instance
+    instance.ventana = tk.Tk()
+    tree = ttk.Treeview(instance.ventana, columns=('Fecha', 'Titulo'), show='headings')
+    tree.heading('Fecha', text='Fecha')
+    tree.heading('Titulo', text='Titulo')
+    tree.column('Fecha', width=100)
+    tree.column('Titulo', width=600)
+
+    # Agregar filas al Treeview desde PrettyTable
+    for row in lista:
+        tree.insert('', 'end', values=row)
+
+    # Mostrar el Treeview
+    tree.pack(padx=10, pady=10, fill='both',expand=True)
+ 
+  def histograma_tabla(self,categorias,lista,referencia):
     
     from GUI import instance
       # Contar la frecuencia de cada categoría
@@ -75,9 +110,14 @@ class histogramas:
     ax.bar(categorias, valores, color='blue')
 
     # Añadir etiquetas y título
-    ax.set_xlabel('Codigo de Areas')
-    ax.set_ylabel('Frecuencia')
-    ax.set_title('Gráfico de Barras de Frecuencia')
+    
+    ax.set_ylabel('Cantidad de proyectos')
+    if referencia == 'area':
+        ax.set_title('Cantidad de proyectos por area')
+        ax.set_xlabel('Codigo de area')
+    elif referencia == 'gran_area':
+        ax.set_title('Cantidad de proyectos por gran area')
+        ax.set_xlabel('Codigo de gran area')
 
     # Mostrar el gráfico
     canvas = FigureCanvasTkAgg(fig, master=instance.ventana)
@@ -91,10 +131,11 @@ class histogramas:
     tree.heading('Referencia', text='Referencia')
 
     # Agregar filas al Treeview desde PrettyTable
-    for row in listaareas:
+    for row in lista:
         tree.insert('', 'end', values=row)
 
     # Mostrar el Treeview
     tree.pack(side='right', padx=10, pady=10, fill='both')
-    
+  
+
     
