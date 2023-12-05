@@ -167,9 +167,11 @@ class Analisis:
                                     else:
                                         listaareascodigo.append(disciplina.area_codigo)
                                         listaareas.add((disciplina.area_codigo,disciplina.area_descripcion))
+            if listaareascodigo==[]:
+                instance.backend.histogramas.mostrar_popup('No hay proyectos en el Gran area: '+ gran_area)                  
             instance.backend.histogramas.histograma_tabla(listaareascodigo,listaareas,'area')
         else:
-            instance.backend.histogramas.mostrar_popup('No hay proyectos en el Gran area: '+ gran_area)
+            instance.backend.histogramas.mostrar_popup('No existe la gran area:'+ gran_area)
     
     #lista de gran areas en los proyectos    
     def gran_areas(self):
@@ -186,6 +188,8 @@ class Analisis:
                             else:
                                 listagranareascodigo.append(disciplina.gran_area_codigo)
                                 listagranareas.add((disciplina.gran_area_codigo,disciplina.gran_area_descripcion))
+        if listagranareas==[]:
+                instance.backend.histogramas.mostrar_popup('No hay proyectos en el Gran area: ')                  
         instance.backend.histogramas.histograma_tabla(listagranareascodigo,listagranareas,'gran area')
         
     #lista de disciplinas segun el area          
@@ -205,6 +209,8 @@ class Analisis:
                                         else:
                                             listadisciplinascodigo.append(disciplina.disciplina_codigo)
                                             listadisciplinas.add((disciplina.disciplina_codigo,disciplina.disciplina_descripcion))
+                if listadisciplinascodigo ==[]:
+                    instance.backend.histogramas.mostrar_popup('No hay proyectos en el area: '+ area)                  
                 instance.backend.histogramas.histograma_tabla(listadisciplinascodigo,listadisciplinas,'disciplina')
             else:
                 instance.backend.histogramas.mostrar_popup('No hay proyectos en el area: '+ area)

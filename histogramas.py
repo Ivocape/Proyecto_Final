@@ -14,11 +14,11 @@ class histogramas:
   def mostrar_popup(self, mensaje_principal, datos=None):
     nuevaventana = tk.Tk()
     nuevaventana.title("Popup")
-    nuevaventana.geometry("600x200")
+    nuevaventana.geometry("1200x200")
     nuevaventana.configure(bg="lightblue")
 
     #crear una etiqueta con el mensaje principal
-    label_principal = tk.Label(nuevaventana, text=mensaje_principal, bg="white", fg="black", justify="left", font=("Arial", 30))
+    label_principal = tk.Label(nuevaventana, text=mensaje_principal, bg="white", fg="black", justify="left", font=("Arial", 14))
     label_principal.pack()
 
     if datos is not None:
