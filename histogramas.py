@@ -14,7 +14,7 @@ class histogramas:
   def mostrar_popup(self, mensaje_principal, datos=None):
     nuevaventana = tk.Tk()
     nuevaventana.title("Popup")
-    nuevaventana.geometry("600x200")
+    nuevaventana.geometry("600x600")
     nuevaventana.configure(bg="lightblue")
 
     #crear una etiqueta con el mensaje principal
