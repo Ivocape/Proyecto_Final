@@ -1,4 +1,3 @@
-# Description: Clase que contiene los objetos de las clases que se encargan de la logica del programa
 from procesos import *
 from discoDuro import *
 from histogramas import *

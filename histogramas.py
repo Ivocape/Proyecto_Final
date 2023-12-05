@@ -14,11 +14,11 @@ class histogramas:
   def mostrar_popup(self, mensaje_principal, datos=None):
     nuevaventana = tk.Tk()
     nuevaventana.title("Popup")
-    nuevaventana.geometry("600x200")
+    nuevaventana.geometry("1200x200")
     nuevaventana.configure(bg="lightblue")
 
     #crear una etiqueta con el mensaje principal
-    label_principal = tk.Label(nuevaventana, text=mensaje_principal, bg="white", fg="black", justify="left", font=("Arial", 30))
+    label_principal = tk.Label(nuevaventana, text=mensaje_principal, bg="white", fg="black", justify="left", font=("Arial", 14))
     label_principal.pack()
 
     if datos is not None:
@@ -31,22 +31,12 @@ class histogramas:
        label_no_datos.pack()
     nuevaventana.mainloop()
 
-  # def mostrar_popup(self,texto,tipo):
-  #   from GUI import instance
-  #   nuevaventana = tk.Tk()
-  #   nuevaventana.title("No hay data para mostrar POPUP")
-  #   nuevaventana.geometry("600x100")
-  #   nuevaventana.configure(bg="red")
-  #   label = tk.Label(nuevaventana, text=(texto + str(tipo)), bg="black", fg="orange")
-  #   label.pack()
-  #   nuevaventana.mainloop()
-
   def grafico_de_tortas(self,porcentaje1,porcentaje2,texto1,texto2,titulo):
     # Datos para el histograma
     nuevaventana = tk.Tk()
     
     nuevaventana.title("Grafico de tortas")
-    print(porcentaje1,porcentaje2)
+    
     porcentajes = [porcentaje1,porcentaje2]
     # Crear figura de Matplotlib
     fig = Figure(figsize=(9, 5), dpi=100)
@@ -69,21 +59,16 @@ class histogramas:
     canvas.draw()
     canvas.get_tk_widget().pack(expand=True,fill='both',)
     
-  def mostrar_dato(self,categoria):
-    nuevaventana = tk.Tk()
-    
-    nuevaventana.title("Mostrar Dato")
   
-  
-  def tabla(self,lista):
+  def tabla(self,lista,columna1,columna2):
     nuevaventana = tk.Tk()
-    tree = ttk.Treeview(nuevaventana, columns=('Fecha', 'Titulo'), show='headings')
-    tree.heading('Fecha', text='Fecha')
-    tree.heading('Titulo', text='Titulo')
-    tree.column('Fecha', width=100)
-    tree.column('Titulo', width=600)
+    tree = ttk.Treeview(nuevaventana, columns=(columna1, columna2), show='headings')
+    tree.heading(columna1, text=columna1)
+    tree.heading(columna2, text=columna2)
+    tree.column(columna1, width=100)
+    tree.column(columna2, width=600)
 
-    # Agregar filas al Treeview desde PrettyTable
+    # Agregar filas al Treeview 
     for row in lista:
         tree.insert('', 'end', values=row)
 
