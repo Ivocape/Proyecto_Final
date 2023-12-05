@@ -34,8 +34,19 @@ class GUI:
         self.valoreselegidos[clavecombobox] = tk.StringVar()
         combobox = ttk.Combobox(self.ventana, width=80, values=opciones)
         combobox.place(relx=0.5, rely=rely_combobox, anchor="center")
-        combobox.bind("<<ComboboxSelected>>",lambda event, clave=clavecombobox: self.on_select(event,clavecombobox))
-        
+        combobox.bind("<KeyRelease>", lambda event, opciones=opciones,clave=clavecombobox: self.filtrar_combobox(event, opciones,clave))
+        combobox.bind("<<ComboboxSelected>>",lambda event, clave=clavecombobox: self.on_select(event,clave))
+    
+    def filtrar_combobox(self, event, opciones, clavecombobox):
+        texto_ingresado = event.widget.get().lower()
+        self.ventana.after(200, lambda: self.actualizar_combobox(event, opciones, texto_ingresado, clavecombobox))
+
+    def actualizar_combobox(self, event, opciones, texto_ingresado, clavecombobox):
+        opciones_filtradas = [opcion for opcion in opciones if texto_ingresado in opcion.lower()]
+        event.widget['values'] = opciones_filtradas
+        self.valoreselegidos[clavecombobox].set(texto_ingresado)
+        event.widget.event_generate('<Down>')
+    
     # Metodo modularizado de creacion de botones    
     def crear_boton(self,texto,relx_boton,rely_boton,funcion):
         boton = tk.Button(self.ventana, text=texto, bg="black", fg="white", command=funcion)
