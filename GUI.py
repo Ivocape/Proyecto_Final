@@ -76,12 +76,10 @@ class GUI:
             case 1:
                 self.backend.analisis.porcentaje_participacion_disciplinas(categoria)
             case 2:
-                self.backend.analisis.porcentaje_monto_financiamiento()
-            case 3:
                 self.backend.analisis.porcentaje_participacion_areas(categoria)
-            case 4:
+            case 3:
                 self.backend.analisis.porcentaje_proyectos_tecnologia()
-            case 5:
+            case 4:
                 self.backend.analisis.porcentaje_participacion_generos()
 
 
@@ -125,7 +123,7 @@ class GUI:
         
         self.crear_combobox(2,list(self.backend.cache.lista_Areas), 0.3)
         self.crear_boton("Ver Histograma en el Area seleccionada",0.2,0.35,lambda valorelegido=self.valoreselegidos[2]: self.histograma3(valorelegido.get()))
-        self.crear_boton("% Hombre/Mujer",0.5,0.35,lambda valorelegido=self.valoreselegidos[2]: self.grafico_de_tortas(valorelegido.get(),3))
+        self.crear_boton("% Hombre/Mujer",0.5,0.35,lambda valorelegido=self.valoreselegidos[2]: self.grafico_de_tortas(valorelegido.get(),2))
         self.crear_boton("Tiempo Promedio Finalizacion",0.8,0.35,lambda valorelegido=self.valoreselegidos[2]:instance.backend.analisis.tiempo_promedio_proyectos_area(valorelegido.get()))
         
         self.crear_combobox(3,(list(self.backend.cache.lista_Disciplinas)),0.45)
@@ -133,10 +131,9 @@ class GUI:
         
 
        
-        self.crear_boton('Tecnologias empleadas',0.2,0.82,lambda:self.grafico_de_tortas(0,4))
-        self.crear_boton("Estadisticas Finacieras",0.5,0.82,lambda :self.grafico_de_tortas(0,2)) #### HACER
+        self.crear_boton('Tecnologias empleadas',0.2,0.82,lambda:self.grafico_de_tortas(0,3))
         self.crear_boton("Ver Histograma General",0.2,0.75,self.histograma2)
-        self.crear_boton('Participacion generos general',0.5,0.75,lambda :self.grafico_de_tortas(0,5))#### HACER'
+        self.crear_boton('Participacion generos general',0.5,0.75,lambda :self.grafico_de_tortas(0,4))#### HACER'
         self.crear_boton2("Salir",0.8,0.9,lambda:self.ventana.destroy())
         self.crear_boton('Ver Proyectos',0.8,0.75,lambda:self.mostrar_proyectos())
         self.crear_boton('Ver Financiacion Proyectos',0.8,0.82,lambda:self.backend.analisis.lista_proyectos_financiacion())
