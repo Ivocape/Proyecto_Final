@@ -309,5 +309,3 @@ class Analisis:
         instance.backend.histogramas.grafico_de_tortas(porcentaje, (100-porcentaje), "Con tecnologias emergentes", "Sin tecnologias emergentes", "Tecnologias emergentes")
 
 
-
-
