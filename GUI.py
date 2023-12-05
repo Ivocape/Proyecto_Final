@@ -13,7 +13,7 @@ class GUI:
         self.ventana.geometry(f"{self.ancho_ventana}x{self.alto_ventana}")
        
         # Cargar la imagen de fondo
-        self.ruta_imagen = "fotoArg.png"  # Reemplaza con la ruta de tu imagen ../fotoArg.png
+        self.ruta_imagen = "fotoArg.png"  
         self.imagen_fondo = tk.PhotoImage(file=self.ruta_imagen)
 
         # Crear un widget Canvas para la imagen de fondo
@@ -23,19 +23,31 @@ class GUI:
 
         #valores elegidos en los combobox
         self.valoreselegidos={}
+        
     #   Metodo modularizado de creacion de texto    
     def agregar_texto(self,texto, relx, rely):
         label = tk.Label(self.ventana, text=texto, font=("Arial", 12), fg="black", width=100)
         label.place(relx=relx, rely=rely,anchor="center")
 
-    #   Metodo modularizado de creacion de combobox y sus botones correspondientes
+    #   Metodo modularizado de creacion de combobox
     def crear_combobox(self, clavecombobox, opciones, rely_combobox):
         self.valoreselegidos[clavecombobox] = tk.StringVar()
         combobox = ttk.Combobox(self.ventana, width=80, values=opciones)
         combobox.place(relx=0.5, rely=rely_combobox, anchor="center")
-        combobox.bind("<<ComboboxSelected>>",lambda event, clave=clavecombobox: self.on_select(event,clavecombobox))
-        
-        
+        combobox.bind("<KeyRelease>", lambda event, opciones=opciones,clave=clavecombobox: self.filtrar_combobox(event, opciones,clave))
+        combobox.bind("<<ComboboxSelected>>",lambda event, clave=clavecombobox: self.on_select(event,clave))
+    
+    def filtrar_combobox(self, event, opciones, clavecombobox):
+        texto_ingresado = event.widget.get().lower()
+        self.ventana.after(200, lambda: self.actualizar_combobox(event, opciones, texto_ingresado, clavecombobox))
+
+    def actualizar_combobox(self, event, opciones, texto_ingresado, clavecombobox):
+        opciones_filtradas = [opcion for opcion in opciones if texto_ingresado in opcion.lower()]
+        event.widget['values'] = opciones_filtradas
+        self.valoreselegidos[clavecombobox].set(texto_ingresado)
+        event.widget.event_generate('<Down>')
+    
+    # Metodo modularizado de creacion de botones    
     def crear_boton(self,texto,relx_boton,rely_boton,funcion):
         boton = tk.Button(self.ventana, text=texto, bg="black", fg="white", command=funcion)
         boton.place(relx=relx_boton, rely=rely_boton, anchor="center")
@@ -48,6 +60,8 @@ class GUI:
     def on_select(self, event, clavecombobox):
         self.valoreselegidos[clavecombobox].set(event.widget.get())
 
+    
+    # FUNCIONES A USAR
     def histograma1(self,categoria):
         self.backend.analisis.areas(categoria)
     def histograma2(self):
@@ -70,8 +84,7 @@ class GUI:
             case 5:
                 self.backend.analisis.porcentaje_participacion_generos()
 
-    def mostrar_data(self):
-        self.backend.analisis.cantidad_proyectos_gran_area("CIENCIAS NATURALES Y EXACTAS")
+
 
     def mostrar_popup(self, categoria):
         self.backend.analisis.tiempo_promedio_proyectos_gran_area(categoria)
@@ -108,12 +121,12 @@ class GUI:
         self.crear_combobox(1,list(self.backend.cache.lista_Gran_Areas), 0.15)
         self.crear_boton("Ver Histograma en el Gran Area seleccionada",0.2,0.2,lambda valorelegido=self.valoreselegidos[1]: self.histograma1(valorelegido.get()))
         self.crear_boton("% Hombre/Mujer",0.5,0.2,lambda valorelegido=self.valoreselegidos[1]: self.grafico_de_tortas(valorelegido.get(),0))
-        self.crear_boton("Tiempo Promedio Finalizacion",0.8,0.2,lambda valorelegido=self.valoreselegidos[1]: instance.backend.analisis.tiempo_promedio_proyectos_gran_area(valorelegido.get()))#cambiar funcion
+        self.crear_boton("Tiempo Promedio Finalizacion",0.8,0.2,lambda valorelegido=self.valoreselegidos[1]: instance.backend.analisis.tiempo_promedio_proyectos_gran_area(valorelegido.get()))
         
         self.crear_combobox(2,list(self.backend.cache.lista_Areas), 0.3)
         self.crear_boton("Ver Histograma en el Area seleccionada",0.2,0.35,lambda valorelegido=self.valoreselegidos[2]: self.histograma3(valorelegido.get()))
         self.crear_boton("% Hombre/Mujer",0.5,0.35,lambda valorelegido=self.valoreselegidos[2]: self.grafico_de_tortas(valorelegido.get(),3))
-        self.crear_boton("Tiempo Promedio Finalizacion",0.8,0.35,lambda valorelegido=self.valoreselegidos[2]:instance.backend.analisis.tiempo_promedio_proyectos_area(valorelegido.get()))#cambiar funcion
+        self.crear_boton("Tiempo Promedio Finalizacion",0.8,0.35,lambda valorelegido=self.valoreselegidos[2]:instance.backend.analisis.tiempo_promedio_proyectos_area(valorelegido.get()))
         
         self.crear_combobox(3,(list(self.backend.cache.lista_Disciplinas)),0.45)
         self.crear_boton("% Hombre/Mujer",0.5,0.5,lambda valorelegido=self.valoreselegidos[3]: self.grafico_de_tortas(valorelegido.get(),1))
@@ -134,7 +147,4 @@ class GUI:
 # Crear una instancia de la clase GUI y ejecutar la aplicación
 instance= GUI()
 
-#####################################################################################
-# + Para llamar al backend y ejecutar sus distintas funciones no estando en este archivo (self.backend en este caso)
-# debo llamar de la siguiente manera: instance.backend.funcion() (donde funcion es la funcion que quiero ejecutar)
-#####################################################################################
+
