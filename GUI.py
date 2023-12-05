@@ -136,6 +136,7 @@ class GUI:
         self.crear_boton('Participacion generos general',0.5,0.75,lambda :self.grafico_de_tortas(0,4))#### HACER'
         self.crear_boton2("Salir",0.8,0.9,lambda:self.ventana.destroy())
         self.crear_boton('Ver Proyectos',0.8,0.75,lambda:self.mostrar_proyectos())
+        self.crear_boton('Developers',0.5,0.82,lambda:self.backend.histogramas.creators())
         self.crear_boton('Ver Financiacion Proyectos',0.8,0.82,lambda:self.backend.analisis.lista_proyectos_financiacion())
         self.ventana.mainloop()
         
