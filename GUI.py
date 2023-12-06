@@ -130,10 +130,10 @@ class GUI:
         self.crear_boton("% Hombre/Mujer",0.5,0.5,lambda valorelegido=self.valoreselegidos[3]: self.grafico_de_tortas(valorelegido.get(),1))
         
 
-       
+       #CREACION DE BOTONES
         self.crear_boton('Tecnologias empleadas',0.2,0.82,lambda:self.grafico_de_tortas(0,3))
         self.crear_boton("Ver Distribucion General",0.2,0.75,self.histograma2)
-        self.crear_boton('Participacion generos general',0.5,0.75,lambda :self.grafico_de_tortas(0,4))#### HACER'
+        self.crear_boton('Participacion generos general',0.5,0.75,lambda :self.grafico_de_tortas(0,4))
         self.crear_boton2("Salir",0.8,0.9,lambda:self.ventana.destroy())
         self.crear_boton('Ver Proyectos',0.8,0.75,lambda:self.mostrar_proyectos())
         self.crear_boton('Developers',0.5,0.82,lambda:self.backend.histogramas.creators())

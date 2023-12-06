@@ -1,6 +1,6 @@
 import csv
 #####################################################################################
-# ESTE DISCO DURO DEBE DE ENCARGARSE DE GUARDAR TODA INFORMACION DE USUARIOS, CLIENTES, PERSONAL, ADMINS,
+# ESTE DISCO DURO DEBE DE ENCARGARSE DE LEER TODA INFORMACION 
 #####################################################################################
 class DiscoDuro():
     # Crear el disco duro
