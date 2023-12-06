@@ -197,7 +197,10 @@ class Analisis:
             from GUI import instance
             listadisciplinascodigo=[]
             listadisciplinas=set()
-            if area in instance.backend.cache.lista_Areas:
+            if area not in instance.backend.cache.lista_Areas:
+            
+                instance.backend.histogramas.mostrar_popup('El area ingresada no es válida.')
+            else:
                 for proyecto in instance.backend.cache.proyectotal:
                     for proyecto_disciplina in instance.backend.cache.proyecto_disciplina:
                         if proyecto.proyecto_id==proyecto_disciplina.proyecto_id:
@@ -212,9 +215,7 @@ class Analisis:
                 if listadisciplinascodigo ==[]:
                     instance.backend.histogramas.mostrar_popup('No hay proyectos en el area: '+ area)                  
                 instance.backend.histogramas.histograma_tabla(listadisciplinascodigo,listadisciplinas,'disciplina')
-            else:
-                instance.backend.histogramas.mostrar_popup('No hay proyectos en el area: '+ area)
-                            
+        
     #Visualizar el tiempo promedio de terminación de los proyectos según el área al que pertenecen.
     def tiempo_promedio_proyectos_area(self,area):
         from GUI import instance
@@ -273,25 +274,6 @@ class Analisis:
                 
                 instance.backend.histogramas.mostrar_popup('El tiempo promedio de terminacion de los proyectos del gran area: '+ gran_area + ' es: ' + str(promedio) + 'dias', datos=promedio)      
 
-    #Visualizar que porcentaje del monto de financiamiento solicitado efectivamente se le otorgó, segun el monto financiado adjudicado por proyecto.
-    def porcentaje_monto_financiamiento(self):
-        
-        cont=0
-        suma=0
-        from GUI import instance
-        for proyecto in instance.backend.cache.proyectotal:
-            if proyecto.monto_financiado_solicitado==0:
-                pass
-                                
-            else:
-                porcentaje_adjudicado=(proyecto.monto_financiado_adjudicado*100)/proyecto.monto_financiado_solicitado
-                suma+=porcentaje_adjudicado
-                cont+=1
-        
-        promedio=suma/cont
-        promedio=round(promedio,2) 
-        instance.backend.histogramas.grafico_de_tortas(promedio, 100-promedio, "Porcentaje de financiamiento adjudicado", "Porcentaje de financiamiento no adjudicado", "Financiamiento de proyectos")
-        
     # Visualizar el porcentaje de proyectos que han utilizado tecnologías emergentes (Tecnología e innovación)
     def porcentaje_proyectos_tecnologia(self): 
         cantidad=0
