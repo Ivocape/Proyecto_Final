@@ -13,7 +13,7 @@ class GUI:
         self.ventana.geometry(f"{self.ancho_ventana}x{self.alto_ventana}")
        
         # Cargar la imagen de fondo
-        self.ruta_imagen = "fotoArg.png"  
+        self.ruta_imagen = "../fotoArg.png"  
         self.imagen_fondo = tk.PhotoImage(file=self.ruta_imagen)
 
         # Crear un widget Canvas para la imagen de fondo
